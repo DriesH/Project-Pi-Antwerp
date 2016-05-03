@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use Illuminate\Support\Facades\Input;
+use Validator;
+use File;
 
 use App\Project;
 
@@ -24,10 +26,23 @@ class AdminController extends Controller
         return view('\admin\nieuw-project');
     }
     
-    protected function postNieuwProject()
+    protected function postNieuwProject(Request $request)
     {
         
         //dd( Input::all() );   om input data te testen.
+        
+        $validator = Validator::make($request->all(), [
+            'naam' => 'required',
+            'uitleg' => 'required',
+            'locatie' => 'required',
+            'foto' => 'image|max:1000',
+        ]);
+        
+        if ($validator->fails()) {
+             return redirect('/admin/nieuwproject/')
+                        ->withErrors($validator)
+                        ->withInput();
+        }
         
         if(Input::hasFile('foto')){
             /**
@@ -136,7 +151,7 @@ class AdminController extends Controller
     ]);
     }
     
-    protected function postProjectBewerken($id)
+    protected function postProjectBewerken($id, Request $request)
     {
         
         //dd( Input::all() );  // om input data te testen.
@@ -147,7 +162,21 @@ class AdminController extends Controller
         *@var array
         */        
         $data = Input::all();
+
         
+        $validator = Validator::make($request->all(), [
+            'naam' => 'required',
+            'uitleg' => 'required',
+            'locatie' => 'required',
+            'foto' => 'image|max:1000',
+        ]);
+        
+        if ($validator->fails()) {
+             return redirect('/admin/project-bewerken/' . $id)
+                        ->withErrors($validator)
+                        ->withInput();
+        }
+       
         /**
         *isActief bevat 1 als checkbox aangevinkt is, 0 als deze uitgevinkt is.
         *
@@ -161,7 +190,8 @@ class AdminController extends Controller
         *@var int
         */ 
         
-        if(Input::hasFile('foto')){
+        if(Input::hasFile('foto')){            
+            
             /**
             *afbeelding is rauwe input data van de aflbeeding
             *
@@ -183,20 +213,25 @@ class AdminController extends Controller
             */
             $nieuwe_naam = uniqid() . "." . $extensie;
         
+            //nieuwe afbeelding in uploads plaatsen
             $afbeelding->move('pictures/uploads', $nieuwe_naam);
             
-            //!!!!!!!checken op formaat => enkel foto's
-            //!!!!!!!vorige afbeelding verwijderen uit map
-        }
-        
-        /**
-        *nieuw pad naar afbeelding
-        *
-        *@var string
-        */
-        $foto_path = '/pictures/uploads/' . $nieuwe_naam;
-
-        Project::where('idProject', $id)
+            /**
+            *nieuw pad naar afbeelding
+            *
+            *@var string
+            */
+            $foto_path = '/pictures/uploads/' . $nieuwe_naam;
+            
+            //oude afbeelding verwijderen uit uploads map
+            $project = Project::where('idProject', '=', $id)->first();
+            $oude_afbeelding = substr($project->foto, 1);
+            
+            if (File::exists($oude_afbeelding)){                
+                unlink($oude_afbeelding);
+            } 
+            
+            Project::where('idProject', $id)
             ->update([
             'naam' => $data['naam'],
             'uitleg' => $data['uitleg'],
@@ -205,10 +240,17 @@ class AdminController extends Controller
             'isActief' => $isActief,
             'idCategorie' => 5
         ]);
-        
-        
-        
-        
+        }
+        else {
+            Project::where('idProject', $id)
+            ->update([
+            'naam' => $data['naam'],
+            'uitleg' => $data['uitleg'],
+            'locatie' => $data['locatie'],
+            'isActief' => $isActief,
+            'idCategorie' => 5
+        ]);
+        }
         
         return redirect('/');
     }

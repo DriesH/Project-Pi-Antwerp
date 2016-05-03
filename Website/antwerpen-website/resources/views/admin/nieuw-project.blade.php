@@ -12,6 +12,18 @@
                       'class' => 'form-horizontal',
                       'role' => 'form',
                       'files' => true)) }}
+                      
+                      <div>
+                    @if (count($errors) > 0)
+                        <div class="alert alert-danger">
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
+                </div>
                        
                         {!! csrf_field() !!}
 
@@ -21,8 +33,7 @@
                                 'class' => 'col-md-4 control-label')) }}       
                             <div class="col-md-6">
                                 {{ Form::text('naam', '', array(
-                                'class' => 'form-control',
-                                'required' => 'required')) }}
+                                'class' => 'form-control')) }}
                                 <!--@if ($errors->has('email'))
                                     <span class="help-block">
                                         <strong>{{ $errors->first('email') }}</strong>
@@ -36,8 +47,7 @@
                                 'class' => 'col-md-4 control-label')) }} 
                             <div class="col-md-6">
                               {{ Form::textarea('uitleg', '', array(
-                                'class' => 'form-control',
-                                'required' => 'required')) }} 
+                                'class' => 'form-control')) }} 
                             </div>                    
                         </div>
                         
@@ -46,8 +56,7 @@
                                 'class' => 'col-md-4 control-label')) }} 
                              <div class="col-md-6"> 
                               {{ Form::text('locatie', '', array(
-                                'class' => 'form-control',
-                                'required' => 'required')) }}
+                                'class' => 'form-control')) }}
                             </div>
                         </div>
                         

@@ -52,3 +52,11 @@ i{
     border-radius: 0;
     transition: none;
 }
+
+
+/*ADMIN*/
+
+input[type=file]{
+    color:transparent;
+}
+
