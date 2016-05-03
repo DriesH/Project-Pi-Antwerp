@@ -1,8 +1,10 @@
 jQuery(document).ready(function($){
-    $('.grid').masonry({
-            percentPosition: true,
-            columnWidth: '.project-box',
-            itemSelector: '.project-box',
+    var $grid = $('.grid').masonry({
+                    columnWidth: '.thumbnail',
+                    itemSelector: '.thumbnail',
+                });
+    $grid.imagesLoaded().progress(function(){
+        $grid.masonry('layout');
     });
 
     /*$('.carousel').slick({

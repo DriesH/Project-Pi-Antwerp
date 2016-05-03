@@ -23,27 +23,29 @@
         <link rel="stylesheet" href="/css/grid-layout.css" media="screen" title="no title" charset="utf-8">
     </head>
     <body>
-            <div class="navbar navbar-fixed-top">
-                <div class="container">
-                    <div class="navbar-header">
-                        <a href="/" class="navbar-brand">
-                            <img src="/pictures/a-logo.svg" alt="a-logo" />
-                        </a>
-                    </div>
-
-                    <div class="nav navbar-nav navbar-right" id="navbar-login">
-                        @if (Auth::guest())
-							<a href="/auth/register"><i class="fa fa-pencil-square-o"></i>Registreren</a>
-							<a href="/auth/login"><i class="fa fa-sign-in"></i>Inloggen</a>
-						@else
-							<a id="welkom" href="/dashboard"><i class="fa fa-user"></i>Welkom, {{ Auth::user()->name }}</a>
-                            <a href="/auth/logout">Afmelden<i class="fa fa-sign-out"></i></a>
-						@endif
-                    </div>
+        <div class="navbar navbar-fixed-top">
+            <div class="container">
+                <div class="navbar-header">
+                    <a href="/" class="navbar-brand">
+                        <img src="/pictures/a-logo.svg" alt="a-logo" />
+                    </a>
                 </div>
-            </div>
 
-        <div class="container">
+                <ul class="nav navbar-nav navbar-right" id="navbar-login">
+                    @if (Auth::guest())
+    					<li><a href="/auth/register"><i class="fa fa-pencil-square-o"></i>Registreren</a></li>
+    					<li><a href="/auth/login"><i class="fa fa-sign-in"></i>Inloggen</a></li>
+    				@else
+    					<li><a id="welkom" href="/dashboard"><i class="fa fa-user"></i>Welkom, {{ Auth::user()->name }}</a></li>
+                        <li><a href="/auth/logout">Afmelden<i class="fa fa-sign-out"></i></a></li>
+    				@endif
+                </ul>
+            </div>
+        </div>
+
+
+
+        <div class="container" id="content">
             @yield('content')
         </div>
 
