@@ -50,18 +50,18 @@ Route::post('/auth/register', 'Auth\AuthController@postRegister');
 /*--Profiel--*/
 Route::get('/dashboard', 'HomeController@dash');
 
-/*Admin*/
+/*Admin-panel*/
 Route::get('/admin', 'AdminController@panel');
 
-/*nieuw project aanmaken*/
+/*Project routes*/
 Route::get('/admin/nieuwproject', 'AdminController@getNieuwProject');
 Route::post('/admin/nieuwproject', 'AdminController@postNieuwProject');
-
-/*Project bewerken*/
 Route::get('/admin/project-bewerken/{id}', 'AdminController@getProjectBewerken');
 Route::post('/admin/project-bewerken/{id}', 'AdminController@postProjectBewerken');
+Route::get('/admin/project-bewerken/{id}/verwijderen', 'AdminController@getProjectVerwijderen');
+Route::post('/admin/project-bewerken/{id}/verwijderen', 'AdminController@postProjectVerwijderen');
 
-/*Fases bewerken*/
+/*Fase routes*/
 Route::get('/admin/project-bewerken/{id}/fases', 'AdminController@getFases');
 Route::get('/admin/project-bewerken/{id}/fases/{faseid}', 'AdminController@getFaseBewerken');
 Route::post('/admin/project-bewerken/{id}/fases/{faseid}', 'AdminController@postFaseBewerken');

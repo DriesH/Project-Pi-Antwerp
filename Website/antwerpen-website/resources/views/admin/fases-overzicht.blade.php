@@ -9,6 +9,7 @@
                 </div>
                 <div class="panel-body">
                    @if($fases->count() > 0)
+                   <a class="btn btn-success" href="nieuwefase" role="button"><i class="fa fa-plus"></i>Niewe fase aanmaken</a>
                    @foreach($fases as $fase)
                     <div class="bs-callout bs-callout-primary"><h3>Fase {{$fase->faseNummer}}: {{$fase->title}}</h3>
                     <p>{{$fase->uitleg}}</p>
@@ -23,7 +24,7 @@
                    @else
                    <div>
                        <h4>Er zijn nog geen fases voor dit project.</h4>
-                       <a class="btn btn-succes" href="nieuwefase" role="button"><i class="fa fa-edit"></i>Niewe fase aanmaken</a>
+                       <a class="btn btn-success" href="nieuwefase" role="button"><i class="fa fa-plus"></i>Niewe fase aanmaken</a>
                    </div>
                    @endif
                 </div>

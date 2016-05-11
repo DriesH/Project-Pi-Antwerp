@@ -3,44 +3,61 @@ using System;
 using System.Collections;
 using System.Data;
 using MySql.Data.MySqlClient;
+using UnityEngine.UI;
 
 public class DatabaseLogic: MonoBehaviour
 {
+ //werkt momenteel enkel met 1 titel en 1 descr, mssn list gebruiken?
+  private static IDbConnection dbConnection; //the connection with the database
+  private static string connectionString; //the string to which database has to be connected
 
-  //NOG NIET GETEST en staat ff in commentaar zodat de rest niet beïntvloedt kan worden
-  /*
-  private static IDbConnection dbConnection;
+  protected static String[] databaseTitels; //titels of the projects that need to be loaded from the database
+  protected static Image[] databaseImages; //images of the projects that need to be loaded from the database
+  protected static String[] databaseDescriptions; //descriptions of the projects that need to be loaded from the database
 
-  public void Start()
+  protected static int numberOfProjects = 0; //the number of total projects
+
+  public void StartDatabase()
   {
     openSqlConnection();
+    databaseTitels       = new String[20];
+    databaseImages       = new Image[20];
+    databaseDescriptions = new String[20];
+
+    if (connectionString != null)
+    { 
+    doQuery("SELECT naam, uitleg, foto FROM projects;");
+    }
   }
 
   // On quit
-  public void OnApplicationQuit()
+  void OnApplicationQuit() //when app is closed, close connection with database
   {
     closeSqlConnection();
   }
 
   // Connect to database
-  private static void openSqlConnection()
+  static void openSqlConnection()
   {
-    string connectionString = "Server=localhost;" +
-        "Database=yourDatabaseName;" +
-        "User ID=yourUserId;" +
-        "Password=yourPassword;" +
-        "Pooling=false";
-    dbConnection = new MySqlConnection(connectionString);
-    dbConnection.Open();
-    Debug.Log("Connected to database.");
+   connectionString = "Server=localhost;" +
+        "Database=mydb;" +
+        "User ID=root;" +
+        "Password=;" +
+        "Pooling=true";
+    dbConnection = new MySqlConnection(connectionString); //make a new connection with the chosen string
+    dbConnection.Open(); //open the connection
+    //Debug.Log("Connected to database.");
   }
 
   // Disconnect from database
-  private static void closeSqlConnection()
+  static void closeSqlConnection()
   {
-    dbConnection.Close();
-    dbConnection = null;
-    Debug.Log("Disconnected from database.");
+    if (dbConnection != null)
+    { 
+      dbConnection.Close();
+      dbConnection = null;
+     // Debug.Log("Disconnected from database.");
+    }
   }
 
   // MySQL Query
@@ -49,11 +66,27 @@ public class DatabaseLogic: MonoBehaviour
     IDbCommand dbCommand = dbConnection.CreateCommand();
     dbCommand.CommandText = sqlQuery;
     IDataReader reader = dbCommand.ExecuteReader();
-    reader.Close();
-    reader = null;
-    dbCommand.Dispose();
-    dbCommand = null;
-  }*/
+
+    while (reader.Read())
+    {
+      databaseTitels[0]= (String)reader["naam"];
+      databaseDescriptions[0] = (String)reader["uitleg"];
+      //databaseImages[0] =  van string naar foto doen opt moment
+    }
+
+    foreach (string titel in databaseTitels)
+    {
+      if (titel != null)
+      {
+        numberOfProjects++;
+      }
+    }
+    Debug.Log(numberOfProjects);
+    reader.Close(); //always close the reader
+    reader = null; //then empty it
+    dbCommand.Dispose(); //get rid of the current searchquery
+    dbCommand = null; //then empty is
+  }
 }
 
 
