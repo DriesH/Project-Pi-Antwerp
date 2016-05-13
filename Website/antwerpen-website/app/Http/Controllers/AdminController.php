@@ -304,7 +304,7 @@ class AdminController extends Controller
     
     protected function postProjectVerwijderen($id){
         
-        DB::table('Projects')->where('idProject', '=', $id)
+        DB::table('projects')->where('idProject', '=', $id)
                             ->delete();
         
         return redirect('/');
@@ -521,7 +521,7 @@ class AdminController extends Controller
         *
         *@var array
         */
-        $laatsteFase = DB::table('Phases')->where('idProject', '=', $id)
+        $laatsteFase = DB::table('phases')->where('idProject', '=', $id)
                                           ->orderBy('faseNummer', 'desc')
                                           ->first();
         /**
