@@ -18,7 +18,7 @@
         </ul>
     </div>
 
-    <div class="btn-group" id="filter--btn">
+    <div class="btn-group" id="filter-loc-btn">
         <button name="filter" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <i class="fa fa-map-marker"></i>Locatie filter   <span class="caret"></span>
         </button>
