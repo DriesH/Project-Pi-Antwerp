@@ -3,6 +3,7 @@
 @section('content')
 
     <div class="project-wrapper">
+       <a href="/" class="btn btn-primary"><i class="fa fa-arrow-left"></i>Terug</a>
         <div class="project-big-box">
             <div class="project-hero-img">
                 <img src="{{$project->foto}}" alt="">
