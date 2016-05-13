@@ -127,7 +127,7 @@ class AdminController extends Controller
         }
 
 
-        return redirect('/admin/project-bewerken/' . $nieuwProject->id . '/fases');
+        return redirect('/admin/project-bewerken/' . $nieuwProject->id . '/fases')->with('message', 'Project succesvol toegevoegd.');
     }
 
     protected function getProjectBewerken($id){
@@ -283,7 +283,7 @@ class AdminController extends Controller
         ]);
         }
 
-        return redirect('/');
+        return redirect('/')->with('message', 'Project succesvol bewerkt.');
     }
     
     protected function getProjectVerwijderen($id){
@@ -307,7 +307,7 @@ class AdminController extends Controller
         DB::table('projects')->where('idProject', '=', $id)
                             ->delete();
         
-        return redirect('/');
+        return redirect('/')->with('message', 'Project succesvol verwijderd.');
     }
     
     
@@ -429,7 +429,7 @@ class AdminController extends Controller
             'status' => $data['status']
         ]);
 
-        return redirect('/admin/project-bewerken/'. $id . '/fases');
+        return redirect('/admin/project-bewerken/'. $id . '/fases')->with('message', 'Fase succesvol bewerkt.');
     }
     
     protected function getFaseVerwijderen($id, $faseid){
@@ -463,7 +463,7 @@ class AdminController extends Controller
                             ->where('idProject', '=', $id)
                             ->delete();
         
-        return redirect('/admin/project-bewerken/'. $id . '/fases');
+        return redirect('/admin/project-bewerken/'. $id . '/fases')->with('message', 'Fase succesvol verwijderd.');
     }
     
     protected function getNieuweFase($id){
@@ -548,6 +548,8 @@ class AdminController extends Controller
             ]);
         
         
-        return redirect('/admin/project-bewerken/'. $id . '/fases');
+        return redirect('/admin/project-bewerken/'. $id . '/fases')->with('message', 'Fase succesvol toegevoegd.');
     }
 }
+
+    /*-----VRAGEN-----*/

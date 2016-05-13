@@ -4,6 +4,9 @@
 @section('content')
 
 <div class="col-md-12 col-xs-12 col-sm-12 filter">
+   @if ( session()->has('message') )
+        <div class="alert alert-success alert-dismissable">{{ session()->get('message') }}</div>
+@endif
     <!-- Single button -->
     <div class="btn-group" id="filter-cat-btn">
         <button name="filter" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -33,7 +36,8 @@
 </div>
 
 
-<div id="grid" data-columns>
+
+<div id="grid" data-columns>    
     @foreach ($projecten as $project)
     <div class="thumbnail project-box">
         <a href="project/{{$project->idProject}}"><img src="{{$project->foto}}" alt=""></a>
