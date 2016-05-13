@@ -8,8 +8,6 @@ using System.Collections.Generic;
 
 public class DatabaseLogic: MonoBehaviour
 {
- //werkt momenteel enkel met 1 titel en 1 descr, mssn list gebruiken?
-
   private static IDbConnection dbConnection; //the connection with the database
   private static string connectionString; //the string to which database has to be connected
 
@@ -19,7 +17,7 @@ public class DatabaseLogic: MonoBehaviour
 
   protected static int numberOfProjects = 0; //the number of total projects
 
-  public void StartDatabase()
+  protected void StartDatabase()
   {
     openSqlConnection();
 
@@ -34,8 +32,7 @@ public class DatabaseLogic: MonoBehaviour
     closeSqlConnection();
   }
 
-  // Connect to database
-  static void openSqlConnection()
+  static void openSqlConnection()  // Connect to database
   {
   /* for Local
    * connectionString = "Server=localhost;" +
@@ -55,8 +52,7 @@ public class DatabaseLogic: MonoBehaviour
     //Debug.Log("Connected to database.");
   }
 
-  // Disconnect from database
-  static void closeSqlConnection()
+  static void closeSqlConnection()  // Disconnect from database
   {
     if (dbConnection != null)
     { 
@@ -67,7 +63,7 @@ public class DatabaseLogic: MonoBehaviour
   }
 
   // MySQL Query
-  public static void doQuery(string sqlQuery)
+  protected static void doQuery(string sqlQuery)
   {
     IDbCommand dbCommand = dbConnection.CreateCommand();
     dbCommand.CommandText = sqlQuery;
@@ -75,12 +71,11 @@ public class DatabaseLogic: MonoBehaviour
 
     while (reader.Read())
     {
-      //databaseImages[0]     =  van string naar foto doen opt moment
       databaseTitles.Add((String)reader["naam"]); //reads the database titles and puts them in the lst
       databaseDescriptions.Add((String)reader["uitleg"]);
       databaseImages.Add((String)reader["foto"]);
     }
-    numberOfProjects = databaseTitles.Count;
+    numberOfProjects = databaseTitles.Count; 
 
     reader.Close(); //always close the reader
     reader = null; //then empty it
