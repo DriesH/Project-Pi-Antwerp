@@ -2,6 +2,9 @@
 
 @section('content')
 <div class="container">
+  @if ( session()->has('message') )
+           <div class="alert alert-success alert-dismissable">{{ session()->get('message') }}</div>
+       @endif
    <a href="/admin/project-bewerken/{{$project->idProject}}" class="btn btn-primary"><i class="fa fa-arrow-left"></i>Terug</a>
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
@@ -27,6 +30,7 @@
                                 <p>Status: <span class="{{$fase->status}}"><strong>{{$fase->status}}</strong></span></p>
 
                                 <a class="btn btn-primary" href="fases/{{$fase->faseNummer}}" role="button"><i class="fa fa-edit"></i>Fase bewerken</a>
+                                <a class="btn btn-primary" href="fases/{{$fase->faseNummer}}/vragen" role="button"><i class="fa fa-edit"></i>Vragen bewerken</a>
 
                                 <a class="btn btn-danger pull-right" href="fases/verwijderen/{{$fase->faseNummer}}" role="button"><i class="fa fa-edit"></i>Fase verwijderen</a>
                             </div>
