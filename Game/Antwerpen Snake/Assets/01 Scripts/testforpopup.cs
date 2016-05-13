@@ -3,7 +3,7 @@ using System.Collections;
 
 public class testforpopup : MonoBehaviour
 {
-
+  /*
   //mag later gedelete worden
   private int score = 0;
   public Texture2D popUpTex;
@@ -32,5 +32,5 @@ public class testforpopup : MonoBehaviour
       Application.LoadLevel("SnakeGame"); 
     }
 
-  }
+  }*/
 }
