@@ -7,7 +7,7 @@ public class SnakeV2 : TouchLogic {
   private Vector3 finger; //coördinates of fingertouch
   private Transform snakeTrans, camTrans; //transform from snake and camera
   public float speed = 5f; //speed of the snake
-  private Vector3 begintestSake;
+  private Vector3 beginPosSnake; //to reset the snake to the center position
 
   public GameObject food = null;
 
@@ -15,7 +15,7 @@ public class SnakeV2 : TouchLogic {
   {
     snakeTrans = this.transform; //save startposition and -rotation of the snake
     camTrans = Camera.main.transform; // save de startposition and -rotation of the camera
-    begintestSake = this.transform.position; //save startposition and -rotation of the snake
+    beginPosSnake = this.transform.position; //save startposition and -rotation of the snake
 
     for (int i = 1; i <= 4; i++)
     {
@@ -80,9 +80,7 @@ public class SnakeV2 : TouchLogic {
   {
     if (c.tag.StartsWith("food"))
     {
-      Destroy(c.gameObject); //delete only the gameobject of choice
-      transform.position = begintestSake; //test zet snake op begin
-      SpawnPickup(c.tag);
+      transform.position = beginPosSnake; //test zet snake op begin
     }
     else if (c.tag.StartsWith("respawn")) // respawn when player oved to the middle
     {

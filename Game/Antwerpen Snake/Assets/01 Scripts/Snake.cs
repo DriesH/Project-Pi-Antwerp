@@ -5,6 +5,7 @@ using System.Linq;
 
 public class Snake : MonoBehaviour
 {
+  /*
 	public GameObject tailPrefab = null; //staartobject
 	public GameObject food_Diamond = null; //antwoordoptie diamandobject
 	public GameObject food_Bomb = null; //antwoordoptie bombobject
@@ -251,5 +252,5 @@ public class Snake : MonoBehaviour
             InvokeRepeating("MovementAndEating", whenToStart, speed);
             started = true;
         }
-    }
+    }*/
 }
