@@ -40,19 +40,19 @@
                     <a href="/" class="navbar-brand">
                         <img src="/pictures/a-logo.svg" alt="a-logo" />
                     </a>
-
-                </div>
-
-                <div class="collapse navbar-collapse" id="inlog-field">
                     <ul class="nav navbar-nav navbar-left">
                         <li><a id="page-title" href="/"><h1>Projecten</h1></a></li>
                     </ul>
+                </div>
+
+                <div class="collapse navbar-collapse" id="inlog-field">
+
                     <ul class="nav navbar-nav navbar-right dropdown" id="navbar-login">
                         @if (Auth::guest())
         					<li><a href="/auth/register"><i class="fa fa-pencil-square-o"></i>Registreren</a></li>
         					<li><a href="/auth/login"><i class="fa fa-sign-in"></i>Inloggen</a></li>
         				@else
-    					    <li><a id="welkom" href="/dashboard"><i class="fa fa-user"></i>Welkom, {{ Auth::user()->name }}</a></li>
+    					    <li><a id="welkom" href="/dashboard"><i class="fa fa-user"></i>{{ Auth::user()->name }}</a></li>
                             @if (!Auth::guest() && Auth::user()->role == 10)
                                 <li><a href="/admin"><i class="fa fa-cog"></i>Admin panel</a></li>
                             @endif
