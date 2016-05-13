@@ -65,8 +65,9 @@
         			<h5>{{$phase->title}}</h5>
         			<p>{{$phase->uitleg}}</p>
         			<span class="cd-date">{{ date('d F, Y', strtotime($phase->start_datum)) }}</span>
-                    <a id="form-reveal" class="btn btn-info"><i class="fa fa-arrow-circle-down"></i>Vul de vragen in!</a>
+                    
                     @if($project->huidige_fasenr == $phase->faseNummer)
+                    <a id="form-reveal" class="btn btn-info"><i class="fa fa-arrow-circle-down"></i>Vul de vragen in!</a>
                     <div class="cd-timeline-question-form" data-id="{{$phase->idFase}}">
                         <h3>Vul de volgende vragen in!</h3>
                         {{ Form::open(array(
