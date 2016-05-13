@@ -79,4 +79,7 @@ Route::post('/admin/project-bewerken/{id}/fases/{faseid}/vragen/nieuwevraag', 'A
 Route::get('/admin/project-bewerken/{id}/fases/{faseid}/vragen/{vraagid}', 'AdminController@getVraagBewerken');
 Route::post('/admin/project-bewerken/{id}/fases/{faseid}/vragen/{vraagid}', 'AdminController@postVraagBewerken');
 
-
+/*TEST PAGINA ROUTE*/
+Route::get('/testmap', function(){
+    return view('testmap');
+});

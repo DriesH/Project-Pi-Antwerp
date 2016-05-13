@@ -7,6 +7,7 @@
 *@var mapElement
 */
 var map;
+var marker;
 var mapElement = document.getElementById('map');
 
 /**
@@ -20,6 +21,20 @@ window.initMap = function() {
                 center: {lat: 51.202257, lng: 4.419694},
                 zoom: 10
             });
+        marker = new google.maps.Marker({
+                    position: {lat: 51.202257, lng: 4.419694},
+                    map: map,
+                    title: 'Klik hier Joren',
+                });
+
+        map.addListener('center_changed', function() {
+            // 3 seconds after the center of the map has changed, pan back to the
+            // marker.
+            window.setTimeout(function() {
+              map.panTo(marker.getPosition());
+            }, 3000);
+          });
+
     }
 };
 
