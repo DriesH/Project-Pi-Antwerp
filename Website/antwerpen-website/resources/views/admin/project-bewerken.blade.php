@@ -5,7 +5,7 @@
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
-                <div class="panel-heading"><h1>Project {{$project->idProject}} aanpassen</h1>
+                <div class="panel-heading"><h1>Project <ins>{{$project->naam}}</ins> aanpassen</h1>
                 <a class="btn btn-primary" href="{{$project->idProject}}/fases" role="button"><i class="fa fa-edit"></i>Fases en vragen bewerken</a>
                 <a class="btn btn-danger pull-right" href="{{$project->idProject}}/verwijderen" role="button"><i class="fa fa-edit"></i>Project verwijderen</a>
                 </div>
