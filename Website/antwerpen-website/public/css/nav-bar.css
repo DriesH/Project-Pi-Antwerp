@@ -30,6 +30,10 @@
     height: 100%;
 }
 
+.afmelden>a>i{
+    padding-right: 0;
+}
+
 #navbar-login{
     height: 100px;
 }

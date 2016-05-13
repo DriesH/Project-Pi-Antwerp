@@ -56,7 +56,7 @@
                             @if (!Auth::guest() && Auth::user()->role == 10)
                                 <li><a href="/admin"><i class="fa fa-cog"></i>Admin panel</a></li>
                             @endif
-                                <li><a href="/auth/logout">Afmelden<i class="fa fa-sign-out"></i></a></li>
+                                <li class="afmelden"><a href="/auth/logout">Afmelden<i class="fa fa-sign-out"></i></a></li>
                 		@endif
                     </ul>
                 </div>
