@@ -6,7 +6,6 @@
         <div class="project-big-box">
             <div class="project-hero-img">
                 <img src="{{$project->foto}}" alt="">
-
             </div>
 
             <article>
@@ -16,6 +15,9 @@
                             <i class="{{$categorie->icon_class}}"></i>{{$categorie->naam}}
                         @endif
                     @endforeach
+                    @if (!Auth::guest() && Auth::user()->role == 10)
+                        <a href="/admin/project-bewerken/{{$project->idProject}}" class="bewerken-link pull-right"><i class="fa fa-pencil-square-o"></i>Bewerken</a>
+                    @endif
                 </p>
                 <div class="title-with-follow">
                     <h1>{{$project->naam}}</h1>
@@ -38,12 +40,10 @@
                         {{ Form::close() }}
                     @endif
                 </div>
-
                 <time> {{ date('d F, Y', strtotime($project->created_at)) }} </time>
                 <p>
                     {{$project->uitleg}}
                 </p>
-
                 @if (Auth::guest())
                     <a href="/auth/login" class="btn btn-info"><i class="fa fa-arrow-circle-down"></i>Meld je aan voor je mening te geven</a>
                 @else
@@ -52,7 +52,6 @@
             </article>
         </div>
     </div>
-
 
     <section id="cd-timeline" class="cd-container">
         @foreach($phases as $key => $phase)
@@ -64,11 +63,12 @@
         		<div class="cd-timeline-content" data-id="{{$phase->idFase}}">
         			<h5>{{$phase->title}}</h5>
         			<p>{{$phase->uitleg}}</p>
-        			<a href="#0" class="cd-read-more" data-id="{{$phase->idFase}}">Lees meer</a>
         			<span class="cd-date">{{ date('d F, Y', strtotime($phase->start_datum)) }}</span>
-
-                   @if($project->huidige_fasenr == $phase->faseNummer)
+                    
+                    @if($project->huidige_fasenr == $phase->faseNummer)
+                    <a id="form-reveal" class="btn btn-info"><i class="fa fa-arrow-circle-down"></i>Vul de vragen in!</a>
                     <div class="cd-timeline-question-form" data-id="{{$phase->idFase}}">
+                        <h3>Vul de volgende vragen in!</h3>
                         {{ Form::open(array(
                             'url' => '/project/' . $project->idProject,
                             'class' => 'form-horizontal',
@@ -76,25 +76,26 @@
                             'files' => false)) }}
 
                                 @foreach($questions as $key => $question)
-                                    {{ Form::label('question', $question[0]->vraag, array(
-                                        'class' => 'control-label')) }}
+                                    @if($question->idFase == $phase->idFase)
+                                        <div class="form-group col-md-12">
+                                            {{ Form::label('question', $question->vraag, array(
+                                                'class' => 'control-label')) }}
 
-                                    {{ Form::text('naam', '', array(
-                                      'class' => 'form-control')) }}
+                                            {{ Form::text('naam', '', array(
+                                              'class' => 'form-control',
+                                              'placeholder' => 'Antwoord...')) }}
+                                        </div>
+                                    @endif
                                 @endforeach
-                                <br/>
-                                {{ Form::submit('Vragen verzenden', array('class' => 'btn btn-success form-control')) }}
-                                <br/>
-                        {{ Form::close() }}
-                        <a href="#0" class="cd-read-less" data-id="{{$phase->idFase}}">Lees minder</a>
-                    </div>
-                  @endif
 
+                                <div class="form-group col-md-12">
+                                    {{ Form::button('<i class="fa fa-paper-plane"></i> Vragen verzenden', array('class' => 'btn btn-success form-control')) }}
+                                </div>
+                        {{ Form::close() }}
+                    </div>
+                    @endif
         		</div> <!-- cd-timeline-content -->
         	</div> <!-- cd-timeline-block -->
         @endforeach
-
 	</section> <!-- cd-timeline -->
-
-
 @endsection

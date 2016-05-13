@@ -101,19 +101,17 @@ jQuery(document).ready(function($){
 
     });
 
-    $('.cd-read-more').on('click', function(){
-        $(this).hide('slow');
-        $('.cd-timeline-question-form').show('slow');
-        $('.cd-read-less').show('slow');
+    $('.cd-timeline-content p').readmore({
+        speed: 500,
+        embedCSS: true,
+        collapsedHeight: 102,
+        moreLink: '<a href="#0" data-id="{{$phase->idFase}}" style="float: left; width: 100px"><i class="fa fa-plus meerlezen_plus"></i> meer lezen</a>',
+        lessLink: '<a href="#0" data-id="{{$phase->idFase}}" style="float: left; width: 100px"> <i class="fa fa-minus meerlezen_plus"></i> minder lezen</a>',
     });
 
-    $('.cd-read-less').on('click', function(){
-        $(this).hide('slow');
-        $('.cd-timeline-question-form').hide('slow');
-        $('.cd-read-more').show('slow');
+    $('#form-reveal').on('click', function(){
+        $(this).hide();
+        $('.cd-timeline-question-form').show('fast');
     });
-
-    
-
 
 });

@@ -32,10 +32,7 @@
 .cd-timeline-question-form{
     height: 500px;
     display: none;
-}
-
-.cd-read-less{
-    display: none;
+    margin-top: 70px;
 }
 
 .title-with-follow{
@@ -49,5 +46,9 @@
 }
 
 .title-with-follow button{
+    float: right;
+}
+
+#form-reveal{
     float: right;
 }

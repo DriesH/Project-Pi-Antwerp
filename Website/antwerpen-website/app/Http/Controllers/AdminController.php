@@ -22,6 +22,8 @@ class AdminController extends Controller
     protected function panel(){
         return view('\admin\admin-panel');
     }
+    
+    /*-----PROJECTEN-----*/
 
     protected function getNieuwProject(){
 
@@ -44,7 +46,7 @@ class AdminController extends Controller
 
         $validator = Validator::make($request->all(), [
             'naam' => 'required',
-            'uitleg' => 'required',
+            'uitleg' => 'required|min:250',
             'locatie' => 'required',
             'foto' => 'image|max:1000',
         ]);
@@ -101,9 +103,9 @@ class AdminController extends Controller
             */
             $foto_path = '/pictures/uploads/' . $nieuwe_naam;
 
-            //dd($data);
+            //dd($foto_path);
 
-            Project::create([
+            $nieuwProject = Project::create([
                 'naam' => $data['naam'],
                 'uitleg' => $data['uitleg'],
                 'locatie' => $data['locatie'],
@@ -114,19 +116,18 @@ class AdminController extends Controller
 
         }
         else {
-            Project::create([
+            $nieuwProject = Project::create([
                 'naam' => $data['naam'],
                 'uitleg' => $data['uitleg'],
                 'locatie' => $data['locatie'],
                 'isActief' => $isActief,
                 'idCategorie' => $data['categorie']
             ]);
+            
         }
 
 
-
-
-        return view('\admin\admin-panel');
+        return redirect('/admin/project-bewerken/' . $nieuwProject->id . '/fases');
     }
 
     protected function getProjectBewerken($id){
@@ -285,6 +286,32 @@ class AdminController extends Controller
         return redirect('/');
     }
     
+    protected function getProjectVerwijderen($id){
+        
+        /**
+        *Project is het geselecteerde project uit de database.
+        *
+        *@var array
+        */
+        $project = Project::where('idProject', '=', $id)->first();
+        
+        return view('\admin\project-verwijderen', [
+        'project' => $project
+
+    ]);
+        
+    }
+    
+    protected function postProjectVerwijderen($id){
+        
+        DB::table('projects')->where('idProject', '=', $id)
+                            ->delete();
+        
+        return redirect('/');
+    }
+    
+    
+    /*-----FASES-----*/
     
     protected function getFases($id){
         
@@ -399,9 +426,10 @@ class AdminController extends Controller
             'uitleg' => $data['uitleg'],
             'status' => $data['status'],
             'start_datum' => $data['start_datum'],
+            'status' => $data['status']
         ]);
 
-        return redirect($request->url());
+        return redirect('/admin/project-bewerken/'. $id . '/fases');
     }
     
     protected function getFaseVerwijderen($id, $faseid){
@@ -418,7 +446,7 @@ class AdminController extends Controller
         *
         *@var array
         */
-        $fase = Phase::where('idFase', '=', $faseid)
+        $fase = Phase::where('faseNummer', '=', $faseid)
                     ->where('idProject', '=', $id)->first();
         
         return view('\admin\fase-verwijderen', [
@@ -488,11 +516,35 @@ class AdminController extends Controller
                         ->withInput();
         }
         
+        /**
+        *laatsteFase is de fase met het hoogste fasenummer van het project waar men een nieuwe fase wil aan toevoegen.
+        *
+        *@var array
+        */
+        $laatsteFase = DB::table('phases')->where('idProject', '=', $id)
+                                          ->orderBy('faseNummer', 'desc')
+                                          ->first();
+        /**
+        *nieuweFaseNummer is de faseNummer voor de nieuwe fase.
+        *
+        *@var int
+        */
+        
+        if($laatsteFase != null){
+            $nieuweFaseNummer = (int)$laatsteFase->faseNummer + 1;
+        }
+        else {
+            $nieuweFaseNummer = 1;
+        }
+        
+        
         Phase::create([
                 'title' => $data['title'],
                 'uitleg' => $data['uitleg'],
                 'start_datum' => $data['start_datum'],
-                'idProject' => $id
+                'idProject' => $id,
+                'faseNummer' => $nieuweFaseNummer,
+                'status' => $data['status']
             ]);
         
         

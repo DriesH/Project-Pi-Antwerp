@@ -88,7 +88,6 @@ class ProjectController extends Controller
             $followingProjectIdArray[$key] = $followingProjectId->project_id;
         }
 
-
         foreach($followingProjectIdArray as $followingProject){
             if($followingProject == $id){
                 $isFollowing = true;
@@ -96,15 +95,12 @@ class ProjectController extends Controller
         }
 
         //get questions per phase
-        $questions = null;
-
-        foreach($phases as $key => $phase){
-            $questions[$key] = Question::with('phases')->where('idFase', '=', $phase->idFase)->get();
-        }
-
-
-        //dd($questions);
-        //$questions = Question::where('idFase', '=', $phaseId)->get();
+        $questions = DB::table('projects')
+                    ->join('phases', 'projects.idProject' , '=', 'phases.idProject')
+                    ->join('questions', 'phases.idFase', '=', 'questions.idFase')
+                    ->where('projects.idProject', '=', $id)
+                    ->select('questions.*')
+                    ->get();
 
 
         return view('project', [
