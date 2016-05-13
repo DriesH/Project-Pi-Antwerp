@@ -2,6 +2,7 @@
 
 @section('content')
 <div class="container">
+   <a href="/admin/project-bewerken/{{$project->idProject}}" class="btn btn-primary"><i class="fa fa-arrow-left"></i>Terug</a>
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">

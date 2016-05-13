@@ -3,6 +3,7 @@
 @section('content')
 
     <div class="project-wrapper">
+       <a href="/" class="btn btn-primary"><i class="fa fa-arrow-left"></i>Terug</a>
         <div class="project-big-box">
             <div class="project-hero-img">
                 <img src="{{$project->foto}}" alt="">
@@ -15,6 +16,9 @@
                             <i class="{{$categorie->icon_class}}"></i>{{$categorie->naam}}
                         @endif
                     @endforeach
+                    @if (!Auth::guest() && Auth::user()->role == 10)
+                        <a href="/admin/project-bewerken/{{$project->idProject}}" class="bewerken-link pull-right"><i class="fa fa-pencil-square-o"></i>Bewerken</a>
+                    @endif
                 </p>
                 <div class="title-with-follow">
                     <h1>{{$project->naam}}</h1>

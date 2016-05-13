@@ -18,7 +18,7 @@
         </ul>
     </div>
 
-    <div class="btn-group" id="filter--btn">
+    <div class="btn-group" id="filter-loc-btn">
         <button name="filter" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <i class="fa fa-map-marker"></i>Locatie filter   <span class="caret"></span>
         </button>
@@ -57,7 +57,7 @@
         </article>
         <div class="project-box-footer">
             @if (!Auth::guest() && Auth::user()->role == 10)
-                <a href="admin/project-bewerken/{{$project->idProject}}" class="bewerken-link"><i class="fa fa-pencil-square-o"></i>Bewerken</a>
+                <a href="/admin/project-bewerken/{{$project->idProject}}" class="bewerken-link"><i class="fa fa-pencil-square-o"></i>Bewerken</a>
             @endif
                 <a href="#" class="footer-link">
                     <i class="{{$project->icon_class}}"></i> {{$project->catNaam}}
