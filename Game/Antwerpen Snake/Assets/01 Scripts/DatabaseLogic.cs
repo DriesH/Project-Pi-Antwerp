@@ -10,13 +10,13 @@ public class DatabaseLogic: MonoBehaviour
 {
   private static IDbConnection dbConnection; //the connection with the database
   private static string connectionString; //the string to which database has to be connected
-
+ 
   protected static List<String> databaseTitles = new List<String>(); //titels of the projects that need to be loaded from the database
   protected static List<String> databaseDescriptions = new List<String>(); //descriptions of the projects that need to be loaded from the database
   protected static List<String> databaseImages = new List<String>(); //images of the projects that need to be loaded from the database (saven in longtext in database)
 
   protected static int numberOfProjects = 0; //the number of total projects
-
+  
   protected void StartDatabase()
   {
     openSqlConnection();

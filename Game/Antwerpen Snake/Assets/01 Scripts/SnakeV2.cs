@@ -8,16 +8,19 @@ public class SnakeV2 : TouchLogic {
   private Transform snakeTrans, camTrans; //transform from snake and camera
   private float speed = 5f; //speed of the snake
   private Vector3 beginPosSnake; //to reset the snake to the center position
-  private float maxDist = 2; //the maximumdistance between snake and finger until it moves again
+  private float maxDist = 1; //the maximumdistance between snake and finger until it moves again
 
   public GameObject food = null;
-  protected bool isPlayingGame = false;
+  public bool isPlayingGame;
+
+  public GameObject questionPanel = null;
 
   void Start()
   {
     snakeTrans = this.transform; //save startposition and -rotation of the snake
     camTrans = Camera.main.transform; // save de startposition and -rotation of the camera
     beginPosSnake = this.transform.position; //save startposition and -rotation of the snake
+    isPlayingGame = false;
 
     for (int i = 1; i <= 4; i++)
     {
@@ -84,6 +87,8 @@ public class SnakeV2 : TouchLogic {
     if (c.tag.StartsWith("food"))
     {
       transform.position = beginPosSnake; //test zet snake op begin
+      isPlayingGame = false;
+      questionPanel.SetActive(true);
     }
     else if (c.tag.StartsWith("respawn")) // respawn when player oved to the middle
     {
