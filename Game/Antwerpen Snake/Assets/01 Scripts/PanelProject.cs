@@ -22,7 +22,7 @@ public class PanelProject : DatabaseLogic
     noProjectText.enabled= false;
     StartDatabase(); //start up the database and query
     imageUrl = new string[numberOfProjects];
-
+  
    // StartCoroutine(LoadUrl());
     if (numberOfProjects <= 0)
     {
