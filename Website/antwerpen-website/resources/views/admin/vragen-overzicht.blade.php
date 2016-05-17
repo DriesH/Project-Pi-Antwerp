@@ -3,13 +3,13 @@
 @section('content')
 <div class="container">
   @if ( session()->has('message') )
-           <div class="alert alert-success alert-dismissable">{{ session()->get('message') }}</div>
-       @endif
+    <div class="alert alert-success alert-dismissable">{{ session()->get('message') }}</div>
+  @endif
    <a href="/admin/project-bewerken/{{$project->idProject}}/fases" class="btn btn-primary"><i class="fa fa-arrow-left"></i>Terug</a>
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
-                <div class="panel-heading"><h2>Vragen van fase {{$fase->faseNummer}}: <ins>{{$fase->title}}</ins> van project <ins>{{$project->naam}}</ins>: aanpassen</h2>
+                <div class="panel-heading"><h2>Vragen van fase {{$fase->faseNummer}}: <ins>{{$fase->title}}</ins> van project <ins>{{$project->naam}}</ins> aanpassen</h2>
                 </div>
 
                 <div class="panel-body">
@@ -31,7 +31,7 @@
                    @else
                        <div>
                            <h4>Er zijn nog geen vragen voor deze fases.</h4>
-                           <a class="btn btn-success" href="nieuwefase" role="button"><i class="fa fa-plus"></i>Niewe vraag aanmaken</a>
+                           <a class="btn btn-success" href="nieuwevraag" role="button"><i class="fa fa-plus"></i>Niewe vraag aanmaken</a>
                        </div>
                    @endif
                 </div>
