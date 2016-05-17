@@ -83,3 +83,6 @@ Route::post('/admin/project-bewerken/{id}/fases/{faseid}/vragen/{vraagid}', 'Adm
 Route::get('/testmap', function(){
     return view('testmap');
 });
+
+/*API*/
+Route::get('/API/get/projecten', 'APIController@getProjecten');
