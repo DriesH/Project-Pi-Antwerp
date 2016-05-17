@@ -47,8 +47,10 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\01 Scripts\DatabaseLogic.cs" />
+     <Compile Include="Assets\01 Scripts\FollowProjectURL.cs" />
      <Compile Include="Assets\01 Scripts\Navbar.cs" />
      <Compile Include="Assets\01 Scripts\PanelProject.cs" />
+     <Compile Include="Assets\01 Scripts\QuestionLogic.cs" />
      <Compile Include="Assets\01 Scripts\Snake.cs" />
      <Compile Include="Assets\01 Scripts\SnakeV2.cs" />
      <Compile Include="Assets\01 Scripts\StartScreenAndInstructionButtons.cs" />

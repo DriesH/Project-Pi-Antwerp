@@ -11,6 +11,7 @@ public class PanelProject : DatabaseLogic
   public Text projectTitleText; //text of a project
   public Text projectDescrText; //the short description of a project;
   public GameObject emptySpot = null; //this is for the empty slot at the bottom of the page
+  public Text noProjectText; //show some text when there are no projects or when there wasn't internet
 
   private const float startValueScrollbar = 1f; //makes sure the scrollbar is always starting at the top of the page
   public Scrollbar bar = null; //drop the scrollbar in here
@@ -18,12 +19,16 @@ public class PanelProject : DatabaseLogic
 
   void Start()
   {
+    noProjectText.enabled= false;
     StartDatabase(); //start up the database and query
     imageUrl = new string[numberOfProjects];
-
-    StartCoroutine(LoadUrl());
-
-    if (numberOfProjects > 0) //if there is atleast 1 project
+  
+   // StartCoroutine(LoadUrl());
+    if (numberOfProjects <= 0)
+    {
+      noProjectText.enabled = true;
+    }
+    else if (numberOfProjects > 0) //if there is atleast 1 project
     {
       for (int i = 0; i < numberOfProjects; i++) //for every project
       {
@@ -42,9 +47,7 @@ public class PanelProject : DatabaseLogic
       {
         bar.value = startValueScrollbar;
       }
-    }
-
-    
+    }  
   }
 
   IEnumerator LoadUrl()
