@@ -2,30 +2,48 @@
 using System.Collections;
 using System.IO;
 using LitJson;
+using System.Collections.Generic;
 
 public class ReadJson : MonoBehaviour {
   
   private string jsonString;
   private JsonData itemData;
-  private string urlString;
+  private string urlString = "http://pi.multimediatechnology.be.be/API/get/projecten";
+
+  protected List<string> databaseTitles       = new List<string>(); //titels of the projects that need to be loaded from the database
+  protected List<string> databaseDescriptions = new List<string>(); //descriptions of the projects that need to be loaded from the database
+  protected List<string> databaseImages       = new List<string>(); //images of the projects that need to be loaded from the database (saven in longtext in database)
+  protected List<int>    databaseIDProjects   = new List<int>();
+
+  protected int numberOfProjects = 0; //the number of total projects
 
 	void Start () {
-    //urlString = getUrl();  ==> uuhhh....
-    
-    //jsonString = File.ReadAllText(Application.dataPath + "06 Resources/Projects.json"); //url hier nog plaatsen (anders?) opt moment leest hij uit folder
-    
-    jsonString = File.ReadAllText(urlString); //read all data in the file
+    getUrl(urlString);
+
+    jsonString = File.ReadAllText(Application.dataPath + "/06 Resources/testjson.json"); //url hier nog plaatsen (anders?) opt moment leest hij uit folder
+//    Debug.Log(jsonString);
+
     itemData = JsonMapper.ToObject(jsonString); //parse it into a JsonObject
 
-    Debug.Log(itemData["project"][1]["bvNaam"]); //eerst project aanduiden, dan zeggen welke ID, dan hetgeen dat je nodig hebt (bv naam)
-    Debug.Log(GetItem("Lorem ipsum", "project")["image"]); //zeg wel projectnaam je wilt, en in welke categorie
+    Debug.Log(itemData["Projects"][0]["naam"]); //in de Json projecten, dan welke key (of pos hier eerste project) en geef naam
+   // Debug.Log(itemData["Projects"][1]["naam"]); 
+    Debug.Log(itemData["Projects"][0]["uitleg"]);
+    Debug.Log(itemData["Projects"][0]["idProject"]);
+    Debug.Log(itemData["Projects"][0]["foto"]);
+
+
+    // ==> hoe in lijst steken?
+
+//    Debug.Log(GetItem("Projects", "Vuilbak")); //naam project ==> dit is enkel zoeken
+
+   // numberOfProjects = itemData["Projects"].Count; //so the rest of the scripts know how many projects there are
 	}
 	
-  JsonData GetItem(string name, string category) //search name in category and return it
+  JsonData GetItem(string category, string name) //search name in category and return it
   {
     for (int i = 0; i < itemData[category].Count; i++)
     {
-      if (itemData[category][i]["name"].ToString() == name)
+      if (itemData[category][i]["naam"].ToString() == name)
       {
         return itemData[category][i];
       }
@@ -33,14 +51,13 @@ public class ReadJson : MonoBehaviour {
     return null; //if nothing was found
   }
 
-  IEnumerator getUrl()
+  IEnumerator getUrl(string url)
   {
-      string JsonUrl = "http://pi.multimediatechnology.be"; // /json????
+    WWW www = new WWW(url);      // Start a download of the given URL
+    yield return www.text;      // Wait for download to complete
 
-      // Start a download of the given URL
-      WWW www = new WWW(JsonUrl);
+    Debug.Log(www.text);
 
-      // Wait for download to complete
-      yield return www.text;
+    //de rest hierachter steken?
    }
  }

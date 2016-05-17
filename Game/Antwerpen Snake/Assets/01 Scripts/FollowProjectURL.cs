@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UI;
 
-public class FollowProjectURL : DatabaseLogic {
+public class FollowProjectURL : ReadJson {
 
   private Object[] allButtons; //to gather all the buttons in the list
   private Object[] oddButtons; //to gather the "Meer lezen" buttons
