@@ -745,9 +745,9 @@ class AdminController extends Controller
                  ->where('faseNummer', '=', $faseid)->first();
 
         return view('\admin\nieuwe-vraag', [
-        'project' => $project,
-        'fase' => $fase
-    ]);
+            'project' => $project,
+            'fase' => $fase
+        ]);
     }
 
     protected function postNieuweVraag($id, $faseid, Request $request){
