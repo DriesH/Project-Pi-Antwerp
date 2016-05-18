@@ -2,7 +2,9 @@
 
 @section('content')
 
-
+@if ( session()->has('message') )
+  <div class="alert alert-success alert-dismissable">{{ session()->get('message') }}</div>
+@endif
 <div class="panel panel-default">
     <div class="panel-heading">
         <h1>Admin panel</h1>

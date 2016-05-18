@@ -3,6 +3,7 @@
 @section('content')
 
     <div class="project-wrapper">
+       <a href="/" class="btn btn-primary"><i class="fa fa-arrow-left"></i>Terug</a>
         <div class="project-big-box">
             <div class="project-hero-img">
                 <img src="{{$project->foto}}" alt="">
@@ -15,6 +16,9 @@
                             <i class="{{$categorie->icon_class}}"></i>{{$categorie->naam}}
                         @endif
                     @endforeach
+                    @if (!Auth::guest() && Auth::user()->role == 10)
+                        <a href="/admin/project-bewerken/{{$project->idProject}}" class="bewerken-link pull-right"><i class="fa fa-pencil-square-o"></i>Bewerken</a>
+                    @endif
                 </p>
                 <div class="title-with-follow">
                     <h1>{{$project->naam}}</h1>
@@ -61,8 +65,9 @@
         			<h5>{{$phase->title}}</h5>
         			<p>{{$phase->uitleg}}</p>
         			<span class="cd-date">{{ date('d F, Y', strtotime($phase->start_datum)) }}</span>
-                    <a id="form-reveal" class="btn btn-info"><i class="fa fa-arrow-circle-down"></i>Vul de vragen in!</a>
+                    
                     @if($project->huidige_fasenr == $phase->faseNummer)
+                    <a id="form-reveal" class="btn btn-info"><i class="fa fa-arrow-circle-down"></i>Vul de vragen in!</a>
                     <div class="cd-timeline-question-form" data-id="{{$phase->idFase}}">
                         <h3>Vul de volgende vragen in!</h3>
                         {{ Form::open(array(

@@ -30,16 +30,28 @@
     height: 100%;
 }
 
+.afmelden>a>i{
+    padding-right: 0;
+}
 
+#navbar-login{
+    height: 100px;
+}
+
+#navbar-login li{
+    height: 100px;
+    line-height: 100px;
+}
 
 #navbar-login a{
     color: white;
     height: 100%;
+    line-height: 70px;
 }
 
 #navbar-login a:hover{
-    /*color: #2C5697;*/
-    /*background-color: white;*/
+    color: #2C5697;
+    background-color: white;
     text-decoration: underline;
 }
 

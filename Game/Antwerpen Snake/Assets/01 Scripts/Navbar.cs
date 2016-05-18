@@ -7,7 +7,6 @@ public class Navbar : MonoBehaviour {
 	public Texture2D buttonWeb; //texture for WebButton (computer)
 	public Texture2D buttonGame; //texture for gameButton (gamepad)
 	private int screenWidth = Screen.width; //load in screenwidth 
-	private int screenHeight = Screen.height; //load in screenheight
 	private float iconSize; //standardsize of icons
 
 	void Start () {

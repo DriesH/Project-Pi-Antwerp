@@ -26,7 +26,7 @@
     border-right: 1px solid #E5E5E6;
     border-bottom: 2px solid #BABABA;
     margin-left: auto;
-    transition: width 0.2s ease;
+    -webkit-transition: all 1s ease;
 }
 
 
