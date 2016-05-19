@@ -3,7 +3,7 @@ using System.Collections;
 using UnityEngine.UI;
 using System.Linq;
 
-public class PanelProject : DatabaseLogic
+public class PanelProject : ReadJson
 {
   public GameObject listOfPanels = null; ///this is where all the panels needs to be put in
   public GameObject panel = null; //this is a panel of 1 project
@@ -18,9 +18,9 @@ public class PanelProject : DatabaseLogic
   private string[] imageUrl;
 
   void Start()
-  {
+  { //moet sowieso later starten dan readJson ==> file moet nog opnieuw ingeladen worden ==> laadscherm?
     noProjectText.enabled= false;
-    StartDatabase(); //start up the database and query
+ //   StartDatabase(); //start up the database and query
     imageUrl = new string[numberOfProjects];
   
    // StartCoroutine(LoadUrl());
