@@ -129,4 +129,16 @@ jQuery(document).ready(function($){
         $('.cd-timeline-question-form').show('fast');
     });
 
+
+    $('#soort_vraag').change(function(){
+        if( $('#soort_vraag').val() == 'Meerkeuze' )
+        {
+            $('#meerkeuze-vragen').show('fast');
+        }
+        else
+        {
+            $('#meerkeuze-vragen').hide('fast');
+        }
+    });
+
 });
