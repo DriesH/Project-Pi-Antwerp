@@ -6,52 +6,50 @@ using System.Collections.Generic;
 
 public class ReadJson : MonoBehaviour {
   
-  private string jsonString;
-  private JsonData itemData;
-  private string urlString = "http://pi.multimediatechnology.be.be/API/get/projecten";
+  private string jsonString; //the string read from the Json api from the website
+  private JsonData itemData; //the data that will be used to select the data needed from the json file
+  private string urlString = "http://pi.multimediatechnology.be.be/API/get/projecten"; //the url where to find the json file
 
-  protected List<string> databaseTitles       = new List<string>(); //titels of the projects that need to be loaded from the database
-  protected List<string> databaseDescriptions = new List<string>(); //descriptions of the projects that need to be loaded from the database
-  protected List<string> databaseImages       = new List<string>(); //images of the projects that need to be loaded from the database (saven in longtext in database)
-  protected List<int>    databaseIDProjects   = new List<int>();
+  protected static List<string> databaseTitles       = new List<string>(); //titels of the projects that need to be loaded from the database
+  protected static List<string> databaseDescriptions = new List<string>(); //descriptions of the projects that need to be loaded from the database
+  protected static List<string> databaseImages       = new List<string>(); //images of the projects that need to be loaded from the database (saven in longtext in database)
+  protected static List<string> databaseIDProjects   = new List<string>(); //the id of the projects that need to be loaded from the database to follow the URL (in string since it has to be a string later on anyway)
 
-  protected int numberOfProjects = 0; //the number of total projects
+  protected static int numberOfProjects = 0; //the number of total projects
 
 	void Start () {
-    getUrl(urlString);
+    GetUrl(urlString);
 
     jsonString = File.ReadAllText(Application.dataPath + "/06 Resources/testjson.json"); //url hier nog plaatsen (anders?) opt moment leest hij uit folder
 //    Debug.Log(jsonString);
 
     itemData = JsonMapper.ToObject(jsonString); //parse it into a JsonObject
 
-    Debug.Log(itemData["Projects"][0]["naam"]); //in de Json projecten, dan welke key (of pos hier eerste project) en geef naam
-   // Debug.Log(itemData["Projects"][1]["naam"]); 
-    Debug.Log(itemData["Projects"][0]["uitleg"]);
-    Debug.Log(itemData["Projects"][0]["idProject"]);
-    Debug.Log(itemData["Projects"][0]["foto"]);
+    Debug.Log(itemData["Projecten"][0]["naam"]); //in de Json projecten, dan welke key (of pos hier eerste project) en geef naam
+    // Debug.Log(itemData["Projecten"][1]["naam"]); 
+    Debug.Log(itemData["Projecten"][0]["uitleg"]);
+    Debug.Log(itemData["Projecten"][0]["idProject"]);
+    Debug.Log(itemData["Projecten"][0]["foto"]);
 
-
-    // ==> hoe in lijst steken?
-
-//    Debug.Log(GetItem("Projects", "Vuilbak")); //naam project ==> dit is enkel zoeken
-
-   // numberOfProjects = itemData["Projects"].Count; //so the rest of the scripts know how many projects there are
+    try
+    {
+      for (int i = 0; i < itemData["Projecten"].Count; i++)
+      {
+        databaseTitles.Add((string)itemData["Projecten"][i]["naam"]);
+        databaseDescriptions.Add((string)itemData["Projecten"][i]["uitleg"]);
+        //databaseImages.Add((string)itemData["Projecten"][i]["foto"]);
+        databaseIDProjects.Add((string)itemData["Projecten"][0]["idProject"]); 
+      }
+      numberOfProjects = itemData["Projecten"].Count; //so the rest of the scripts know how many projects there are
+    }
+    catch
+    {
+      numberOfProjects = 0;
+    }
 	}
 	
-  JsonData GetItem(string category, string name) //search name in category and return it
-  {
-    for (int i = 0; i < itemData[category].Count; i++)
-    {
-      if (itemData[category][i]["naam"].ToString() == name)
-      {
-        return itemData[category][i];
-      }
-    }
-    return null; //if nothing was found
-  }
 
-  IEnumerator getUrl(string url)
+  IEnumerator GetUrl(string url)
   {
     WWW www = new WWW(url);      // Start a download of the given URL
     yield return www.text;      // Wait for download to complete

@@ -18,7 +18,7 @@ public class PanelProject : ReadJson
   private string[] imageUrl;
 
   void Start()
-  {
+  { //moet sowieso later starten dan readJson ==> file moet nog opnieuw ingeladen worden ==> laadscherm?
     noProjectText.enabled= false;
  //   StartDatabase(); //start up the database and query
     imageUrl = new string[numberOfProjects];

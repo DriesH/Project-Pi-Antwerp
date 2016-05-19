@@ -4,7 +4,7 @@ using System.IO;
 using LitJson;
 
 public class WriteJson : MonoBehaviour {
-
+  /*
   public QuestionData qData = new QuestionData("Vuilbakken op bomen zijn nodig.", "Helemaal eens", "eens", "oneens", "helemaal oneens");
   JsonData answerData;
 
@@ -28,5 +28,5 @@ public class QuestionData {
     this.answer2 = answer2;
     this.answer3 = answer3;
     this.answer4 = answer4;
-  }
+  }*/
 }
