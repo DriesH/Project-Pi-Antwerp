@@ -11,6 +11,7 @@ use App\Project;
 use App\Categorie;
 use App\Phase;
 use App\Question;
+use App\Multiple_choice_answer;
 use DB;
 
 class AdminController extends Controller
@@ -602,56 +603,45 @@ class AdminController extends Controller
 
     protected function getVraagBewerken($id, $faseid, $vraagid){
 
-        /**
-        *id is de idProject van het project dat men wil bewerken.
-        *
-        *@param int
-        */
-
-        /**
-        *faseid is de idFase van de fase dat men wil bewerken.
-        *
-        *@param int
-        */
-
-        /**
-        *Project is het geselecteerde project uit de database.
-        *
-        *@var array
-        */
-        $project = Project::where('idProject', '=', $id)->first();
-
-        /**
-        *fase bevat alle data over de fases van het huidige project.
-        *
-        *@var array
-        */
-        $fase = Phase::where('faseNummer', '=', $faseid)
-                    ->where('idProject', '=', $id)->first();
-
-        //dd($fase);
+      /**
+      *id is de idProject van het project waar men een fase wil aan toevoegen.
+      *
+      *@param int
+      */
 
 
-        return view('\admin\fase-bewerken', [
-        'fase' => $fase,
-        'project' => $project
+      /**
+      *Project is het geselecteerde project uit de database.
+      *
+      *@var array
+      */
+      $project = Project::where('idProject', '=', $id)->first();
 
-    ]);
+      $fase = Phase::where('idProject', '=', $id)->orderBy('faseNummer', 'asc')
+               ->where('faseNummer', '=', $faseid)->first();
+
+      $vraag = Question::where('idvraag', '=', $vraagid)->first();
+
+      if($vraag->soort_vraag == "Meerkeuze"){
+        $antwoorden = Multiple_choice_answer::where('idvraag', '=', $vraagid)->first()->toArray();
+      }
+      else {
+        $antwoorden = null;
+      }
+
+      return view('\admin\vraag-bewerken', [
+          'project' => $project,
+          'fase' => $fase,
+          'vraag' => $vraag,
+          'antwoorden' => $antwoorden,
+      ]);
     }
 
     protected function postVraagBewerken($id, $faseid, $vraagid, Request $request)
     {
 
-        //dd( Input::all() );  // om input data te testen.
-
         /**
-        *id is de idProject van het project dat men wil bewerken.
-        *
-        *@param int
-        */
-
-        /**
-        *faseid is de idFase van de fase dat men wil bewerken.
+        *id is de idProject van het project waar men een fase wil aan toevoegen.
         *
         *@param int
         */
@@ -663,12 +653,18 @@ class AdminController extends Controller
         */
         $data = Input::all();
 
-
-        $validator = Validator::make($request->all(), [
-            'title' => 'required',
-            'uitleg' => 'required|min:50',
-            'start_datum' => 'required'
-        ]);
+        if($data['soort_vraag'] == "Meerkeuze"){
+          $validator = Validator::make($request->all(), [
+              'vraag' => 'required',
+              'antwoord_1' => 'required',
+              'antwoord_2' => 'required',
+          ]);
+        }
+        else {
+          $validator = Validator::make($request->all(), [
+              'vraag' => 'required',
+          ]);
+        }
 
         if ($validator->fails()) {
              return redirect($request->url())
@@ -676,17 +672,44 @@ class AdminController extends Controller
                         ->withInput();
         }
 
-            Phase::where('idFase', '=', $faseid)
-                    ->where('idProject', '=', $id)
-            ->update([
-            'title' => $data['title'],
-            'uitleg' => $data['uitleg'],
-            'status' => $data['status'],
-            'start_datum' => $data['start_datum'],
-            'status' => $data['status']
-        ]);
 
-        return redirect('/admin/project-bewerken/'. $id . '/fases')->with('message', 'Fase succesvol bewerkt.');
+        $vraag_soort_before = Question::where('idvraag', '=', $vraagid)->first()->soort_vraag;
+        if ($vraag_soort_before == "Meerkeuze" && $data['soort_vraag'] != "Meerkeuze") {
+          DB::table('Multiple_choice_answers')->where('idVraag', '=', $vraagid)
+                                ->delete();
+        }
+        else if ($vraag_soort_before != "Meerkeuze" && $data['soort_vraag'] == "Meerkeuze") {
+
+          $data['antwoord_3'] = ($data['antwoord_3'] == "") ? null : $data['antwoord_3'];
+          $data['antwoord_4'] = ($data['antwoord_4'] == "") ? null : $data['antwoord_4'];
+
+          Multiple_choice_answer::create([
+                  'antwoord_1' => $data['antwoord_1'],
+                  'antwoord_2' => $data['antwoord_2'],
+                  'antwoord_3' => $data['antwoord_3'],
+                  'antwoord_4' => $data['antwoord_4'],
+                  'idVraag' => $vraagid,
+
+              ]);
+        }
+        else if ($vraag_soort_before == "Meerkeuze" && $data['soort_vraag'] == "Meerkeuze") {
+          Multiple_choice_answer::where('idVraag', '=', $vraagid)
+          ->update([
+                  'antwoord_1' => $data['antwoord_1'],
+                  'antwoord_2' => $data['antwoord_2'],
+                  'antwoord_3' => $data['antwoord_3'],
+                  'antwoord_4' => $data['antwoord_4']
+              ]);
+        }
+
+        Question::where('idVraag', '=', $vraagid)
+        ->update([
+          'vraag' => $data['vraag'],
+          'soort_vraag' => $data['soort_vraag']
+        ]);
+        
+        return redirect('/admin/project-bewerken/'. $id . '/fases/' . $faseid . '/vragen')->with('message', 'Vraag succesvol aangepast.');
+
     }
 
     protected function getVraagVerwijderen($id, $faseid, $vraagid){
@@ -765,9 +788,18 @@ class AdminController extends Controller
         */
         $data = Input::all();
 
-        $validator = Validator::make($request->all(), [
-            'vraag' => 'required'
-        ]);
+        if($data['soort_vraag'] == "Meerkeuze"){
+          $validator = Validator::make($request->all(), [
+              'vraag' => 'required',
+              'antwoord_1' => 'required',
+              'antwoord_2' => 'required',
+          ]);
+        }
+        else {
+          $validator = Validator::make($request->all(), [
+              'vraag' => 'required',
+          ]);
+        }
 
         if ($validator->fails()) {
              return redirect($request->url())
@@ -780,11 +812,25 @@ class AdminController extends Controller
                  ->first(array('idFase'));
 
 
-        Question::create([
+        $nieuweVraag = Question::create([
                 'vraag' => $data['vraag'],
                 'soort_vraag' => $data['soort_vraag'],
                 'idFase' => $fase->idFase
-            ]);
+            ])->id;
+
+            $data['antwoord_3'] = ($data['antwoord_3'] == "") ? null : $data['antwoord_3'];
+            $data['antwoord_4'] = ($data['antwoord_4'] == "") ? null : $data['antwoord_4'];
+
+            if($data['soort_vraag'] == "Meerkeuze"){
+              Multiple_choice_answer::create([
+                      'antwoord_1' => $data['antwoord_1'],
+                      'antwoord_2' => $data['antwoord_2'],
+                      'antwoord_3' => $data['antwoord_3'],
+                      'antwoord_4' => $data['antwoord_4'],
+                      'idVraag' => $nieuweVraag,
+
+                  ]);
+            }
 
 
         return redirect('/admin/project-bewerken/'. $id . '/fases/' . $faseid . '/vragen')->with('message', 'Vraag succesvol toegevoegd.');
