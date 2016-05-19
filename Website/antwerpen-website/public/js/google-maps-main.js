@@ -2,6 +2,7 @@
 *Variabele bevat de map data van de Google Maps API
 *
 *@var map
+*
 *Variabele bevat het DOM element waar de map in wordt gerenderd
 *
 *@var mapElement
@@ -33,7 +34,6 @@ window.initMap = function() {
             window.setTimeout(function() {
               map.panTo(marker.getPosition());
             }, 3000);
-          });
-
+        });
     }
 };

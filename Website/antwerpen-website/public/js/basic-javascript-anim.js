@@ -50,4 +50,22 @@ jQuery(document).ready(function($){
             $('#meerkeuze-vragen').hide('fast');
         }
     });
+
+    //show meerkeuze vragen input field on page reload.
+    $(window).load(function(){
+        var selectedOption = $("#soort_vraag option:selected").attr('value');
+
+        function showMeerkeuze(){
+            $('#meerkeuze-vragen').show('fast');
+        }
+
+        function hideMeerkeuze(){
+            $('#meerkeuze-vragen').hide('fast');
+        }
+
+        if( selectedOption == 'Meerkeuze'){
+            showMeerkeuze();
+        }
+    });
+
 });
