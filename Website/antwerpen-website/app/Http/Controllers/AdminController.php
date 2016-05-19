@@ -11,6 +11,7 @@ use App\Project;
 use App\Categorie;
 use App\Phase;
 use App\Question;
+use App\Multiple_choice_answer;
 use DB;
 
 class AdminController extends Controller
@@ -765,9 +766,18 @@ class AdminController extends Controller
         */
         $data = Input::all();
 
-        $validator = Validator::make($request->all(), [
-            'vraag' => 'required'
-        ]);
+        if($data['soort_vraag'] == "Meerkeuze"){
+          $validator = Validator::make($request->all(), [
+              'vraag' => 'required',
+              'antwoord_1' => 'required',
+              'antwoord_2' => 'required',
+          ]);
+        }
+        else {
+          $validator = Validator::make($request->all(), [
+              'vraag' => 'required',
+          ]);
+        }
 
         if ($validator->fails()) {
              return redirect($request->url())
@@ -785,6 +795,16 @@ class AdminController extends Controller
                 'soort_vraag' => $data['soort_vraag'],
                 'idFase' => $fase->idFase
             ]);
+
+            (!isset($data['antwoord_3'])) ? "" : $data['antwoord_3'];
+            (!isset($data['antwoord_4'])) ? "" : $data['antwoord_4'];
+
+
+            if($data['soort_vraag'] == "Meerkeuze"){
+              Multiple_choice_answer::create([
+                      'vraag' => $data['vraag']
+                  ]);
+            }
 
 
         return redirect('/admin/project-bewerken/'. $id . '/fases/' . $faseid . '/vragen')->with('message', 'Vraag succesvol toegevoegd.');

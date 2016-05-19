@@ -48,12 +48,12 @@
                     </div>
 
                     <div id="meerkeuze-vragen">
-                        @for ($i = 0; $i < 4; $i++)
+                        @for ($i = 1; $i < 5; $i++)
                             <div class="form-group">
-                                {{ Form::label('vraag' . $i,'Vraag', array(
+                                {{ Form::label('antwoord_' . $i,'Antwoord ' . $i , array(
                                   'class' => 'col-md-4 control-label')) }}
                                 <div class="col-md-6">
-                                    {{ Form::text('vraag' . $i, '',array(
+                                    {{ Form::text('antwoord_' . $i, '',array(
                                       'class' => 'form-control')) }}
                                 </div>
                             </div>
