@@ -94,6 +94,7 @@ jQuery(document).ready(function($){
         $('#project-link button').addClass('btn-success').removeClass('btn-danger');
     });*/
 
+
     //follow button
     $('#follow-btn').mouseenter(function(){
         $(this).addClass('btn-success').removeClass('btn-default');
@@ -116,6 +117,8 @@ jQuery(document).ready(function($){
 
     });
 
+
+    //readmore: uitleg bij een fase tonen en weg doen.
     $('.cd-timeline-content p').readmore({
         speed: 500,
         embedCSS: true,
@@ -124,12 +127,14 @@ jQuery(document).ready(function($){
         lessLink: '<a href="#0" data-id="{{$phase->idFase}}" style="float: left; width: 100px"> <i class="fa fa-minus meerlezen_plus"></i> minder lezen</a>',
     });
 
+    //toon vragen formulier.
     $('#form-reveal').on('click', function(){
         $(this).hide();
         $('.cd-timeline-question-form').show('fast');
     });
 
 
+    //admin panel vragen toevoegen animatie Meerkeuze vragen.
     $('#soort_vraag').change(function(){
         if( $('#soort_vraag').val() == 'Meerkeuze' )
         {
@@ -140,5 +145,4 @@ jQuery(document).ready(function($){
             $('#meerkeuze-vragen').hide('fast');
         }
     });
-
 });

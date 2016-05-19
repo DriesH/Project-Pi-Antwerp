@@ -50,10 +50,10 @@
                     <div id="meerkeuze-vragen">
                         @for ($i = 0; $i < 4; $i++)
                             <div class="form-group">
-                                {{ Form::label('vraag','Vraag', array(
+                                {{ Form::label('vraag' . $i,'Vraag', array(
                                   'class' => 'col-md-4 control-label')) }}
                                 <div class="col-md-6">
-                                    {{ Form::text('vraag', '',array(
+                                    {{ Form::text('vraag' . $i, '',array(
                                       'class' => 'form-control')) }}
                                 </div>
                             </div>
