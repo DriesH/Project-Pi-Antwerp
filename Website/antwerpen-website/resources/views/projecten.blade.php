@@ -4,8 +4,11 @@
 @section('content')
 
 <div class="col-md-12 col-xs-12 col-sm-12 filter">
+    @if ( session()->has('message') )
+        <div class="alert alert-success alert-dismissable">{{ session()->get('message') }}</div>
+    @endif
     <!-- Single button -->
-    <div class="btn-group" id="filter-cat-btn">
+    <div class="btn-group pull-left" id="filter-cat-btn">
         <button name="filter" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <i class="fa fa-filter"></i>Categorie filter   <span class="caret"></span>
         </button>
@@ -18,7 +21,7 @@
         </ul>
     </div>
 
-    <div class="btn-group" id="filter-loc-btn">
+    <div class="btn-group pull-left" id="filter-loc-btn">
         <button name="filter" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <i class="fa fa-map-marker"></i>Locatie filter   <span class="caret"></span>
         </button>
@@ -31,6 +34,7 @@
         </ul>
     </div>
 </div>
+
 
 
 <div id="grid" data-columns>

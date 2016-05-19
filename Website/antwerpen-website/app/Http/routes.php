@@ -69,3 +69,20 @@ Route::get('/admin/project-bewerken/{id}/fases/verwijderen/{faseid}', 'AdminCont
 Route::post('/admin/project-bewerken/{id}/fases/verwijderen/{faseid}', 'AdminController@postFaseVerwijderen');
 Route::get('/admin/project-bewerken/{id}/nieuwefase', 'AdminController@getNieuweFase');
 Route::post('/admin/project-bewerken/{id}/nieuwefase', 'AdminController@postNieuweFase');
+
+/*Vragen routes*/
+Route::get('/admin/project-bewerken/{id}/fases/{faseid}/vragen', 'AdminController@getVragen');
+Route::get('/admin/project-bewerken/{id}/fases/{faseid}/vragen/{vraagid}', 'AdminController@getVraagBewerken');
+Route::post('/admin/project-bewerken/{id}/fases/{faseid}/vragen/{vraagid}', 'AdminController@postVraagBewerken');
+Route::get('/admin/project-bewerken/{id}/fases/{faseid}/nieuwevraag', 'AdminController@getNieuweVraag');
+Route::post('/admin/project-bewerken/{id}/fases/{faseid}/nieuwevraag', 'AdminController@postNieuweVraag');
+Route::get('/admin/project-bewerken/{id}/fases/{faseid}/vragen/verwijderen/{vraagid}', 'AdminController@getVraagVerwijderen');
+Route::post('/admin/project-bewerken/{id}/fases/{faseid}/vragen/verwijderen/{vraagid}', 'AdminController@postVraagVerwijderen');
+
+/*TEST PAGINA ROUTE*/
+Route::get('/testmap', function(){
+    return view('testmap');
+});
+
+/*API*/
+Route::get('/API/get/projecten', 'APIController@getProjecten');

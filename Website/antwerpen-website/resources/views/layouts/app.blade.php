@@ -56,7 +56,7 @@
                             @if (!Auth::guest() && Auth::user()->role == 10)
                                 <li><a href="/admin"><i class="fa fa-cog"></i>Admin panel</a></li>
                             @endif
-                                <li><a href="/auth/logout">Afmelden<i class="fa fa-sign-out"></i></a></li>
+                                <li class="afmelden"><a href="/auth/logout">Afmelden<i class="fa fa-sign-out"></i></a></li>
                 		@endif
                     </ul>
                 </div>
@@ -68,17 +68,22 @@
         </div>
 
         <!-- JQUERY & plugins -->
-        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCkN_qoobIjk7OOThbtXZAP4axJuTZOZ4E&callback=window.initMap" defer></script>
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCkN_qoobIjk7OOThbtXZAP4axJuTZOZ4E&region=BE&language=nl&callback=window.initMap" defer></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
         <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery.slick/1.5.9/slick.min.js"></script>
+
         <script src="/js/readmore.min.js"></script>
         <script src="/js/salvatorre.min.js" charset="utf-8"></script>
         <script src="/js/modernizr.js" charset="utf-8"></script>
-        <script src="/js/main.js" charset="utf-8"></script>
+
         <script src="/js/bootstrap-datepicker.min.js" charset="utf-8"></script>
         <script src="/js/bootstrap-datepicker.nl-BE.min.js" charset="utf-8"></script>
         <script src="/js/datepicker.js" charset="utf-8"></script>
+
+        <script src="/js/main.js" charset="utf-8"></script>
+        <script src="/js/google-maps-main.js" charset="utf-8"></script>
+        <script src="/js/basic-javascript-anim.js" charset="utf-8"></script>
 
     </body>
 </html>

@@ -7,8 +7,7 @@
 }
 
 .btn-group{
-    float: right;
-    margin-left: 10px;
+    margin-right: 10px;
 }
 
 /* Project box */
@@ -125,7 +124,7 @@ article time {
 
 .location a{
     float: right;
-    font-family: "SunAntwerpen";
+    font-family: "Sun-Antwerpen 500";
     color: #282020;
     font-weight: 700;
 }
