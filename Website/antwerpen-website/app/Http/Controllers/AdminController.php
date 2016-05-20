@@ -707,7 +707,7 @@ class AdminController extends Controller
           'vraag' => $data['vraag'],
           'soort_vraag' => $data['soort_vraag']
         ]);
-        
+
         return redirect('/admin/project-bewerken/'. $id . '/fases/' . $faseid . '/vragen')->with('message', 'Vraag succesvol aangepast.');
 
     }
