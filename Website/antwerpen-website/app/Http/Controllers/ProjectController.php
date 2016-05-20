@@ -111,7 +111,9 @@ class ProjectController extends Controller
                     ->select('multiple_choice_answers.*')
                     ->get();
 
-//dd($antwoorden);
+
+
+
         return view('project', [
             'project' => $project,
             'phases' => $phases,

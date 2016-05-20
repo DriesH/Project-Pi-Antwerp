@@ -83,29 +83,39 @@
                                                 'class' => 'control-label')) }}
 
                                             @if($question->soort_vraag == "Open")
-                                              {{ Form::text('question_' . $key_questions, '', array(
-                                                'class' => 'form-control',
-                                                'placeholder' => 'Antwoord...')) }}
+                                                <div class="form-group col-md-12">
+                                                  {{ Form::text('question_' . $key_questions, '', array(
+                                                    'class' => 'form-control',
+                                                    'placeholder' => 'Antwoord...')) }}
+                                                </div>
                                             @elseif($question->soort_vraag == "Ja/Nee")
-                                              {{ Form::radio('question_' . $key_questions, 'Ja', array(
-                                                  'class' => 'form-control')) }}
-                                              {{ Form::radio('question_' . $key_questions, 'Nee', array(
-                                                  'class' => 'form-control')) }}
-                                            @elseif($question->soort_vraag == "Meerkeuze")
-                                              @foreach($antwoorden as $key_antwoord => $antwoord)
-                                                @if($antwoord->idVraag == $question->idVraag)
-                                                  @for($i=1; $i < 5; $i++)
-                                                    <<?php var_dump((array)$antwoord->) ?>
-                                                      <!--@if($antwoord["antwoord_" . $i] != null)
+                                                <div class="form-group col-md-12">
+                                                    {{ Form::radio('question_' . $key_questions, 'Ja', array(
+                                                      'class' => 'form-control')) }}
+                                                    {{ Form::label('question_' . $key_questions, 'Ja', array(
+                                                      'class' => 'form-label')) }}
 
-                                                    {{ Form::label('question_' . $key_questions, $antwoord["antwoord_" . $i], array(
-                                                          'class' => 'control-label')) }}
-                                                      {{ Form::radio('question_' . $key_questions, $antwoord["antwoord_" . $i], array(
-                                                          'class' => 'form-control')) }}
-                                                    @endif-->
-                                                  @endfor
-                                                @endif
-                                              @endforeach
+
+                                                </div>
+                                                <div class="form-group col-md-12">
+                                                    {{ Form::radio('question_' . $key_questions, 'Nee', array(
+                                                      'class' => 'form-control')) }}
+                                                    {{ Form::label('question_' . $key_questions, 'Nee', array(
+                                                      'class' => 'form-label')) }}
+                                                </div>
+                                            @elseif($question->soort_vraag == "Meerkeuze")
+                                                @foreach($antwoorden as $key_antwoord => $antwoord)
+                                                    @if($antwoord->idVraag == $question->idVraag)
+                                                        @for( $j = 1; $j < 5;  $j++)
+                                                            <div class="form-group col-md-12">
+                                                                {{ Form::radio('question_' . $question->idVraag, $antwoord->{'antwoord_' . $j}, array(
+                                                                      'class' => 'form-control')) }}
+                                                                {{ Form::label('question_' . $question->idVraag, $antwoord->{'antwoord_' . $j}, array(
+                                                                       'class' => 'form-label')) }}
+                                                            </div>
+                                                        @endfor
+                                                    @endif
+                                                @endforeach
                                             @endif
                                         </div>
                                     @endif
