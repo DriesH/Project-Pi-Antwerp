@@ -65,32 +65,68 @@
         			<h5>{{$phase->title}}</h5>
         			<p>{{$phase->uitleg}}</p>
         			<span class="cd-date">{{ date('d F, Y', strtotime($phase->start_datum)) }}</span>
-                    
+
                     @if($project->huidige_fasenr == $phase->faseNummer)
                     <a id="form-reveal" class="btn btn-info"><i class="fa fa-arrow-circle-down"></i>Vul de vragen in!</a>
                     <div class="cd-timeline-question-form" data-id="{{$phase->idFase}}">
                         <h3>Vul de volgende vragen in!</h3>
                         {{ Form::open(array(
-                            'url' => '/project/' . $project->idProject,
+                            'url' => '/project/' . $project->idProject . '/done',
                             'class' => 'form-horizontal',
                             'role' => 'form',
                             'files' => false)) }}
 
-                                @foreach($questions as $key => $question)
+                                @foreach($questions as $key_questions => $question)
                                     @if($question->idFase == $phase->idFase)
                                         <div class="form-group col-md-12">
-                                            {{ Form::label('question', $question->vraag, array(
+                                            {{ Form::label('question_' . $question->idVraag, $question->vraag, array(
                                                 'class' => 'control-label')) }}
 
-                                            {{ Form::text('naam', '', array(
-                                              'class' => 'form-control',
-                                              'placeholder' => 'Antwoord...')) }}
+                                            @if($question->soort_vraag == "Open")
+                                                <div class="form-group col-md-12">
+                                                  {{ Form::text('question_' . $question->idVraag, '', array(
+                                                    'class' => 'form-control',
+                                                    'placeholder' => 'Antwoord...')) }}
+                                                </div>
+                                            @elseif($question->soort_vraag == "Ja/Nee")
+                                                <div class="form-group col-md-12">
+                                                    {{ Form::radio('question_' . $question->idVraag, 'Ja', array(
+                                                      'class' => 'form-control')) }}
+                                                    {{ Form::label('question_' . $question->idVraag, 'Ja', array(
+                                                      'class' => 'form-label')) }}
+
+
+                                                </div>
+                                                <div class="form-group col-md-12">
+                                                    {{ Form::radio('question_' . $question->idVraag, 'Nee', array(
+                                                      'class' => 'form-control')) }}
+                                                    {{ Form::label('question_' . $question->idVraag, 'Nee', array(
+                                                      'class' => 'form-label')) }}
+                                                </div>
+                                            @elseif($question->soort_vraag == "Meerkeuze")
+                                                @foreach($antwoorden as $key_antwoord => $antwoord)
+                                                    @if($antwoord->idVraag == $question->idVraag)
+                                                        @for( $j = 1; $j < 5;  $j++)
+                                                            <div class="form-group col-md-12">
+                                                                {{ Form::radio('question_' . $question->idVraag, $antwoord->{'antwoord_' . $j}, array(
+                                                                      'class' => 'form-control')) }}
+                                                                {{ Form::label('question_' . $question->idVraag, $antwoord->{'antwoord_' . $j}, array(
+                                                                       'class' => 'form-label')) }}
+                                                            </div>
+                                                        @endfor
+                                                    @endif
+                                                @endforeach
+                                            @endif
                                         </div>
                                     @endif
                                 @endforeach
 
-                                <div class="form-group col-md-12">
-                                    {{ Form::button('<i class="fa fa-paper-plane"></i> Vragen verzenden', array('class' => 'btn btn-success form-control')) }}
+                                <div class="form-group">
+                                    <div class="col-md-12">
+                                        <button type="submit" class="btn btn-success form-control">
+                                            <i class="fa fa-paper-plane"></i> Vragen verzenden
+                                        </button>
+                                    </div>
                                 </div>
                         {{ Form::close() }}
                     </div>

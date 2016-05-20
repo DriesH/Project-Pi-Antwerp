@@ -103,14 +103,44 @@ class ProjectController extends Controller
                     ->get();
 
 
+        $antwoorden = DB::table('projects')
+                    ->join('phases', 'projects.idProject' , '=', 'phases.idProject')
+                    ->join('questions', 'phases.idFase', '=', 'questions.idFase')
+                    ->join('multiple_choice_answers', 'questions.idVraag', '=', 'multiple_choice_answers.idVraag')
+                    ->where('projects.idProject', '=', $id)
+                    ->select('multiple_choice_answers.*')
+                    ->get();
+
+
+
+
         return view('project', [
             'project' => $project,
             'phases' => $phases,
             'categorien' => $categorien,
             'questions' => $questions,
             'isFollowing' => $isFollowing,
+            'antwoorden' => $antwoorden,
+
         ]);
 
+    }
+
+    public function PostProject($id, Request $request){
+
+      /**
+      *Data bevat de values van inputfields van het nieuwe project.
+      *
+      *@var array
+      */
+      $data = Input::all();
+
+      dd($data);
+
+
+            for ($i=1; $i < $data.length; $i++) {
+              # code...
+            }
     }
 
     public function PostProjectFollow($id, Request $request) {
