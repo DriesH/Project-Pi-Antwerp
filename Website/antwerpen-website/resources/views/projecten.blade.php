@@ -60,7 +60,7 @@
             </div>
         </article>
         <div class="project-box-footer">
-            @if (!Auth::guest() && Auth::user()->role == 10)
+            @if ($isLoggedIn && $isAdmin)
                 <a href="/admin/project-bewerken/{{$project->idProject}}" class="bewerken-link"><i class="fa fa-pencil-square-o"></i>Bewerken</a>
             @endif
                 <a href="#" class="footer-link">
