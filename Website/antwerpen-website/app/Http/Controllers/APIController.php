@@ -29,8 +29,8 @@ class APIController extends Controller
                       ->select('categories.naam as catNaam', 'categories.icon_class', 'projects.*')
                       ->orderBy('projects.created_at', 'desc')
                       ->get();
-
-      return Response::json($projecten);
+      $projecten_array = ['projecten' => $projecten];
+      return Response::json($projecten_array);
 
   }
 
