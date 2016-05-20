@@ -32,6 +32,12 @@ jQuery(document).ready(function($){
         lessLink: '<a href="#0" data-id="{{$phase->idFase}}" style="float: left; width: 100px"> <i class="fa fa-minus meerlezen_plus"></i> minder lezen</a>',
     });
 
+    $("cd-timeline-question-form").readmore({
+        speed: 500,
+        embedCSS: true,
+        collapsedHeight: 0,
+    });
+
     //toon vragen formulier.
     $('#form-reveal').on('click', function(){
         $(this).hide();
