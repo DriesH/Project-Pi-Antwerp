@@ -180,3 +180,11 @@ i{
 .bs-callout-info h4 {
     color: #5bc0de;
 }
+
+.control-label{
+    font-family: 'Sun-Antwerpen 700', sans-serif;
+}
+
+.form-label{
+    font-family: 'Sun-Antwerpen 300', sans-serif;
+}
