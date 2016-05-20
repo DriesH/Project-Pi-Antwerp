@@ -71,7 +71,7 @@
                     <div class="cd-timeline-question-form" data-id="{{$phase->idFase}}">
                         <h3>Vul de volgende vragen in!</h3>
                         {{ Form::open(array(
-                            'url' => '/project/' . $project->idProject,
+                            'url' => '/project/' . $project->idProject . '/done',
                             'class' => 'form-horizontal',
                             'role' => 'form',
                             'files' => false)) }}
@@ -79,28 +79,28 @@
                                 @foreach($questions as $key_questions => $question)
                                     @if($question->idFase == $phase->idFase)
                                         <div class="form-group col-md-12">
-                                            {{ Form::label('question_' . $key_questions, $question->vraag, array(
+                                            {{ Form::label('question_' . $question->idVraag, $question->vraag, array(
                                                 'class' => 'control-label')) }}
 
                                             @if($question->soort_vraag == "Open")
                                                 <div class="form-group col-md-12">
-                                                  {{ Form::text('question_' . $key_questions, '', array(
+                                                  {{ Form::text('question_' . $question->idVraag, '', array(
                                                     'class' => 'form-control',
                                                     'placeholder' => 'Antwoord...')) }}
                                                 </div>
                                             @elseif($question->soort_vraag == "Ja/Nee")
                                                 <div class="form-group col-md-12">
-                                                    {{ Form::radio('question_' . $key_questions, 'Ja', array(
+                                                    {{ Form::radio('question_' . $question->idVraag, 'Ja', array(
                                                       'class' => 'form-control')) }}
-                                                    {{ Form::label('question_' . $key_questions, 'Ja', array(
+                                                    {{ Form::label('question_' . $question->idVraag, 'Ja', array(
                                                       'class' => 'form-label')) }}
 
 
                                                 </div>
                                                 <div class="form-group col-md-12">
-                                                    {{ Form::radio('question_' . $key_questions, 'Nee', array(
+                                                    {{ Form::radio('question_' . $question->idVraag, 'Nee', array(
                                                       'class' => 'form-control')) }}
-                                                    {{ Form::label('question_' . $key_questions, 'Nee', array(
+                                                    {{ Form::label('question_' . $question->idVraag, 'Nee', array(
                                                       'class' => 'form-label')) }}
                                                 </div>
                                             @elseif($question->soort_vraag == "Meerkeuze")
