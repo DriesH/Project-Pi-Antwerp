@@ -51,11 +51,12 @@
      <Compile Include="Assets\01 Scripts\Navbar.cs" />
      <Compile Include="Assets\01 Scripts\PanelProject.cs" />
      <Compile Include="Assets\01 Scripts\QuestionLogic.cs" />
+     <Compile Include="Assets\01 Scripts\ReadJson.cs" />
      <Compile Include="Assets\01 Scripts\Snake.cs" />
      <Compile Include="Assets\01 Scripts\SnakeV2.cs" />
      <Compile Include="Assets\01 Scripts\StartScreenAndInstructionButtons.cs" />
      <Compile Include="Assets\01 Scripts\TouchLogic.cs" />
-     <Compile Include="Assets\01 Scripts\testforpopup.cs" />
+     <Compile Include="Assets\01 Scripts\WriteJson.cs" />
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>
@@ -71,14 +72,8 @@
  <Reference Include="I18N.West">
  <HintPath>C:/Users/Gebruiker/Documents/GitHub/Project-Pi-Antwerp/Game/Antwerpen Snake/Assets/05 DLL/I18N.West.dll</HintPath>
  </Reference>
- <Reference Include="MySql.Data">
- <HintPath>C:/Users/Gebruiker/Documents/GitHub/Project-Pi-Antwerp/Game/Antwerpen Snake/Assets/05 DLL/MySql.Data.dll</HintPath>
- </Reference>
- <Reference Include="System.Data">
- <HintPath>C:/Users/Gebruiker/Documents/GitHub/Project-Pi-Antwerp/Game/Antwerpen Snake/Assets/05 DLL/System.Data.dll</HintPath>
- </Reference>
- <Reference Include="System.Drawing">
- <HintPath>C:/Users/Gebruiker/Documents/GitHub/Project-Pi-Antwerp/Game/Antwerpen Snake/Assets/05 DLL/System.Drawing.dll</HintPath>
+ <Reference Include="LitJson">
+ <HintPath>C:/Users/Gebruiker/Documents/GitHub/Project-Pi-Antwerp/Game/Antwerpen Snake/Assets/05 DLL/LitJson.dll</HintPath>
  </Reference>
  <Reference Include="UnityEditor.iOS.Extensions.Xcode">
  <HintPath>C:/Program Files/Unity/Editor/Data/PlaybackEngines/iOSSupport/UnityEditor.iOS.Extensions.Xcode.dll</HintPath>

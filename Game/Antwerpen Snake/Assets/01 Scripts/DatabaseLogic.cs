@@ -1,13 +1,14 @@
 ﻿using UnityEngine;
 using System;
 using System.Collections;
-using System.Data;
+/*using System.Data;
 using MySql.Data.MySqlClient;
 using UnityEngine.UI;
-using System.Collections.Generic;
+using System.Collections.Generic;*/
 
 public class DatabaseLogic: MonoBehaviour
 {
+  /*
   private static IDbConnection dbConnection; //the connection with the database
   private static string connectionString; //the string to which database has to be connected
  
@@ -43,11 +44,11 @@ public class DatabaseLogic: MonoBehaviour
         "Pooling=true";
 
   //for database online
-   /*connectionString = "Server=websites.kdg.be;" +
+   connectionString = "Server=websites.kdg.be;" +
     "Database=project_antwerpen;" +
     "User ID=joren;" +
     "Password=KdGqDDZ5;" +
-    "Pooling=true";*/
+    "Pooling=true";
 
     dbConnection = new MySqlConnection(connectionString); //make a new connection with the chosen string
     dbConnection.Open(); //open the connection
@@ -87,7 +88,7 @@ public class DatabaseLogic: MonoBehaviour
       dbCommand.Dispose(); //get rid of the current searchquery
       dbCommand = null; //then empty is
     }
-  }
+  }*/
 }
 
 
