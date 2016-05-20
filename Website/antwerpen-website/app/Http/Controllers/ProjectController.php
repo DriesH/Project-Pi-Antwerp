@@ -126,6 +126,23 @@ class ProjectController extends Controller
 
     }
 
+    public function PostProject($id, Request $request){
+
+      /**
+      *Data bevat de values van inputfields van het nieuwe project.
+      *
+      *@var array
+      */
+      $data = Input::all();
+
+      dd($data);
+
+
+            for ($i=1; $i < $data.length; $i++) {
+              # code...
+            }
+    }
+
     public function PostProjectFollow($id, Request $request) {
 
         $userId = Auth::id();
