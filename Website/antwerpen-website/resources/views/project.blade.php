@@ -1,7 +1,9 @@
 @extends('layouts.app')
 
 @section('content')
-
+  @if ( session()->has('message') )
+    <div class="alert alert-success alert-dismissable">{{ session()->get('message') }}</div>
+  @endif
     <div class="project-wrapper">
        <a href="/" class="btn btn-primary"><i class="fa fa-arrow-left"></i>Terug</a>
         <div class="project-big-box">
@@ -45,18 +47,14 @@
                 <p>
                     {{$project->uitleg}}
                 </p>
-                @if (Auth::guest())
-                    <a href="/auth/login" class="btn btn-info"><i class="fa fa-arrow-circle-down"></i>Meld je aan voor je mening te geven</a>
-                @else
-                    <a href="#{{$project->huidige_fasenr}}" class="btn btn-info"><i class="fa fa-arrow-circle-down"></i>Geef je mening</a>
-                @endif
+                    <a href="#in-progress" class="btn btn-info"><i class="fa fa-arrow-circle-down"></i>Uw mening telt!</a>
             </article>
         </div>
     </div>
 
     <section id="cd-timeline" class="cd-container">
         @foreach($phases as $key => $phase)
-        	<div class="cd-timeline-block" id="{{$phase->faseNummer}}">
+        	<div class="cd-timeline-block" id="{{$phase->status}}">
         		<div class="cd-timeline-img cd-{{$phase->status}}">
                     <span>#{{$phase->faseNummer}}</span>
         		</div> <!-- cd-timeline-img -->
@@ -66,7 +64,7 @@
         			<p>{{$phase->uitleg}}</p>
         			<span class="cd-date">{{ date('d F, Y', strtotime($phase->start_datum)) }}</span>
 
-                    @if($project->huidige_fasenr == $phase->faseNummer)
+                    @if($phase->status == "in-progress")
                     <a id="form-reveal" class="btn btn-info"><i class="fa fa-arrow-circle-down"></i>Vul de vragen in!</a>
                     <div class="cd-timeline-question-form" data-id="{{$phase->idFase}}">
                         <h3>Vul de volgende vragen in!</h3>
@@ -79,28 +77,30 @@
                                 @foreach($questions as $key_questions => $question)
                                     @if($question->idFase == $phase->idFase)
                                         <div class="form-group col-md-12">
-                                            {{ Form::label('question_' . $question->idVraag, $question->vraag, array(
+                                            {{ Form::label($question->idVraag, $question->vraag, array(
                                                 'class' => 'control-label')) }}
 
                                             @if($question->soort_vraag == "Open")
                                                 <div class="form-group col-md-12">
-                                                  {{ Form::text('question_' . $question->idVraag, '', array(
+                                                  {{ Form::text($question->idVraag, '', array(
                                                     'class' => 'form-control',
-                                                    'placeholder' => 'Antwoord...')) }}
+                                                    'placeholder' => 'Antwoord...',
+                                                    'required' => 'required',
+                                                    'maxlength' => 100 )) }}
                                                 </div>
                                             @elseif($question->soort_vraag == "Ja/Nee")
                                                 <div class="form-group col-md-12">
-                                                    {{ Form::radio('question_' . $question->idVraag, 'Ja', array(
+                                                    {{ Form::radio($question->idVraag, 'Ja', array(
                                                       'class' => 'form-control')) }}
-                                                    {{ Form::label('question_' . $question->idVraag, 'Ja', array(
+                                                    {{ Form::label($question->idVraag, 'Ja', array(
                                                       'class' => 'form-label')) }}
 
 
                                                 </div>
                                                 <div class="form-group col-md-12">
-                                                    {{ Form::radio('question_' . $question->idVraag, 'Nee', array(
+                                                    {{ Form::radio($question->idVraag, 'Nee', array(
                                                       'class' => 'form-control')) }}
-                                                    {{ Form::label('question_' . $question->idVraag, 'Nee', array(
+                                                    {{ Form::label($question->idVraag, 'Nee', array(
                                                       'class' => 'form-label')) }}
                                                 </div>
                                             @elseif($question->soort_vraag == "Meerkeuze")
@@ -108,9 +108,9 @@
                                                     @if($antwoord->idVraag == $question->idVraag)
                                                         @for( $j = 1; $j < 5;  $j++)
                                                             <div class="form-group col-md-12">
-                                                                {{ Form::radio('question_' . $question->idVraag, $antwoord->{'antwoord_' . $j}, array(
+                                                                {{ Form::radio($question->idVraag, $antwoord->{'antwoord_' . $j}, array(
                                                                       'class' => 'form-control')) }}
-                                                                {{ Form::label('question_' . $question->idVraag, $antwoord->{'antwoord_' . $j}, array(
+                                                                {{ Form::label($question->idVraag, $antwoord->{'antwoord_' . $j}, array(
                                                                        'class' => 'form-label')) }}
                                                             </div>
                                                         @endfor
