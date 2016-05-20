@@ -121,8 +121,12 @@
                                     @endif
                                 @endforeach
 
-                                <div class="form-group col-md-12">
-                                    {{ Form::button('<i class="fa fa-paper-plane"></i> Vragen verzenden', array('class' => 'btn btn-success form-control')) }}
+                                <div class="form-group">
+                                    <div class="col-md-12">
+                                        <button type="submit" class="btn btn-success form-control">
+                                            <i class="fa fa-paper-plane"></i> Vragen verzenden
+                                        </button>
+                                    </div>
                                 </div>
                         {{ Form::close() }}
                     </div>
