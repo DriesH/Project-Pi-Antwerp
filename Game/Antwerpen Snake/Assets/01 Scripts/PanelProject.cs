@@ -6,34 +6,67 @@ using System.Linq;
 public class PanelProject : ReadJson
 {
   public GameObject listOfPanels = null; ///this is where all the panels needs to be put in
-  public GameObject panel = null; //this is a panel of 1 project
-  public Image projectImage; //image of a project
-  public Text projectTitleText; //text of a project
-  public Text projectDescrText; //the short description of a project;
+  public GameObject panel        = null; //this is a panel of 1 project
+  public Image      projectImage; //image of a project
+  public Text       projectTitleText; //text of a project
+  public Text       projectDescrText; //the short description of a project;
   public GameObject emptySpot = null; //this is for the empty slot at the bottom of the page
-  public Text noProjectText; //show some text when there are no projects or when there wasn't internet
+  public Text       noProjectText; //show some text when there are no projects or when there wasn't internet
 
   private const float startValueScrollbar = 1f; //makes sure the scrollbar is always starting at the top of the page
   public Scrollbar bar = null; //drop the scrollbar in here
   private string[] imageUrl;
 
   void Start()
-  { //moet sowieso later starten dan readJson ==> file moet nog opnieuw ingeladen worden ==> laadscherm?
-    noProjectText.enabled= false;
- //   StartDatabase(); //start up the database and query
+  { 
+    noProjectText.enabled= false; //start with hiding the text 
+
+    StartCoroutine(GetDatabase(urlString));   
+  }
+
+  void LateUpdate()
+  {
+    if (readyToBuild && numberOfProjects > 0)
+    {
+      readyToBuild = false;
+      StartCoroutine(LoadImageUrl());
+    }
+  }
+
+  IEnumerator LoadImageUrl()
+  {
     imageUrl = new string[numberOfProjects];
-  
-   // StartCoroutine(LoadUrl());
+
+    for (int i = 0; i < numberOfProjects; i++)
+    {
+      imageUrl[i] = "http://pi.multimediatechnology.be" + databaseImages[i];
+      // Start a download of the given URL
+      WWW www = new WWW(imageUrl[i]);
+
+      // Wait for download to complete
+      yield return www;
+
+      Sprite sprite = new Sprite();
+      sprite      = Sprite.Create(www.texture, new Rect(0, 0, 3.008f , 2.0f), new Vector2(0, 0));
+      Debug.Log("Sprite gemaakt");
+      projectImage.sprite = sprite;
+      www.Dispose();
+      MakePanels();
+      }
+  }
+
+  void MakePanels()
+  {
     if (numberOfProjects <= 0)
     {
-      noProjectText.enabled = true;
+      noProjectText.enabled = true; //when there are no projects
     }
     else if (numberOfProjects > 0) //if there is atleast 1 project
     {
       for (int i = 0; i < numberOfProjects; i++) //for every project
       {
         projectDescrText.text = databaseDescriptions[i]; //reads in all the database descriptions
-        projectTitleText.text = databaseTitles[i]; //reads in all the database Titel
+        projectTitleText.text = databaseTitles[i]; //reads in all the database titles
 
         //make a new panel with all the parameters from above and place it within listOfPanels
         GameObject childObject = Instantiate(panel);
@@ -47,26 +80,6 @@ public class PanelProject : ReadJson
       {
         bar.value = startValueScrollbar;
       }
-    }  
-  }
-
-  IEnumerator LoadUrl()
-  {
-    for (int i = 0; i <= numberOfProjects; i++)
-    {
-      imageUrl[i] = "http://pi.multimediatechnology.be" + databaseImages[i];
-
-      // Start a download of the given URL
-      WWW www = new WWW(imageUrl[i]);
-
-      // Wait for download to complete
-      yield return www;
-
-      Sprite sprite = new Sprite();
-      sprite      = Sprite.Create(www.texture, new Rect(0, 0, 3.008f , 2.0f), new Vector2(0, 0));
-
-      projectImage.sprite = sprite;
-      www.Dispose();
-      }
+    }
   }
 }

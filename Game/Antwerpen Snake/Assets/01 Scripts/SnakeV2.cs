@@ -6,7 +6,7 @@ public class SnakeV2 : TouchLogic {
 
   private Vector3 fingerPos; //coördinates of fingertouch
   private Transform snakeTrans, camTrans; //transform from snake and camera
-  private float speed = 5f; //speed of the snake
+  private float speed = 10f; //speed of the snake
   private Vector3 beginPosSnake; //to reset the snake to the center position
   private float maxDist = 1; //the maximumdistance between snake and finger until it moves again
 
