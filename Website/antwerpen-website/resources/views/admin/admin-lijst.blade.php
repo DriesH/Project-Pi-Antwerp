@@ -2,9 +2,12 @@
 
 @section('content')
 
-  @if ( session()->has('message') )
-    <div class="alert alert-success alert-dismissable">{{ session()->get('message') }}</div>
+  @if ( isset($message) )
+    <div class="alert alert-success alert-dismissable">{{ $message }}</div>
+  @elseif(isset($error))
+    <div class="alert alert-danger alert-dismissable">{{ $error }}</div>
   @endif
+  
   <div class="panel panel-default">
       <div class="panel-heading">
           <h1>Admin lijst</h1>
@@ -12,7 +15,7 @@
       <div class="panel-body container">
           <div class="row">
               {{ Form::open(array(
-                'url' => Request::fullUrl() . '/nieuweadmin',
+                'url' => Request::fullUrl(),
                 'class' => 'form-horizontal',
                 'role' => 'form')) }}
 
@@ -31,7 +34,7 @@
                 {!! csrf_field() !!}
 
                 <div class="input-group">
-                        {{ Form::text('vraag', '',array(
+                        {{ Form::text('admin', '',array(
                           'class' => 'form-control',
                           'placeholder' => 'Naam of email van nieuwe admin...')) }}
                         <span class="input-group-btn">
