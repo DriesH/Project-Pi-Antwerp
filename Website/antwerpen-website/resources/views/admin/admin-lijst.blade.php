@@ -40,10 +40,22 @@
                           </button>
                         </span>
                 </div>
-
-
-
                 {{ Form::close() }}
+
+                <div class="bs-callout bs-callout-primary">
+                  <h4>Huidige administrators</h4>
+                  <div class="admin-info">
+                    @foreach($admins as $admin)
+                      <p>
+                        Naam:<strong>{{$admin->name}}</strong>
+                      </p>
+                      <p>
+                        E-mail:<strong>{{$admin->email}}</strong>
+                      </p>
+                    @endforeach
+                  </div>
+
+                </div>
         </div>
     </div>
 
