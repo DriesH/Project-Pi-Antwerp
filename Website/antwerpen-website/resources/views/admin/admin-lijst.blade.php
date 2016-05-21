@@ -7,7 +7,7 @@
   @elseif(isset($error))
     <div class="alert alert-danger alert-dismissable">{{ $error }}</div>
   @endif
-  
+
   <div class="panel panel-default">
       <div class="panel-heading">
           <h1>Admin lijst</h1>
