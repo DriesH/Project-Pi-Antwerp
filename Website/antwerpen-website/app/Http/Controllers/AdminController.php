@@ -12,6 +12,7 @@ use App\Categorie;
 use App\Phase;
 use App\Question;
 use App\User;
+use Auth;
 use App\Multiple_choice_answer;
 use DB;
 
@@ -30,12 +31,37 @@ class AdminController extends Controller
 
       $admins = User::orderBy('name', 'asc')
                 ->where('role', '=', 10)
-                ->select('name', 'email')
+                ->select('name', 'email', 'id')
                 ->get();
-
       return view('\admin\admin-lijst', [
       'admins' => $admins
   ]);
+    }
+
+    protected function getAdminVerwijderen($id){
+
+      User::where('id', $id)
+      ->update([
+      'role' => 0
+    ]);
+
+    if (Auth::user()->id != $id) {
+      $admins = User::orderBy('name', 'asc')
+                ->where('role', '=', 10)
+                ->select('name', 'email', 'id')
+                ->get();
+      return redirect('/admin/admin-lijst', [
+                  'admins' => $admins,
+                  'message' => 'Gebruiker is succesvol van zijn administratorrol ontdaan.'
+              ]);
+    }
+    else {
+      return redirect('/admin/admin-lijst', [
+        'admins' => $admins,
+        'error' => 'U kan uzelf niet verwijderen als administrator.'
+    ]);
+    }
+
     }
 
     protected function postNieuweAdmin(Request $request){

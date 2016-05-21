@@ -84,6 +84,7 @@ Route::post('/admin/project-bewerken/{id}/fases/{faseid}/vragen/verwijderen/{vra
 /*Admin lijst*/
 Route::get('/admin/admin-lijst', 'AdminController@getAdmins');
 Route::post('/admin/admin-lijst', 'AdminController@postNieuweAdmin');
+Route::get('/admin/admin-lijst/verwijderen/{id}', 'AdminController@getAdminVerwijderen');
 
 /*Project lijst*/
 Route::get('/admin/project-lijst', 'AdminController@getProjectLijst');

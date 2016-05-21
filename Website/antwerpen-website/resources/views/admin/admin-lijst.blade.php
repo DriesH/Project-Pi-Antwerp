@@ -7,7 +7,7 @@
   @elseif(isset($error))
     <div class="alert alert-danger alert-dismissable">{{ $error }}</div>
   @endif
-  
+
   <div class="panel panel-default">
       <div class="panel-heading">
           <h1>Admin lijst</h1>
@@ -44,21 +44,29 @@
                         </span>
                 </div>
                 {{ Form::close() }}
-
-                <div class="bs-callout bs-callout-primary">
+                <div>
                   <h4>Huidige administrators</h4>
-                  <div class="admin-info">
-                    @foreach($admins as $admin)
-                      <p>
-                        Naam:<strong>{{$admin->name}}</strong>
-                      </p>
-                      <p>
-                        E-mail:<strong>{{$admin->email}}</strong>
-                      </p>
-                    @endforeach
-                  </div>
+
+                      @foreach($admins as $admin)
+                        <div class="bs-callout bs-callout-primary">
+                          <p>
+                            Naam:<strong>{{$admin->name}}</strong>
+                          </p>
+                          <p>
+                            E-mail:<strong>{{$admin->email}}</strong>
+                          </p>
+                          @if(Auth::user()->id != $admin->id)
+                            <a href="admin-lijst/verwijderen/{{$admin->id}}">
+                            <button class="btn btn-danger">
+                                <i class="fa fa-btn fa-trash-o"></i>Verwijderen als administrator
+                            </button>
+                            </a>
+                          @endif
+                        </div>
+                      @endforeach
 
                 </div>
+
         </div>
     </div>
 
