@@ -87,6 +87,7 @@ Route::post('/admin/lijst/nieuweadmin', 'AdminController@postNewAdmin');
 
 /*Project lijst*/
 Route::get('/admin/project-lijst', 'AdminController@getProjectLijst');
+Route::get('/admin/project-lijst', 'AdminController@getProjectLijst');
 
 
 /*TEST PAGINA ROUTE*/
