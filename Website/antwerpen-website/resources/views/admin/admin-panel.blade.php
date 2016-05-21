@@ -18,7 +18,7 @@
             </div>
             <div class="col-md-4">
                 <div>
-                    <a class="btn btn-info center-block" href="/admin/lijst"><i class="fa fa-pencil-square-o"></i>Admins bewerken</a>
+                    <a class="btn btn-info center-block" href="/admin/admin-lijst"><i class="fa fa-pencil-square-o"></i>Admins bewerken</a>
                 </div>
             </div>
             <div class="col-md-4">
