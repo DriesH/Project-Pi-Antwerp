@@ -23,7 +23,7 @@
             </div>
             <div class="col-md-4">
                 <div>
-                    <a class="btn btn-info center-block" href="/admin/verwijderproject"><i class="fa fa-trash-o"></i>Lijst van projecten weergeven</a>
+                    <a class="btn btn-info center-block" href="/admin/verwijderproject"><i class="fa fa-list"></i>Lijst van projecten weergeven</a>
                 </div>
             </div>
         </div>

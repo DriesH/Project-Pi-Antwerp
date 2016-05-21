@@ -11,6 +11,7 @@ use App\Project;
 use App\Categorie;
 use App\Phase;
 use App\Question;
+use App\User;
 use App\Multiple_choice_answer;
 use DB;
 
@@ -27,7 +28,14 @@ class AdminController extends Controller
 
     protected function getAdmins(){
 
-      return view('\admin\admin-lijst');
+      $admins = User::orderBy('name', 'asc')
+                ->where('role', '=', 10)
+                ->select('name', 'email')
+                ->get();
+
+      return view('\admin\admin-lijst', [
+      'admins' => $admins
+  ]);
     }
 
     /*-----PROJECTEN-----*/
@@ -840,4 +848,17 @@ class AdminController extends Controller
 
         return redirect('/admin/project-bewerken/'. $id . '/fases/' . $faseid . '/vragen')->with('message', 'Vraag succesvol toegevoegd.');
     }
+
+    protected function getProjectLijst(){
+
+      $projecten = DB::table('projects')
+                      ->select('naam', 'foto', 'created_at')
+                      ->orderBy('projects.created_at', 'desc')
+                      ->get();
+
+      return view('\admin\project-lijst', [
+      'projecten' => $projecten
+  ]);
+    }
+
   }
