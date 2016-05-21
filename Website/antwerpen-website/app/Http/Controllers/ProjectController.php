@@ -135,7 +135,13 @@ class ProjectController extends Controller
       *@var array
       */
       $data = Input::all();
-      $user = Auth::user()->id;
+
+      if(Auth::user()){
+        $user = Auth::user()->id;
+      }
+      else {
+        $user = 0;
+      }
 
             foreach ($data as $key => $value) {
               if($key != '_token'){
