@@ -38,6 +38,60 @@ class AdminController extends Controller
   ]);
     }
 
+    protected function postNieuweAdmin(Request $request){
+
+      /**
+      *Data bevat de values van inputfields.
+      *
+      *@var array
+      */
+      $data = Input::all();
+
+      $validator = Validator::make($request->all(), [
+          'admin' => 'required'
+      ]);
+
+      if ($validator->fails()) {
+           return redirect('/admin/admin-lijst')
+                      ->withErrors($validator)
+                      ->withInput();
+      }
+
+      $user = User::where('name', $data['admin'])
+      ->orWhere('email', $data['admin'])
+      ->first();
+
+      if ($user != null) {
+        User::where('name', $data['admin'])
+        ->orWhere('email', $data['admin'])
+        ->update([
+        'role' => 10
+    ]);
+      }
+      else {
+        $admins = User::orderBy('name', 'asc')
+                  ->where('role', '=', 10)
+                  ->select('name', 'email')
+                  ->get();
+
+        return view('\admin\admin-lijst', [
+        'admins' => $admins,
+        'error' => $data['admin'] . ' is geen bestaande gebruiker. Probeer opnieuw.'
+    ]);
+      }
+
+
+      $admins = User::orderBy('name', 'asc')
+                ->where('role', '=', 10)
+                ->select('name', 'email')
+                ->get();
+
+      return view('\admin\admin-lijst', [
+        'admins' => $admins,
+        'message' => $user->name . ' is succesvol gepromoveerd tot administrator.'
+    ]);
+    }
+
     /*-----PROJECTEN-----*/
 
     protected function getNieuwProject(){
