@@ -85,6 +85,10 @@ Route::post('/admin/project-bewerken/{id}/fases/{faseid}/vragen/verwijderen/{vra
 Route::get('/admin/lijst', 'AdminController@getAdmins');
 Route::post('/admin/lijst/nieuweadmin', 'AdminController@postNewAdmin');
 
+/*Project lijst*/
+Route::get('/admin/project-lijst', 'AdminController@getProjectLijst');
+
+
 /*TEST PAGINA ROUTE*/
 Route::get('/testmap', function(){
     return view('testmap');
