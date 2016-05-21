@@ -28,10 +28,5 @@
             </div>
         </div>
     </div>
-
-    <div class="container" id="map">
-
-    </div>
-
 </div>
 @endsection
