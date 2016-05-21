@@ -18,12 +18,12 @@
             </div>
             <div class="col-md-4">
                 <div>
-                    <a class="btn btn-info center-block" href="/admin/lijst"><i class="fa fa-pencil-square-o"></i>Admins bewerken</a>
+                    <a class="btn btn-info center-block" href="/admin/admin-lijst"><i class="fa fa-pencil-square-o"></i>Admins bewerken</a>
                 </div>
             </div>
             <div class="col-md-4">
                 <div>
-                    <a class="btn btn-info center-block" href="/admin/verwijderproject"><i class="fa fa-list"></i>Lijst van projecten weergeven</a>
+                    <a class="btn btn-info center-block" href="/admin/project-lijst"><i class="fa fa-list"></i>Lijst van projecten weergeven</a>
                 </div>
             </div>
         </div>
