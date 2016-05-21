@@ -25,6 +25,11 @@ class AdminController extends Controller
         return view('\admin\admin-panel');
     }
 
+    protected function getAdmins(){
+
+      return view('\admin\admin-lijst');
+    }
+
     /*-----PROJECTEN-----*/
 
     protected function getNieuwProject(){

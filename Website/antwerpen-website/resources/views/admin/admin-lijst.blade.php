@@ -1,0 +1,51 @@
+@extends('layouts.app')
+
+@section('content')
+
+  @if ( session()->has('message') )
+    <div class="alert alert-success alert-dismissable">{{ session()->get('message') }}</div>
+  @endif
+  <div class="panel panel-default">
+      <div class="panel-heading">
+          <h1>Admin lijst</h1>
+      </div>
+      <div class="panel-body container">
+          <div class="row">
+              {{ Form::open(array(
+                'url' => Request::fullUrl() . '/nieuweadmin',
+                'class' => 'form-horizontal',
+                'role' => 'form')) }}
+
+                <div>
+                    @if (count($errors) > 0)
+                        <div class="alert alert-danger">
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
+                </div>
+
+                {!! csrf_field() !!}
+
+                <div class="input-group">
+                        {{ Form::text('vraag', '',array(
+                          'class' => 'form-control',
+                          'placeholder' => 'Naam of email van nieuwe admin...')) }}
+                        <span class="input-group-btn">
+                          <button type="submit" class="btn btn-primary">
+                              <i class="fa fa-btn fa-sign-in"></i>Maak admin
+                          </button>
+                        </span>
+                </div>
+
+
+
+                {{ Form::close() }}
+        </div>
+    </div>
+
+</div>
+@endsection

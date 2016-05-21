@@ -47,7 +47,7 @@
                 <p>
                     {{$project->uitleg}}
                 </p>
-                    <a href="#in-progress" class="btn btn-info"><i class="fa fa-arrow-circle-down"></i>Uw mening telt!</a>
+                    <a href="#in-progress" class="btn btn-info"><i class="fa fa-arrow-circle-down"></i>Geef je mening</a>
             </article>
         </div>
     </div>
@@ -67,7 +67,7 @@
                     @if($phase->status == "in-progress")
                     <a id="form-reveal" class="btn btn-info"><i class="fa fa-arrow-circle-down"></i>Vul de vragen in!</a>
                     <div class="cd-timeline-question-form" data-id="{{$phase->idFase}}">
-                        <h3>Vul de volgende vragen in!</h3>
+                        <h3>Uw mening telt!</h3>
                         {{ Form::open(array(
                             'url' => '/project/' . $project->idProject . '/done',
                             'class' => 'form-horizontal',
@@ -90,29 +90,25 @@
                                                 </div>
                                             @elseif($question->soort_vraag == "Ja/Nee")
                                                 <div class="form-group col-md-12">
-                                                    {{ Form::radio($question->idVraag, 'Ja', array(
-                                                      'class' => 'form-control')) }}
-                                                    {{ Form::label($question->idVraag, 'Ja', array(
-                                                      'class' => 'form-label')) }}
-
-
-                                                </div>
-                                                <div class="form-group col-md-12">
-                                                    {{ Form::radio($question->idVraag, 'Nee', array(
-                                                      'class' => 'form-control')) }}
-                                                    {{ Form::label($question->idVraag, 'Nee', array(
-                                                      'class' => 'form-label')) }}
+                                                  <div class="radio">
+                                                    <label><input type="radio" name="{{$question->idVraag}}" value="Nee" required>Ja</label>
+                                                  </div>
+                                                  <div class="radio">
+                                                      <label><input type="radio" name="{{$question->idVraag}}" value="Nee" required>Nee</label>
+                                                  </div>
                                                 </div>
                                             @elseif($question->soort_vraag == "Meerkeuze")
                                                 @foreach($antwoorden as $key_antwoord => $antwoord)
                                                     @if($antwoord->idVraag == $question->idVraag)
                                                         @for( $j = 1; $j < 5;  $j++)
+                                                          @if($antwoord->{'antwoord_' . $j} != null && $antwoord->{'antwoord_' . $j} != "")
                                                             <div class="form-group col-md-12">
-                                                                {{ Form::radio($question->idVraag, $antwoord->{'antwoord_' . $j}, array(
-                                                                      'class' => 'form-control')) }}
-                                                                {{ Form::label($question->idVraag, $antwoord->{'antwoord_' . $j}, array(
-                                                                       'class' => 'form-label')) }}
+                                                              <div class="radio">
+                                                                  <label><input type="radio" name="{{$question->idVraag}}" value="{{ $antwoord->{'antwoord_' . $j} }}" required>{{ $antwoord->{'antwoord_' . $j} }}</label>
+                                                              </div>
                                                             </div>
+                                                          @endif
+
                                                         @endfor
                                                     @endif
                                                 @endforeach
