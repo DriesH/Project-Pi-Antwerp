@@ -13,6 +13,7 @@ use App\Phase;
 use App\Question;
 use App\User;
 use Auth;
+use Excel;
 use App\Multiple_choice_answer;
 use DB;
 
@@ -962,5 +963,63 @@ class AdminController extends Controller
             'amountFollowers' => $amountFollowers,
             'prevUser' => $prevUser,
         ]);
+    }
+    protected function getDownloadFeedback($id){
+
+      $project = DB::table('projects')
+                    ->where('idProject', '=', $id)
+                    ->first();
+
+      $dataProject = DB::table('phases')
+                      ->where( 'phases.idProject' , '=', $id)
+                      ->join('questions', 'phases.idFase', '=', 'questions.idFase')
+                      ->join('answers', 'questions.idVraag', '=', 'answers.idVraag')
+                      ->orderBy('phases.idFase', 'asc')
+                      ->get();
+
+
+      Excel::create('Feedback_Project_' . $project->naam, function($excel) use($project, $dataProject) {
+
+
+        $excel->sheet('ProjectInfo', function($sheet) use($project, $dataProject) {
+
+          $sheet->row(1, array(
+            'naam', 'uitleg', 'Locatie', 'aangemaakt op'
+            ))->setStyle(array(
+              'font' => array(
+              'bold'      =>  true
+              )
+            ))->setWidth('B', 10);
+
+            $sheet->setfitToHeight('true');
+
+          $sheet->row(2, array(
+            $project->naam, $project->uitleg, $project->locatie, $project->created_at
+          ));
+
+      });
+
+      $currentPhase = 0;
+
+      for ($i=0; $i < count($dataProject); $i++) {
+        if($dataProject[$i]->idFase !=  $currentPhase){
+          $currentPhase = $dataProject[$i]->idFase;
+
+          $excel->sheet('Fase_' . $dataProject[$i]->faseNummer, function($sheet) use($project, $dataProject) {
+
+            $sheet->row(1, array(
+              'naam', 'uitleg', 'Locatie', 'aangemaakt op'
+            ));
+
+
+        });
+
+        }
+      }
+
+    })->export('xlsx');
+
+      return redirect('/admin/project-lijst/');
+
     }
 }
