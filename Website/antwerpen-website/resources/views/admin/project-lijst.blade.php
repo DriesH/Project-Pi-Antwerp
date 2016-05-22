@@ -13,8 +13,8 @@
                 ?>
 
                 <div class="project-slice">
-                    <button id="info-btn-project-slice" class="btn btn-info pull-right" type="button" name="button"><i class="fa fa-info-circle"></i> Uitgebreide info</button>
-                    <button id="delete-btn-project-slice" class="btn btn-danger pull-right" type="button" name="button"><i class="fa fa-trash"></i> Verwijderen</button>
+                    <a id="info-btn-project-slice" class="btn btn-info pull-right" ><i class="fa fa-info-circle"></i> Uitgebreide info</a>
+                    <a id="delete-btn-project-slice" class="btn btn-danger pull-right" href="/admin/project-bewerken/{{$project->idProject}}/verwijderen"><i class="fa fa-trash"></i> Verwijderen</a>
 
                     <div id="project-round-image" class="round-image" style='background-image: url({{ $project->foto }})'>
                         <div>
