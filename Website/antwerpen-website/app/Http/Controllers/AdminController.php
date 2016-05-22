@@ -940,14 +940,27 @@ class AdminController extends Controller
                         ->join('phases', 'projects.idProject', '=', 'phases.idProject')
                         ->join('questions', 'phases.idFase', '=', 'questions.idFase')
                         ->join('answers', 'questions.idVraag', '=', 'answers.idVraag')
-                        ->select('projects.*', 'questions.*', 'answers.*')
+                        ->join('user_follows', 'projects.idProject', '=', 'user_follows.project_id')
+                        ->select('projects.*', 'questions.*', 'answers.*', 'user_follows.*')
                         ->get();
-        $amountAnswers = 0;
+
+        $usersProject = DB::table('projects')
+                        ->join('user_follows', 'projects.idProject', '=', 'user_follows.project_id')
+                        ->select('user_follows.*')
+                        ->get();
+
+
+        $amountAnswers   = 0;
+        $amountFollowers = 0;
+        $prevUser        = 0;
 
         return view('\admin\project-lijst', [
             'projecten' => $projecten,
             'dataProject' => $dataProject,
+            'usersProject' => $usersProject,
             'amountAnswers' => $amountAnswers,
+            'amountFollowers' => $amountFollowers,
+            'prevUser' => $prevUser,
         ]);
     }
 }

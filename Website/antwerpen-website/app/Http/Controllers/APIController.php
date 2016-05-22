@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Input;
 use App\Http\Requests;
 
 use DB;
@@ -34,6 +34,14 @@ class APIController extends Controller
         ];
 
         return Response::json($projecten_array);
+
+    }
+
+    protected function postAntwoordenProjecten(){
+
+        //soon...
+
+
 
     }
 

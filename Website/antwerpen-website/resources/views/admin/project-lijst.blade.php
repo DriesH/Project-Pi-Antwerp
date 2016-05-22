@@ -15,36 +15,52 @@
                         </div>
                     </div>
 
-
-
                     <h2><a href="/project/{{$project->idProject}}">{{ $project->naam }}</a></h2>
 
                     @for($i = 0; $i < count($dataProject); $i++)
                         @if($dataProject[$i]->idProject == $project->idProject)
+                            <?php
+                                $user = $dataProject[$i]->user_id;
+                                $userAnswered = $dataProject[$i]->idUser;
 
-                            <?php ++$amountAnswers ?>
+                                if($user == $userAnswered){
+                                    ++$amountAnswers;
+                                }
+                            ?>
+                        @endif
+                    @endfor
 
+                    @for($i = 0; $i < count($usersProject); $i++)
+                        @if($usersProject[$i]->project_id == $project->idProject)
+                            <?php
+                                $user = $usersProject[$i]->user_id;
+
+                                if($user != $prevUser){
+                                    ++$amountFollowers;
+                                    $prevUser = $user;
+                                }
+                            ?>
                         @endif
                     @endfor
 
                     <div class="small-info-box">
                         <h4>Vragen beantwoord:</h4>
                         <p>
-                            {{$amountAnswers}}
+                            {{ $amountAnswers }}
                         </p>
                     </div>
 
                     <div class="small-info-box">
-                        <h4>test</h4>
+                        <h4>Aantal volgers</h4>
                         <p>
-                            {{$amountAnswers}}
+                            {{ $amountFollowers }}
                         </p>
                     </div>
 
                     <div class="small-info-box">
-                        <h4>test</h4>
+                        <h4>Voorlopige test</h4>
                         <p>
-                            {{$amountAnswers}}
+                            0
                         </p>
                     </div>
                 </div>
