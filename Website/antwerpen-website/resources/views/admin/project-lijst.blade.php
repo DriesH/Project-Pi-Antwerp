@@ -5,9 +5,16 @@
     <div class="container">
         <div id="#projecten-lijst">
             @foreach($projecten as $project)
+
+                <?php
+                    $amountFollowers = 0;
+                    $amountAnswers   = 0;
+                    $prevUser        = 0;
+                ?>
+
                 <div class="project-slice">
-                    <button id="info-btn-project-slice" class="btn btn-info pull-right" type="button" name="button"><i class="fa fa-info-circle"></i> Uitgebreide info</button>
-                    <button id="delete-btn-project-slice" class="btn btn-danger pull-right" type="button" name="button"><i class="fa fa-trash"></i> Verwijderen</button>
+                    <a id="info-btn-project-slice" class="btn btn-info pull-right" ><i class="fa fa-info-circle"></i> Uitgebreide info</a>
+                    <a id="delete-btn-project-slice" class="btn btn-danger pull-right" href="/admin/project-bewerken/{{$project->idProject}}/verwijderen"><i class="fa fa-trash"></i> Verwijderen</a>
 
                     <div id="project-round-image" class="round-image" style='background-image: url({{ $project->foto }})'>
                         <div>
@@ -15,36 +22,52 @@
                         </div>
                     </div>
 
-
-
                     <h2><a href="/project/{{$project->idProject}}">{{ $project->naam }}</a></h2>
 
                     @for($i = 0; $i < count($dataProject); $i++)
                         @if($dataProject[$i]->idProject == $project->idProject)
+                            <?php
+                                $user = $dataProject[$i]->user_id;
+                                $userAnswered = $dataProject[$i]->idUser;
 
-                            <?php ++$amountAnswers ?>
+                                if($user == $userAnswered){
+                                    ++$amountAnswers;
+                                }
+                            ?>
+                        @endif
+                    @endfor
 
+                    @for($i = 0; $i < count($usersProject); $i++)
+                        @if($usersProject[$i]->project_id == $project->idProject)
+                            <?php
+                                $user = $usersProject[$i]->user_id;
+
+                                if($user != $prevUser){
+                                    ++$amountFollowers;
+                                    $prevUser = $user;
+                                }
+                            ?>
                         @endif
                     @endfor
 
                     <div class="small-info-box">
                         <h4>Vragen beantwoord:</h4>
                         <p>
-                            {{$amountAnswers}}
+                            {{ $amountAnswers }}
                         </p>
                     </div>
 
                     <div class="small-info-box">
-                        <h4>test</h4>
+                        <h4>Aantal volgers</h4>
                         <p>
-                            {{$amountAnswers}}
+                            {{ $amountFollowers }}
                         </p>
                     </div>
 
                     <div class="small-info-box">
-                        <h4>test</h4>
+                        <h4>Voorlopige test</h4>
                         <p>
-                            {{$amountAnswers}}
+                            0
                         </p>
                     </div>
                 </div>
