@@ -74,4 +74,18 @@ jQuery(document).ready(function($){
         }
     });
 
+
+    //change pencil to 'bewerken' in admin panel info page
+    // $('#project-round-image').mouseenter(function(){
+    //     $('#project-round-image div a i').removeClass('fa fa-pencil-square-o');
+    //     $('#project-round-image div a i').html('Bewerken');
+    // });
+    //
+    // $('#project-round-image').mouseleave(function(){
+    //     $('#project-round-image div a i').addClass('fa fa-pencil-square-o');
+    //     $('#project-round-image div a i').html('');
+    // });
+
+
+
 });

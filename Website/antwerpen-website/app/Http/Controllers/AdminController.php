@@ -931,14 +931,36 @@ class AdminController extends Controller
 
     protected function getProjectLijst(){
 
-      $projecten = DB::table('projects')
+        $projecten = DB::table('projects')
                       ->select('naam', 'foto', 'created_at', 'uitleg', 'idProject')
                       ->orderBy('projects.created_at', 'desc')
                       ->get();
 
-      return view('\admin\project-lijst', [
-      'projecten' => $projecten
-  ]);
-    }
+        $dataProject = DB::table('projects')
+                        ->join('phases', 'projects.idProject', '=', 'phases.idProject')
+                        ->join('questions', 'phases.idFase', '=', 'questions.idFase')
+                        ->join('answers', 'questions.idVraag', '=', 'answers.idVraag')
+                        ->join('user_follows', 'projects.idProject', '=', 'user_follows.project_id')
+                        ->select('projects.*', 'questions.*', 'answers.*', 'user_follows.*')
+                        ->get();
 
-  }
+        $usersProject = DB::table('projects')
+                        ->join('user_follows', 'projects.idProject', '=', 'user_follows.project_id')
+                        ->select('user_follows.*')
+                        ->get();
+
+
+        $amountAnswers   = 0;
+        $amountFollowers = 0;
+        $prevUser        = 0;
+
+        return view('\admin\project-lijst', [
+            'projecten' => $projecten,
+            'dataProject' => $dataProject,
+            'usersProject' => $usersProject,
+            'amountAnswers' => $amountAnswers,
+            'amountFollowers' => $amountFollowers,
+            'prevUser' => $prevUser,
+        ]);
+    }
+}

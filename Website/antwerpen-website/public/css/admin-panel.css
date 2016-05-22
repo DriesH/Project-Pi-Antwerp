@@ -6,25 +6,28 @@
     display: none;
 }
 
-.jumbotron, .container .jumbotron{
+.project-slice{
     border-radius: 0px;
     border-bottom: 2px solid #BABABA;
     background-color: #F5F5F6;
-    height: 200px;
+    height: 400px;
+    padding: 20px;
+    margin-bottom: 20px;
 }
 
 .project-slice h2{
-    margin: 0;
-    width: 350px;
-    margin-left: 10px;
-    margin-top: 30px;
-    margin-right: 0;
+    text-align: center;
+}
+
+.project-slice p{
+    text-align: center;
 }
 
 .project-slice h2 a{
     color: #282020;
     font-weight: 300;
     text-decoration: none;
+    text-align: center;
 }
 
 .project-slice h2 a:hover{
@@ -41,7 +44,8 @@
     border-radius: 50%;
     width: 100px;
     height: 100px;
-    margin-right: 25px;
+    margin-right: auto;
+    margin-left: auto;
 }
 
 .round-image>div{
@@ -69,4 +73,20 @@
 
 #delete-btn-project-slice{
     margin-right: 5px;
+}
+
+.small-info-box{
+    margin-top: 30px;
+    width: 33%;
+    height: 150px;
+    background-color: #BABABA;
+    display: inline-block;
+}
+
+.small-info-box h4{
+    text-align: center;
+}
+
+.small-info-box p{
+    font-size: 4rem;
 }
