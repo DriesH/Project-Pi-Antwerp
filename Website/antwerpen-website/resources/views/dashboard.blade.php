@@ -3,23 +3,22 @@
 @section('content')
 
 <div class="container" id="dashboard">
+    <a href="{{ URL::previous() }}" class="btn btn-primary"><i class="fa fa-arrow-left"></i>Terug</a>
+
     <h1>Profiel gegevens.</h1>
 
-    <div class="col-md-3 col-sm-3 col-xs-12">
-        <div class="panel panel-default profile-box">
-            <img class="profile-picture-big center-block" src="/pictures/a-logo.svg" alt="" />
-            <p>
-                {{Auth::user()->name}}
-            </p>
-            <p>
-                {{Auth::user()->email}}
-            </p>
-            <a href="#" class="btn btn-default center-block"><i class="fa fa-pencil-square-o"></i>Profiel bewerken</a>
 
-        </div>
+    <div class="panel panel-default profile-box col-md-3 col-sm-3 col-xs-12">
+        <img class="profile-picture-big center-block" src="/pictures/a-logo.svg" alt="" />
+        <p>
+            {{Auth::user()->name}}
+        </p>
+        <p>
+            {{Auth::user()->email}}
+        </p>
     </div>
 
-    <div class="col-md-9 col-sm-9 col-xs-12">
+    <div class="col-md-9 col-sm-9 col-xs-12" id="information-panel">
         <div class="panel panel-default">
             <div class="panel-heading profile-heading">
                 <h3><i class="fa fa-bar-chart"></i>Profiel activiteit</h3>
