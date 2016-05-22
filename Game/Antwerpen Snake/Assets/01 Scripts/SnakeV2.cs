@@ -11,9 +11,9 @@ public class SnakeV2 : TouchLogic {
   private float maxDist = 1; //the maximumdistance between snake and finger until it moves again
 
   public GameObject food = null;
-  public bool isPlayingGame;
+  public bool isPlayingGame; // is the game playing or are we answering a question
 
-  public GameObject questionPanel = null;
+  public GameObject questionPanel = null; //drag UI questionpanel to the inspector
 
   void Start()
   {
