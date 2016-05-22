@@ -19,15 +19,27 @@
                             <i class="{{$categorie->icon_class}}"></i>{{$categorie->naam}}
                         @endif
                     @endforeach
+
                     <!--  VVV VVVVVVVVVVVVVVVVVVV VVV  -->
                     <!--  VVV - FIX NEEDED HERE - VVV  -->
                     <!--  VVV VVVVVVVVVVVVVVVVVVV VVV  -->
+
                     @if (!Auth::guest() && Auth::user()->role == 10)
                         <a href="/admin/project-bewerken/{{$project->idProject}}" class="bewerken-link pull-right"><i class="fa fa-pencil-square-o"></i>Bewerken</a>
                     @endif
                 </p>
+
                 <div class="title-with-follow">
                     <h1>{{$project->naam}}</h1>
+                </div>
+
+                <time> {{ date('d F, Y', strtotime($project->created_at)) }} </time>
+
+                <p>
+                    {{$project->uitleg}}
+                </p>
+                <div class="btn-bottom">
+                    <a href="#in-progress" class="btn btn-info test pull-left"><i class="fa fa-arrow-circle-down"></i>Geef je mening</a>
 
                     <!--  VVV VVVVVVVVVVVVVVVVVVV VVV  -->
                     <!--  VVV - FIX NEEDED HERE - VVV  -->
@@ -43,19 +55,16 @@
                           'files' => true)) }}
 
                             @if($isFollowing)
-                                <button type="submit" id="following-btn" class="btn btn-success"><i class="fa fa-check"></i>Aan het volgen</button>
+                                <button type="submit" id="following-btn" class="btn btn-success test col-md-push-8"><i class="fa fa-check"></i>Aan het volgen</button>
                             @else
-                                <button type="submit" id="follow-btn" class="btn btn-default"><i class="fa fa-plus"></i>Project volgen</a>
+                                <button type="submit" id="follow-btn" class="btn btn-default test pull-right"><i class="fa fa-plus"></i>Project volgen</button>
                             @endif
 
                         {{ Form::close() }}
                     @endif
+
                 </div>
-                <time> {{ date('d F, Y', strtotime($project->created_at)) }} </time>
-                <p>
-                    {{$project->uitleg}}
-                </p>
-                    <a href="#in-progress" class="btn btn-info"><i class="fa fa-arrow-circle-down"></i>Geef je mening</a>
+
             </article>
         </div>
 

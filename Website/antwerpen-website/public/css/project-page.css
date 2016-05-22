@@ -52,3 +52,7 @@
 #form-reveal{
     float: right;
 }
+
+.test{
+    display: inline;
+}
