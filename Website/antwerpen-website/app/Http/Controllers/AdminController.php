@@ -11,6 +11,8 @@ use App\Project;
 use App\Categorie;
 use App\Phase;
 use App\Question;
+use App\User;
+use Auth;
 use App\Multiple_choice_answer;
 use DB;
 
@@ -23,6 +25,97 @@ class AdminController extends Controller
 
     protected function panel(){
         return view('\admin\admin-panel');
+    }
+
+    protected function getAdmins(){
+
+      $admins = User::orderBy('name', 'asc')
+                ->where('role', '=', 10)
+                ->select('name', 'email', 'id')
+                ->get();
+      return view('\admin\admin-lijst', [
+      'admins' => $admins
+  ]);
+    }
+
+    protected function getAdminVerwijderen($id){
+
+      User::where('id', $id)
+      ->update([
+      'role' => 0
+    ]);
+
+    if (Auth::user()->id != $id) {
+      $admins = User::orderBy('name', 'asc')
+                ->where('role', '=', 10)
+                ->select('name', 'email', 'id')
+                ->get();
+      return redirect('/admin/admin-lijst', [
+                  'admins' => $admins,
+                  'message' => 'Gebruiker is succesvol van zijn administratorrol ontdaan.'
+              ]);
+    }
+    else {
+      return redirect('/admin/admin-lijst', [
+        'admins' => $admins,
+        'error' => 'U kan uzelf niet verwijderen als administrator.'
+    ]);
+    }
+
+    }
+
+    protected function postNieuweAdmin(Request $request){
+
+      /**
+      *Data bevat de values van inputfields.
+      *
+      *@var array
+      */
+      $data = Input::all();
+
+      $validator = Validator::make($request->all(), [
+          'admin' => 'required'
+      ]);
+
+      if ($validator->fails()) {
+           return redirect('/admin/admin-lijst')
+                      ->withErrors($validator)
+                      ->withInput();
+      }
+
+      $user = User::where('name', $data['admin'])
+      ->orWhere('email', $data['admin'])
+      ->first();
+
+      if ($user != null) {
+        User::where('name', $data['admin'])
+        ->orWhere('email', $data['admin'])
+        ->update([
+        'role' => 10
+    ]);
+      }
+      else {
+        $admins = User::orderBy('name', 'asc')
+                  ->where('role', '=', 10)
+                  ->select('name', 'email')
+                  ->get();
+
+        return view('\admin\admin-lijst', [
+        'admins' => $admins,
+        'error' => $data['admin'] . ' is geen bestaande gebruiker. Probeer opnieuw.'
+    ]);
+      }
+
+
+      $admins = User::orderBy('name', 'asc')
+                ->where('role', '=', 10)
+                ->select('name', 'email')
+                ->get();
+
+      return view('\admin\admin-lijst', [
+        'admins' => $admins,
+        'message' => $user->name . ' is succesvol gepromoveerd tot administrator.'
+    ]);
     }
 
     /*-----PROJECTEN-----*/
@@ -835,4 +928,26 @@ class AdminController extends Controller
 
         return redirect('/admin/project-bewerken/'. $id . '/fases/' . $faseid . '/vragen')->with('message', 'Vraag succesvol toegevoegd.');
     }
-  }
+
+    protected function getProjectLijst(){
+
+        $projecten = DB::table('projects')
+                      ->select('naam', 'foto', 'created_at', 'uitleg', 'idProject')
+                      ->orderBy('projects.created_at', 'desc')
+                      ->get();
+
+        $dataProject = DB::table('projects')
+                        ->join('phases', 'projects.idProject', '=', 'phases.idProject')
+                        ->join('questions', 'phases.idFase', '=', 'questions.idFase')
+                        ->join('answers', 'questions.idVraag', '=', 'answers.idVraag')
+                        ->select('projects.*', 'questions.*', 'answers.*')
+                        ->get();
+        $amountAnswers = 0;
+
+        return view('\admin\project-lijst', [
+            'projecten' => $projecten,
+            'dataProject' => $dataProject,
+            'amountAnswers' => $amountAnswers,
+        ]);
+    }
+}

@@ -80,6 +80,16 @@ Route::post('/admin/project-bewerken/{id}/fases/{faseid}/nieuwevraag', 'AdminCon
 Route::get('/admin/project-bewerken/{id}/fases/{faseid}/vragen/verwijderen/{vraagid}', 'AdminController@getVraagVerwijderen');
 Route::post('/admin/project-bewerken/{id}/fases/{faseid}/vragen/verwijderen/{vraagid}', 'AdminController@postVraagVerwijderen');
 
+
+/*Admin lijst*/
+Route::get('/admin/admin-lijst', 'AdminController@getAdmins');
+Route::post('/admin/admin-lijst', 'AdminController@postNieuweAdmin');
+Route::get('/admin/admin-lijst/verwijderen/{id}', 'AdminController@getAdminVerwijderen');
+
+/*Project lijst*/
+Route::get('/admin/project-lijst', 'AdminController@getProjectLijst');
+
+
 /*TEST PAGINA ROUTE*/
 Route::get('/testmap', function(){
     return view('testmap');

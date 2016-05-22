@@ -11,6 +11,7 @@ use App\Project;
 use App\Categorie;
 use App\Phase;
 use App\User;
+use App\Answer;
 use Auth;
 use Illuminate\Support\Facades\Input;
 
@@ -135,12 +136,23 @@ class ProjectController extends Controller
       */
       $data = Input::all();
 
-      dd($data);
+      if(Auth::user()){
+        $user = Auth::user()->id;
+      }
+      else {
+        $user = 0;
+      }
 
-
-            for ($i=1; $i < $data.length; $i++) {
-              # code...
+            foreach ($data as $key => $value) {
+              if($key != '_token'){
+                Answer::create([
+                    'idVraag' => $key,
+                    'idUser' => $user,
+                    'antwoord' => $value
+                ]);
+              }
             }
+      return redirect('/project/' . $id)->with('message', 'Bedankt voor het deling van uw mening! We houden hier zeker rekening mee.');
     }
 
     public function PostProjectFollow($id, Request $request) {
