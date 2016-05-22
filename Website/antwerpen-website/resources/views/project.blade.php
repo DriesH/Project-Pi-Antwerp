@@ -18,12 +18,19 @@
                             <i class="{{$categorie->icon_class}}"></i>{{$categorie->naam}}
                         @endif
                     @endforeach
+                    <!--  VVV VVVVVVVVVVVVVVVVVVV VVV  -->
+                    <!--  VVV - FIX NEEDED HERE - VVV  -->
+                    <!--  VVV VVVVVVVVVVVVVVVVVVV VVV  -->
                     @if (!Auth::guest() && Auth::user()->role == 10)
                         <a href="/admin/project-bewerken/{{$project->idProject}}" class="bewerken-link pull-right"><i class="fa fa-pencil-square-o"></i>Bewerken</a>
                     @endif
                 </p>
                 <div class="title-with-follow">
                     <h1>{{$project->naam}}</h1>
+
+                    <!--  VVV VVVVVVVVVVVVVVVVVVV VVV  -->
+                    <!--  VVV - FIX NEEDED HERE - VVV  -->
+                    <!--  VVV VVVVVVVVVVVVVVVVVVV VVV  -->
 
                     @if (Auth::guest())
 
