@@ -5,6 +5,13 @@
     <div class="container">
         <div id="#projecten-lijst">
             @foreach($projecten as $project)
+
+                <?php
+                    $amountFollowers = 0;
+                    $amountAnswers   = 0;
+                    $prevUser        = 0;
+                ?>
+
                 <div class="project-slice">
                     <button id="info-btn-project-slice" class="btn btn-info pull-right" type="button" name="button"><i class="fa fa-info-circle"></i> Uitgebreide info</button>
                     <button id="delete-btn-project-slice" class="btn btn-danger pull-right" type="button" name="button"><i class="fa fa-trash"></i> Verwijderen</button>
