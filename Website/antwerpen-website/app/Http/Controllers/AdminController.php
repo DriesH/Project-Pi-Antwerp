@@ -1005,11 +1005,22 @@ class AdminController extends Controller
         if($dataProject[$i]->idFase !=  $currentPhase){
           $currentPhase = $dataProject[$i]->idFase;
 
-          $excel->sheet('Fase_' . $dataProject[$i]->faseNummer, function($sheet) use($project, $dataProject) {
-
-            $sheet->row(1, array(
-              'naam', 'uitleg', 'Locatie', 'aangemaakt op'
+          $excel->sheet('Fase_' . $dataProject[$i]->faseNummer, function($sheet) use($project, $dataProject, $currentPhase) {
+            $sheet->appendRow(array(
+              'Vraag', 'Antwoord'
             ));
+            for ($i=0; $i < count($dataProject); $i++) {
+              if ($dataProject[$i]->idFase ==  $currentPhase) {
+                $sheet->appendRow(array(
+                  $dataProject[$i]->vraag, $dataProject[$i]->antwoord
+                ))->setStyle(array(
+                  'font' => array(
+                  'bold'      =>  false
+                  )
+                ));
+              }
+
+            }
 
 
         });

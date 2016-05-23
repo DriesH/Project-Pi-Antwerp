@@ -51,7 +51,7 @@
                     @endfor
 
                     <div class="small-info-box">
-                        <h4>Vragen beantwoord:</h4>
+                        <h4>Vragen beantwoord</h4>
                         <p>
                             {{ $amountAnswers }}
                         </p>
