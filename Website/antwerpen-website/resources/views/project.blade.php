@@ -38,6 +38,101 @@
                 {{$project->uitleg}}
             </p>
 
+<<<<<<< HEAD
+        <section id="cd-timeline" class="cd-container">
+            @foreach($phases as $key => $phase)
+            	<div class="cd-timeline-block" id="{{$phase->status}}">
+            		<div class="cd-timeline-img cd-{{$phase->status}}">
+                        <span>#{{$phase->faseNummer}}</span>
+            		</div> <!-- cd-timeline-img -->
+
+            		<div class="cd-timeline-content" data-id="{{$phase->idFase}}">
+            			<h5>{{$phase->title}}</h5>
+            			<p>{{$phase->uitleg}}</p>
+            			<span class="cd-date">{{ date('d F, Y', strtotime($phase->start_datum)) }}</span>
+
+                  <?php $isAlreadyAnswered = false; ?>
+                  @foreach($AnsweredPhases as $Answeredphase)
+                    @if($Answeredphase->idFase == $phase->idFase)
+                      <?php $isAlreadyAnswered = true; ?>
+                    <?php break; ?>
+                    @endif
+                  @endforeach
+
+                        @if($phase->status == "in-progress" && !$isAlreadyAnswered)
+                        <a id="form-reveal" class="btn btn-info"><i class="fa fa-arrow-circle-down"></i>Vul de vragen in!</a>
+                        <div class="cd-timeline-question-form" data-id="{{$phase->idFase}}">
+                            <h3>Uw mening telt!</h3>
+
+                            {{ Form::open(array(
+                                'url' => '/project/' . $project->idProject . '/done',
+                                'class' => 'form-horizontal',
+                                'role' => 'form',
+                                'files' => false)) }}
+                                    @foreach($questions as $key_questions => $question)
+                                        @if($question->idFase == $phase->idFase)
+                                            <div class="form-group col-md-12">
+                                                {{ Form::label($question->idVraag, $question->vraag, array(
+                                                    'class' => 'control-label')) }}
+
+                                                @if($question->soort_vraag == "Open")
+                                                    <div class="form-group col-md-12">
+                                                      {{ Form::text($question->idVraag, '', array(
+                                                        'class' => 'form-control',
+                                                        'placeholder' => 'Antwoord...',
+                                                        'required' => 'required',
+                                                        'maxlength' => 100 )) }}
+                                                    </div>
+                                                @elseif($question->soort_vraag == "Ja/Nee")
+                                                    <div class="form-group col-md-12">
+                                                      <div class="radio">
+                                                        <label><input type="radio" name="{{$question->idVraag}}" value="Ja" required>Ja</label>
+                                                      </div>
+                                                      <div class="radio">
+                                                          <label><input type="radio" name="{{$question->idVraag}}" value="Nee" required>Nee</label>
+                                                      </div>
+                                                    </div>
+                                                @elseif($question->soort_vraag == "Meerkeuze")
+                                                    @foreach($antwoorden as $key_antwoord => $antwoord)
+                                                        @if($antwoord->idVraag == $question->idVraag)
+                                                            @for( $j = 1; $j < 5;  $j++)
+                                                              @if($antwoord->{'antwoord_' . $j} != null && $antwoord->{'antwoord_' . $j} != "")
+                                                                <div class="form-group col-md-12">
+                                                                  <div class="radio">
+                                                                      <label><input type="radio" name="{{$question->idVraag}}" value="{{ $antwoord->{'antwoord_' . $j} }}" required>{{ $antwoord->{'antwoord_' . $j} }}</label>
+                                                                  </div>
+                                                                </div>
+                                                              @endif
+                                                            @endfor
+                                                        @endif
+                                                    @endforeach
+                                                @endif
+                                            </div>
+                                        @endif
+                                    @endforeach
+
+                                    <div class="form-group">
+                                        <div class="col-md-12">
+                                            <button type="submit" class="btn btn-success form-control">
+                                                <i class="fa fa-paper-plane"></i> Vragen verzenden
+                                            </button>
+                                        </div>
+                                    </div>
+                            {{ Form::close() }}
+                        </div>
+                      @elseif($phase->status == "in-progress" && $isAlreadyAnswered)
+                        <div class="">
+                          <p>
+                            <strong>U hebt deze vragen al beantwoord!</strong>
+                          </p>
+                        </div>
+                      @endif
+            		</div> <!-- cd-timeline-content -->
+            	</div> <!-- cd-timeline-block -->
+            @endforeach
+    	</section> <!-- cd-timeline -->
+=======
+>>>>>>> refs/remotes/origin/master
 
         </article>
 

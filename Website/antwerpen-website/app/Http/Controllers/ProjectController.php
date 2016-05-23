@@ -12,6 +12,7 @@ use App\Categorie;
 use App\Phase;
 use App\User;
 use App\Answer;
+use App\Multiple_choice_answer;
 use Auth;
 use Illuminate\Support\Facades\Input;
 
@@ -113,6 +114,14 @@ class ProjectController extends Controller
                     ->get();
 
 
+        $AnsweredPhases = DB::table('answers')
+                            ->join('questions', 'answers.idVraag', '=', 'questions.idVraag')
+                            ->join('phases', 'questions.idFase', '=', 'phases.idFase')
+                            ->where('phases.idProject', '=', $id)
+                            ->where('idUser', '=', $userId)
+                            ->select('phases.idFase')
+                            ->distinct()
+                            ->get();
 
 
         return view('project', [
@@ -122,6 +131,7 @@ class ProjectController extends Controller
             'questions' => $questions,
             'isFollowing' => $isFollowing,
             'antwoorden' => $antwoorden,
+            'AnsweredPhases' => $AnsweredPhases
 
         ]);
 
