@@ -46,13 +46,11 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\01 Scripts\DatabaseLogic.cs" />
      <Compile Include="Assets\01 Scripts\FollowProjectURL.cs" />
      <Compile Include="Assets\01 Scripts\Navbar.cs" />
      <Compile Include="Assets\01 Scripts\PanelProject.cs" />
      <Compile Include="Assets\01 Scripts\QuestionLogic.cs" />
      <Compile Include="Assets\01 Scripts\ReadJson.cs" />
-     <Compile Include="Assets\01 Scripts\Snake.cs" />
      <Compile Include="Assets\01 Scripts\SnakeV2.cs" />
      <Compile Include="Assets\01 Scripts\StartScreenAndInstructionButtons.cs" />
      <Compile Include="Assets\01 Scripts\TouchLogic.cs" />
@@ -67,13 +65,13 @@
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UnityAnalytics/UnityEngine.Analytics.dll</HintPath>
  </Reference>
  <Reference Include="I18N">
- <HintPath>C:/Users/Gebruiker/School/KDG/Project VIR-WEB/Backup kopie van github/backback/Antwerpen Snake/Assets/05 DLL/I18N.dll</HintPath>
+ <HintPath>C:/Users/Gebruiker/Documents/GitHub/Project-Pi-Antwerp/Game/Antwerpen Snake/Assets/05 DLL/I18N.dll</HintPath>
  </Reference>
  <Reference Include="I18N.West">
- <HintPath>C:/Users/Gebruiker/School/KDG/Project VIR-WEB/Backup kopie van github/backback/Antwerpen Snake/Assets/05 DLL/I18N.West.dll</HintPath>
+ <HintPath>C:/Users/Gebruiker/Documents/GitHub/Project-Pi-Antwerp/Game/Antwerpen Snake/Assets/05 DLL/I18N.West.dll</HintPath>
  </Reference>
  <Reference Include="LitJson">
- <HintPath>C:/Users/Gebruiker/School/KDG/Project VIR-WEB/Backup kopie van github/backback/Antwerpen Snake/Assets/05 DLL/LitJson.dll</HintPath>
+ <HintPath>C:/Users/Gebruiker/Documents/GitHub/Project-Pi-Antwerp/Game/Antwerpen Snake/Assets/05 DLL/LitJson.dll</HintPath>
  </Reference>
  <Reference Include="UnityEditor.iOS.Extensions.Xcode">
  <HintPath>C:/Program Files/Unity/Editor/Data/PlaybackEngines/iOSSupport/UnityEditor.iOS.Extensions.Xcode.dll</HintPath>

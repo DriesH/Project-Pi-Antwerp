@@ -2,36 +2,33 @@
 using System.Collections;
 using UnityEngine.UI;
 
-public class QuestionLogic : SnakeV2 {
+public class QuestionLogic : ReadJson {
   
-  public Text questionText = null;
- // public GameObject questionPanel = null;
+  public Text questionText        = null; //the text where all the questions will appear
+  public Text loadingText         = null;
+  public GameObject questionPanel = null; //the panel that alternatively will be set to hide or appear
 
-  private int numberOfQuestions = 3;
-  private int currentQuestion = 0;
-  private string[] questions;
+  private int currentQuestion     = 0; //so the script knows which question to show
+  private string[] questions;     //to save all the questions for the database
 
-  protected SnakeV2 boolChecker;
+  private SnakeV2 boolChecker;  //to save the script to check the bool in this script
+  public GameObject snake;      //also used to check the bool
 
   void Start()
   {
-    GameObject g = GameObject.FindGameObjectWithTag("Player");
-    boolChecker = g.GetComponent<SnakeV2>();
+//    StartCoroutine(GetDatabase(urlProject, "Question")); //start the method from ReadJson so it's the first to begin
 
-    questionPanel.SetActive(true);
-    questions = new string[numberOfQuestions];
-    questions[0] = "Op elke boom moet een vuilbak staan.";
-    questions[1] = "Er moeten minder auto's in de binnenstad kunnen rijden.";
-    questions[2] = "De fietspaden int Antwerpen zijn niet veilig genoeg.";
+    boolChecker = snake.GetComponent<SnakeV2>(); //and get the script from this gameobject to check the bool later
+    loadingText.enabled = true;
   }
 
 	void Update() {
-    if (!boolChecker.isPlayingGame) //if the game is NOT playing 
+    if (!boolChecker.isPlayingGame) //if the game is NOT playing (checks from snakeV2 script)
     {
       if (currentQuestion < numberOfQuestions) //there are still questions left
       {
-        questionText.text = questions[currentQuestion];
-        questionPanel.SetActive(true);
+        questionText.text = questions[currentQuestion]; //show the current question
+        questionPanel.SetActive(true); // and show the panel
       }
       else if (currentQuestion >= numberOfQuestions) //no questions left
       {
@@ -40,10 +37,28 @@ public class QuestionLogic : SnakeV2 {
     }
 	}
 
-  public void QuestionButtonPress() //when the button on the questionPanel is pressed
+  void LateUpdate(){
+    if (readyToPlay)
+    {
+      readyToPlay = false;
+      loadInQuestions();
+    }
+  }
+
+  void loadInQuestions()
   {
-    boolChecker.isPlayingGame = true;
-    questionPanel.SetActive(false);
-    currentQuestion++;
+    questionPanel.SetActive(true); //show the panel when the game starts
+    questions = new string[numberOfQuestions]; //make the array as long as the amount of questions found in the database
+    for (int i = 0; i < databaseQuestions.Count; i++) //put each question from the databaselist into the questionArray
+    {
+      questions[i] = databaseQuestions[i];
+    }
+    loadingText.enabled = false;
+  }
+
+  public void QuestionButtonPress(){ //when the button on the questionPanel is pressed
+    boolChecker.isPlayingGame = true; //make sure the player can play the game
+    questionPanel.SetActive(false); //hide the panel
+    currentQuestion++; //flip to the next question
   }
 }
