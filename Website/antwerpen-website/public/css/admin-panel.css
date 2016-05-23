@@ -98,3 +98,16 @@
     background: #2C5697;
     border-color: rgb(3, 77, 130);
 }
+
+#actief-vinkje{
+    color: green;
+}
+
+#disable-vinkje{
+    color: red;
+}
+
+.titel-time-adminpanel{
+    width: 100%;
+    text-align: center;
+}
