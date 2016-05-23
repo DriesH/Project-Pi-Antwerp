@@ -33,6 +33,7 @@ class ProjectController extends Controller
                           ->select('categories.naam as catNaam', 'categories.icon_class', 'projects.*')
                           ->orderBy('projects.created_at', 'desc')
                           ->get();
+
           $isResetEnabled = true;
         }
         elseif (isset($request->locatie)) {
@@ -54,8 +55,6 @@ class ProjectController extends Controller
 
           $isResetEnabled = false;
         }
-
-
 
         $categories = Categorie::all();
 

@@ -3,7 +3,7 @@
 @section('content')
 
 <div class="container" id="dashboard">
-    <a href="{{ URL::previous() }}" class="btn btn-primary"><i class="fa fa-arrow-left"></i>Terug</a>
+    <a href="/" class="btn btn-primary"><i class="fa fa-arrow-left"></i>Terug</a>
 
     <h1>Profiel gegevens.</h1>
 
@@ -21,7 +21,7 @@
     <div class="col-md-9 col-sm-9 col-xs-12" id="information-panel">
         <div class="panel panel-default">
             <div class="panel-heading profile-heading">
-                <h3><i class="fa fa-bar-chart"></i>Profiel activiteit</h3>
+                <h3><i class="fa fa-bar-chart"></i>Gevolgde projecten</h3>
             </div><!--panel-heading-->
 
             <div class="panel-body">
@@ -36,7 +36,7 @@
 
                         <div class="media-body">
 
-                                <h4 class="media-heading"><a href='/project/{{ $project->idProject }}' id="project-link"> Project: {{ $project->naam }} <button type="button" name="button" class="btn btn-success btn-following"><i class="fa fa-check"></i> Aan het volgen</button></a></h4>
+                                <h4 class="media-heading"><a href='/project/{{ $project->idProject }}' id="project-link"> Project: {{ $project->naam }}</a></h4>
                                 <p>
                                     {{ $project->uitleg }}
                                 </p>

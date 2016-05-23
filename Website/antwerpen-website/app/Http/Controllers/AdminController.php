@@ -400,6 +400,14 @@ class AdminController extends Controller
 
     protected function postProjectVerwijderen($id){
 
+        $project = Project::where('idProject', '=', $id)->first();
+
+        $oude_afbeelding = substr($project->foto, 1);
+
+        if (File::exists($oude_afbeelding)){
+            unlink($oude_afbeelding);
+        }
+
         DB::table('projects')->where('idProject', '=', $id)
                             ->delete();
 
@@ -933,7 +941,8 @@ class AdminController extends Controller
     protected function getProjectLijst(){
 
         $projecten = DB::table('projects')
-                      ->select('naam', 'foto', 'created_at', 'uitleg', 'idProject')
+                      ->select('naam', 'foto', 'created_at', 'uitleg', 'idProject', 'isActief')
+                      ->orderBy('projects.isActief', 'desc')
                       ->orderBy('projects.created_at', 'desc')
                       ->get();
 
