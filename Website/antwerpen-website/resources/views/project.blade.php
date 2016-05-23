@@ -98,7 +98,7 @@
                                                 @elseif($question->soort_vraag == "Ja/Nee")
                                                     <div class="form-group col-md-12">
                                                       <div class="radio">
-                                                        <label><input type="radio" name="{{$question->idVraag}}" value="Nee" required>Ja</label>
+                                                        <label><input type="radio" name="{{$question->idVraag}}" value="Ja" required>Ja</label>
                                                       </div>
                                                       <div class="radio">
                                                           <label><input type="radio" name="{{$question->idVraag}}" value="Nee" required>Nee</label>
