@@ -37,12 +37,13 @@ jQuery(document).ready(function($){
 
 	var pathname = window.location.pathname;
 
-	if ((pathname.search("bewerken") >= 0 || pathname.search("nieuw") >= 0) ) {
+//PRETTY ANNOYING ...
+	/*if ((pathname.search("bewerken") >= 0 || pathname.search("nieuw") >= 0) ) {
 
 		window.onbeforeunload = function() {
 	        return "Als u deze pagina verlaat zullen de huidige aanpassingen niet opgeslagen worden.";
 	    }
-	}
+	}*/
 
 
 

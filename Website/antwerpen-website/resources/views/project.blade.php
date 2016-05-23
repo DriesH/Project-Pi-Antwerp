@@ -31,7 +31,9 @@
 
 
             </div>
-            <img src="{{$project->foto}}" alt="">
+            @if($project->foto != null)
+              <img src="{{$project->foto}}" alt="">
+            @endif
         </div>
 
         <article>
