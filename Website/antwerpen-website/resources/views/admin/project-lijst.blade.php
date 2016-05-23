@@ -13,8 +13,9 @@
                 ?>
 
                 <div class="project-slice">
-                    <a id="info-btn-project-slice" class="btn btn-info pull-right" href="/admin/download/{{$project->idProject}}"><i class="fa fa-download"></i> Download feedback</a>
+
                     <a id="delete-btn-project-slice" class="btn btn-danger pull-right" href="/admin/project-bewerken/{{$project->idProject}}/verwijderen"><i class="fa fa-trash"></i> Verwijderen</a>
+                    <a id="download-btn-project-slice" class="btn btn-default pull-right" href="/admin/download/{{$project->idProject}}"><i class="fa fa-download"></i> Download feedback</a>
 
                     <div id="project-round-image" class="round-image" style='background-image: url({{ $project->foto }})'>
                         <div>
