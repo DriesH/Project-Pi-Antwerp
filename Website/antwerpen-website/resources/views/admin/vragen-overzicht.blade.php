@@ -9,7 +9,7 @@
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
-                <div class="panel-heading"><h2>Vragen van fase {{$fase->faseNummer}}: <ins>{{$fase->title}}</ins> van project <ins>{{$project->naam}}</ins> aanpassen</h2>
+                <div class="panel-heading"><h2><ins>Vragen</ins> Fase {{$fase->faseNummer}}: <em>{{$fase->title}}</em> - Project: <em>{{$project->naam}}</em> aanpassen</h2>
                 </div>
 
                 <div class="panel-body">
@@ -25,7 +25,7 @@
 
                                 <a class="btn btn-primary" href="vragen/{{$vraag->idVraag}}" role="button"><i class="fa fa-edit"></i>Vraag bewerken</a>
 
-                                <a class="btn btn-danger pull-right" href="vragen/verwijderen/{{$vraag->idVraag}}" role="button"><i class="fa fa-edit"></i>Vraag verwijderen</a>
+                                <a class="btn btn-danger pull-right" href="vragen/verwijderen/{{$vraag->idVraag}}" role="button"><i class="fa fa-trash"></i>Vraag verwijderen</a>
                             </div>
                         @endforeach
                    @else
