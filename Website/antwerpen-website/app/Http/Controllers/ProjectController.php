@@ -18,17 +18,40 @@ use Illuminate\Support\Facades\Input;
 
 class ProjectController extends Controller
 {
-    public function GetProjects(){
-        /**
-        *Array bevat alle projecten en hun data.
-        *
-        *@var array
-        */
-        $projecten = DB::table('projects')
-                        ->join('categories', 'projects.idCategorie', '=', 'categories.idCategorie')
-                        ->select('categories.naam as catNaam', 'categories.icon_class', 'projects.*')
-                        ->orderBy('projects.created_at', 'desc')
-                        ->get();
+    public function GetProjects(Request $request){
+
+        if (isset($request->categorie)) {
+          $categorie = $request->categorie;
+          /**
+          *Array bevat alle projecten en hun data.
+          *
+          *@var array
+          */
+          $projecten = DB::table('projects')
+                          ->join('categories', 'projects.idCategorie', '=', 'categories.idCategorie')
+                          ->where('categories.naam', '=', $categorie)
+                          ->select('categories.naam as catNaam', 'categories.icon_class', 'projects.*')
+                          ->orderBy('projects.created_at', 'desc')
+                          ->get();
+        }
+        elseif (isset($request->locatie)) {
+          $locatie = $request->locatie;
+          $projecten = DB::table('projects')
+                          ->where('locatie', '=', $locatie)
+                          ->join('categories', 'projects.idCategorie', '=', 'categories.idCategorie')
+                          ->select('categories.naam as catNaam', 'categories.icon_class', 'projects.*')
+                          ->orderBy('projects.created_at', 'desc')
+                          ->get();
+        }
+        else {
+          $projecten = DB::table('projects')
+                          ->join('categories', 'projects.idCategorie', '=', 'categories.idCategorie')
+                          ->select('categories.naam as catNaam', 'categories.icon_class', 'projects.*')
+                          ->orderBy('projects.created_at', 'desc')
+                          ->get();
+        }
+
+
 
         $categories = Categorie::all();
 
