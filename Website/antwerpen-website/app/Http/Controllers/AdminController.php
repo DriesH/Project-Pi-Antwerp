@@ -1006,7 +1006,7 @@ class AdminController extends Controller
           $currentPhase = $dataProject[$i]->idFase;
 
           $excel->sheet('Fase_' . $dataProject[$i]->faseNummer, function($sheet) use($project, $dataProject, $currentPhase) {
-            
+
             $sheet->appendRow(array(
               'Vraag', 'Antwoord'
             ));
