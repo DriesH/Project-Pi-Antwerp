@@ -10,26 +10,24 @@
     <!-- Single button -->
     <div class="btn-group pull-left" id="filter-cat-btn">
         <button name="filter" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <i class="fa fa-filter"></i>Categorie filter   <span class="caret"></span>
+            <i class="fa fa-filter"></i>Categorie filter <span class="caret"></span>
         </button>
 
-        <ul class="dropdown-menu">
+        <ul class="dropdown-menu categorie-dropdown">
             @foreach($categories as $categorie)
-                <!-- TO DO: ADD FILTER METHODE AAN BUTTON CLICK -->
-                <li><a href="/{{$categorie->idCategorie}}/NULL"> {{$categorie->naam}} </a></li>
+                <li><a href="?categorie={{$categorie->naam}}"> {{$categorie->naam}} </a></li>
             @endforeach
         </ul>
     </div>
 
     <div class="btn-group pull-left" id="filter-loc-btn">
         <button name="filter" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <i class="fa fa-map-marker"></i>Locatie filter   <span class="caret"></span>
+            <i class="fa fa-map-marker"></i>Locatie filter <span class="caret"></span>
         </button>
 
-        <ul class="dropdown-menu">
+        <ul class="dropdown-menu locatie-dropdown">
             @foreach($locaties as $locatie)
-                <!-- TO DO: ADD FILTER METHODE AAN BUTTON CLICK -->
-                <li><a href="#"> {{$locatie->locatie}} </a></li>
+                <li><a href="?locatie={{$locatie->locatie}}"> {{$locatie->locatie}} </a></li>
             @endforeach
         </ul>
     </div>
@@ -39,7 +37,7 @@
 
 <div id="grid" data-columns>
     @foreach ($projecten as $project)
-    <div class="thumbnail project-box">
+    <div class="thumbnail project-box locatie-{{$project->locatie}} categorie-{{$project->catNaam}}">
         <a href="project/{{$project->idProject}}"><img src="{{$project->foto}}" alt=""></a>
         <div class="location">
             <h5>

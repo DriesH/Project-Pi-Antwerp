@@ -40,7 +40,7 @@
     <body>
         <div class="container">
             <div class="content">
-                <div class="title">U hebt niet de juiste rechten om deze pagina te bekijken.</div>
+                <div class="title">Deze pagina bestaat niet.</div>
             </div>
         </div>
     </body>
