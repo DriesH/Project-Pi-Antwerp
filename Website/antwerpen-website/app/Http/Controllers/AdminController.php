@@ -933,7 +933,8 @@ class AdminController extends Controller
     protected function getProjectLijst(){
 
         $projecten = DB::table('projects')
-                      ->select('naam', 'foto', 'created_at', 'uitleg', 'idProject')
+                      ->select('naam', 'foto', 'created_at', 'uitleg', 'idProject', 'isActief')
+                      ->orderBy('projects.isActief', 'desc')
                       ->orderBy('projects.created_at', 'desc')
                       ->get();
 

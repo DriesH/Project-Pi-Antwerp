@@ -22,8 +22,11 @@
                             <a href="/admin/project-bewerken/{{$project->idProject}}"><i class="fa fa-pencil-square-o"></i></a>
                         </div>
                     </div>
-
-                    <h2><a href="/project/{{$project->idProject}}">{{ $project->naam }}</a></h2>
+                    
+                    <div class="titel-time-adminpanel">
+                        <h2><a href="/project/{{$project->idProject}}">{{ $project->naam }}</a></h2>
+                        <time><strong>Aangemaakt:</strong> {{ date('d F, Y', strtotime($project->created_at)) }}</time>
+                    </div>
 
                     @for($i = 0; $i < count($dataProject); $i++)
                         @if($dataProject[$i]->idProject == $project->idProject)
@@ -66,9 +69,13 @@
                     </div>
 
                     <div class="small-info-box">
-                        <h4>Voorlopige test</h4>
+                        <h4>Project actief</h4>
                         <p>
-                            0
+                            @if($project->isActief)
+                                <i class="fa fa-check" id="actief-vinkje"></i>
+                            @else
+                                <i class="fa fa-times" id="disable-vinkje"></i>
+                            @endif
                         </p>
                     </div>
                 </div>
