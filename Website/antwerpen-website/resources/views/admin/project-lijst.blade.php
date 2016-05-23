@@ -13,7 +13,7 @@
                 ?>
 
                 <div class="project-slice">
-                    <a id="info-btn-project-slice" class="btn btn-info pull-right" ><i class="fa fa-info-circle"></i> Uitgebreide info</a>
+                    <a id="info-btn-project-slice" class="btn btn-info pull-right" href="/admin/download/{{$project->idProject}}"><i class="fa fa-download"></i> Download feedback</a>
                     <a id="delete-btn-project-slice" class="btn btn-danger pull-right" href="/admin/project-bewerken/{{$project->idProject}}/verwijderen"><i class="fa fa-trash"></i> Verwijderen</a>
 
                     <div id="project-round-image" class="round-image" style='background-image: url({{ $project->foto }})'>
@@ -51,7 +51,7 @@
                     @endfor
 
                     <div class="small-info-box">
-                        <h4>Vragen beantwoord:</h4>
+                        <h4>Vragen beantwoord</h4>
                         <p>
                             {{ $amountAnswers }}
                         </p>

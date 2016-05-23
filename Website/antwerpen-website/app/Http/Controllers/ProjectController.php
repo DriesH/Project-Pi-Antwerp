@@ -152,7 +152,7 @@ class ProjectController extends Controller
                 ]);
               }
             }
-      return redirect('/project/' . $id)->with('message', 'Bedankt voor het deling van uw mening! We houden hier zeker rekening mee.');
+      return redirect('/project/' . $id)->with('message', 'Bedankt voor het delen van uw mening! We houden hier zeker rekening mee.');
     }
 
     public function PostProjectFollow($id, Request $request) {

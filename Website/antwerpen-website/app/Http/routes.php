@@ -88,7 +88,8 @@ Route::get('/admin/admin-lijst/verwijderen/{id}', 'AdminController@getAdminVerwi
 
 /*Project lijst*/
 Route::get('/admin/project-lijst', 'AdminController@getProjectLijst');
-
+/*Download feedback*/
+Route::get('/admin/download/{id}', 'AdminController@getDownloadFeedback');
 
 /*TEST PAGINA ROUTE*/
 Route::get('/testmap', function(){
