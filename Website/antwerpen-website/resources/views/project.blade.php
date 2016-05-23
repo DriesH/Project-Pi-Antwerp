@@ -80,7 +80,16 @@
         			<p>{{$phase->uitleg}}</p>
         			<span class="cd-date">{{ date('d F, Y', strtotime($phase->start_datum)) }}</span>
 
-                    @if($phase->status == "in-progress")
+                    <?php $isAlreadyAnswered = false; ?>
+
+                    @foreach($AnsweredPhases as $Answeredphase)
+                        @if($Answeredphase->idFase == $phase->idFase)
+                            <?php $isAlreadyAnswered = true; ?>
+                            <?php break; ?>
+                        @endif
+                    @endforeach
+
+                    @if($phase->status == "in-progress" && !$isAlreadyAnswered)
                     <a id="form-reveal" class="btn btn-info"><i class="fa fa-arrow-circle-down"></i>Vul de vragen in!</a>
                     <div class="cd-timeline-question-form" data-id="{{$phase->idFase}}">
                         <h3>Uw mening telt!</h3>
@@ -142,6 +151,12 @@
                                 </div>
                         {{ Form::close() }}
                     </div>
+                    @elseif($phase->status == "in-progress" && $isAlreadyAnswered)
+                       <div class="">
+                           <p>
+                                <strong>U hebt deze vragen al beantwoord!</strong>
+                           </p>
+                        </div>
                     @endif
         		</div> <!-- cd-timeline-content -->
         	</div> <!-- cd-timeline-block -->
