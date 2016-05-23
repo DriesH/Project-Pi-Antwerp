@@ -141,7 +141,7 @@ class ProjectController extends Controller
                     ->get();
 
 
-        $AnsweredPhases = DB::table('answers')
+        $answeredPhases = DB::table('answers')
                             ->join('questions', 'answers.idVraag', '=', 'questions.idVraag')
                             ->join('phases', 'questions.idFase', '=', 'phases.idFase')
                             ->where('phases.idProject', '=', $id)
@@ -150,6 +150,14 @@ class ProjectController extends Controller
                             ->distinct()
                             ->get();
 
+        $dataProject = DB::table('phases')
+                        ->where( 'phases.idProject' , '=', $id)
+                        ->join('questions', 'phases.idFase', '=', 'questions.idFase')
+                        ->join('answers', 'questions.idVraag', '=', 'answers.idVraag')
+                        ->get();
+
+
+        $amountAnswered = count($dataProject);
 
         return view('project', [
             'project' => $project,
@@ -158,10 +166,10 @@ class ProjectController extends Controller
             'questions' => $questions,
             'isFollowing' => $isFollowing,
             'antwoorden' => $antwoorden,
-            'AnsweredPhases' => $AnsweredPhases
+            'answeredPhases' => $answeredPhases,
+            'amountAnswered' => $amountAnswered
 
         ]);
-
     }
 
     public function PostProject($id, Request $request){
