@@ -16,8 +16,10 @@
                       'class' => 'form-horizontal',
                       'role' => 'form',
                       'files' => true)) }}
-                    <button type="submit" class="btn btn-danger"><i class="fa fa-edit"></i>Project Verwijderen</button>
-                    <a class="btn btn-info" href="/admin/project-bewerken/{{$project->idProject}}" role="button"><i class="fa fa-edit"></i>Annuleren</a>
+
+                    <a class="btn btn-warning" href="/admin/project-bewerken/{{$project->idProject}}" role="button"><i class="fa fa-ban"></i>Annuleren</a>
+                    <button type="submit" class="btn btn-danger pull-right"><i class="fa fa-trash"></i>Project Verwijderen</button>
+
                        {{ Form::close() }}
                     </div>
                 </div>
