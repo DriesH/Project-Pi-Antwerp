@@ -33,6 +33,7 @@ class ProjectController extends Controller
                           ->select('categories.naam as catNaam', 'categories.icon_class', 'projects.*')
                           ->orderBy('projects.created_at', 'desc')
                           ->get();
+          $isResetEnabled = true;
         }
         elseif (isset($request->locatie)) {
           $locatie = $request->locatie;
@@ -42,6 +43,7 @@ class ProjectController extends Controller
                           ->select('categories.naam as catNaam', 'categories.icon_class', 'projects.*')
                           ->orderBy('projects.created_at', 'desc')
                           ->get();
+        $isResetEnabled = true;
         }
         else {
           $projecten = DB::table('projects')
@@ -49,6 +51,8 @@ class ProjectController extends Controller
                           ->select('categories.naam as catNaam', 'categories.icon_class', 'projects.*')
                           ->orderBy('projects.created_at', 'desc')
                           ->get();
+
+          $isResetEnabled = false;
         }
 
 
@@ -66,6 +70,7 @@ class ProjectController extends Controller
             'projecten' => $projecten,
             'categories' => $categories,
             'locaties' => $locaties,
+            'isResetEnabled' => $isResetEnabled
         ]);
     }
 
