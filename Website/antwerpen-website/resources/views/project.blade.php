@@ -12,7 +12,7 @@
                 <?xml version="1.0" encoding="utf-8"?>
                 <!-- Generator: Adobe Illustrator 19.2.1, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
                 <svg version="1.1" id="Laag_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-                	 viewBox="0 0 78.2 125.5" style="enable-background:new 0 0 78.2 125.5;" xml:space="preserve" width="60%" height="60%">
+                	 viewBox="0 0 78.2 125.5" style="enable-background:new 0 0 78.2 125.5;" xml:space="preserve" width="55%" height="60%">
                     <style type="text/css">
                     	.st0{fill:#480F0F;}
                     	.st1{fill:#DA291C;}
@@ -21,12 +21,23 @@
                     	.st4{font-size:49.2952px;}
                     	.st5{font-size:10.1389px;}
                     	.st6{font-size:12px;}
+                        .st7{font-size:35px;}
                     </style>
                     <polygon class="st0" points="39.1,99.8 78.2,125.5 78.2,2 39.1,2 0,2 0,125.5 "/>
                     <polygon class="st1" points="39.1,97.8 78.2,123.5 78.2,0 39.1,0 0,0 0,123.5 "/>
-                    <text transform="matrix(1 0 0 1 26.9738 60.7319)" class="st2 st3 st4">3</text>
+                    @if($amountAnswered < 10)
+                        <text transform="matrix(1 0 0 1 26.9738 61.7319)" class="st2 st3 st4">{{ $amountAnswered }}</text>
+                        <text transform="matrix(1 0 0 1 54.8056 61.7318)" class="st2 st3 st6">x</text>
+                    @elseif(99 >= $amountAnswered && $amountAnswered >= 10)
+                        <text transform="matrix(1 0 0 1 5 62.7319)" class="st2 st3 st4">{{ $amountAnswered }}</text>
+                        <text transform="matrix(1 0 0 1 62 61.7318)" class="st2 st3 st6">x</text>
+                    @elseif($amountAnswered > 99)
+                        <text transform="matrix(1 0 0 1 10 62.7319)" class="st2 st3 st7">{{ $amountAnswered }}</text>
+                        <text transform="matrix(1 0 0 1 65 61.7318)" class="st2 st3 st6">x</text>
+                    @endif
+
                     <text transform="matrix(1 0 0 1 19.6256 74.0208)" class="st2 st3 st5">ingevuld</text>
-                    <text transform="matrix(1 0 0 1 54.8056 61.7318)" class="st2 st3 st6">x</text>
+
                 </svg>
 
 
@@ -106,8 +117,8 @@
 
                     <?php $isAlreadyAnswered = false; ?>
 
-                    @foreach($AnsweredPhases as $Answeredphase)
-                        @if($Answeredphase->idFase == $phase->idFase)
+                    @foreach($answeredPhases as $answeredphase)
+                        @if($answeredphase->idFase == $phase->idFase)
                             <?php $isAlreadyAnswered = true; ?>
                             <?php break; ?>
                         @endif
