@@ -90,3 +90,11 @@
 .small-info-box p{
     font-size: 4rem;
 }
+
+.admin-panel-btn{
+    display: block;
+    width: 100%;
+    margin-bottom: 1.2rem;
+    background: #2C5697;
+    border-color: rgb(3, 77, 130);
+}
