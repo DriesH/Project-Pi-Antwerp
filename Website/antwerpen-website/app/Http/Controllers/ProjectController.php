@@ -56,12 +56,19 @@ class ProjectController extends Controller
           $isResetEnabled = false;
         }
 
-        $categories = Categorie::all();
+        $categories = DB::table('projects')
+                    ->where('projects.isActief', '=', 1)
+                    ->join('categories', 'projects.idCategorie', '=', 'categories.idCategorie')
+                    ->select('categories.naam')
+                    ->distinct()
+                    ->get();
 
         //duplicates filteren
-        $locaties = array_unique(DB::table('projects')
+        $locaties = DB::table('projects')
+                    ->where('projects.isActief', '=', 1)
                     ->select('projects.locatie')
-                    ->get(), SORT_REGULAR);
+                    ->distinct()
+                    ->get();
 
 
 
@@ -97,6 +104,10 @@ class ProjectController extends Controller
         */
         //get project by id
         $project = Project::where('idProject', '=', $id)->first();
+
+        if($project == null || $project->isActief == 0){
+          abort(404);
+        }
         //get phases of project
         $phases = Phase::where('idProject', '=', $id)->get();
         //get all categories
