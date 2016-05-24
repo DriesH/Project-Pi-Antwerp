@@ -36,6 +36,7 @@ class Controller extends BaseController
         $this->isLoggedIn = false;
       }
 
+
       View::share([ 'current_user' => $this->current_user,
                     'isLoggedIn' => $this->isLoggedIn,
                     'isAdmin' => $this->isAdmin]);
