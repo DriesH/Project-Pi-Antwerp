@@ -48,7 +48,7 @@
 
                 <div class="collapse navbar-collapse" id="inlog-field">
                     <ul class="nav navbar-nav navbar-right dropdown" id="navbar-login">
-                            <li><a href="#">Speel de app! <img id="mascot-styling" src="/pictures/mascot.png" alt="mascot-van-de-website" /></a></li>
+                            <li class="speel-app"><a href="#">Speel de app! <img id="mascot-styling" src="/pictures/mascot.png" alt="mascot-van-de-website" /></a></li>
                         @if (Auth::guest())
         					<li><a href="/auth/register"><i class="fa fa-pencil-square-o"></i>Registreren</a></li>
         					<li><a href="/auth/login"><i class="fa fa-sign-in"></i>Inloggen</a></li>

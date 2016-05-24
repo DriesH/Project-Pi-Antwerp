@@ -36,6 +36,8 @@
       <a href="/" class="btn btn-default">Filter verwijderen</a>
     @endif
 
+
+
 </div>
 
 
