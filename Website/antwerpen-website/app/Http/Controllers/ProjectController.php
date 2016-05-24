@@ -12,29 +12,63 @@ use App\Categorie;
 use App\Phase;
 use App\User;
 use App\Answer;
+use App\Multiple_choice_answer;
 use Auth;
 use Illuminate\Support\Facades\Input;
 
 class ProjectController extends Controller
 {
-    public function GetProjects(){
-        /**
-        *Array bevat alle projecten en hun data.
-        *
-        *@var array
-        */
-        $projecten = DB::table('projects')
-                        ->join('categories', 'projects.idCategorie', '=', 'categories.idCategorie')
-                        ->select('categories.naam as catNaam', 'categories.icon_class', 'projects.*')
-                        ->orderBy('projects.created_at', 'desc')
-                        ->get();
+    public function GetProjects(Request $request){
 
-        $categories = Categorie::all();
+        if (isset($request->categorie)) {
+          $categorie = $request->categorie;
+          /**
+          *Array bevat alle projecten en hun data.
+          *
+          *@var array
+          */
+          $projecten = DB::table('projects')
+                          ->join('categories', 'projects.idCategorie', '=', 'categories.idCategorie')
+                          ->where('categories.naam', '=', $categorie)
+                          ->select('categories.naam as catNaam', 'categories.icon_class', 'projects.*')
+                          ->orderBy('projects.created_at', 'desc')
+                          ->get();
+
+          $isResetEnabled = true;
+        }
+        elseif (isset($request->locatie)) {
+          $locatie = $request->locatie;
+          $projecten = DB::table('projects')
+                          ->where('locatie', '=', $locatie)
+                          ->join('categories', 'projects.idCategorie', '=', 'categories.idCategorie')
+                          ->select('categories.naam as catNaam', 'categories.icon_class', 'projects.*')
+                          ->orderBy('projects.created_at', 'desc')
+                          ->get();
+        $isResetEnabled = true;
+        }
+        else {
+          $projecten = DB::table('projects')
+                          ->join('categories', 'projects.idCategorie', '=', 'categories.idCategorie')
+                          ->select('categories.naam as catNaam', 'categories.icon_class', 'projects.*')
+                          ->orderBy('projects.created_at', 'desc')
+                          ->get();
+
+          $isResetEnabled = false;
+        }
+
+        $categories = DB::table('projects')
+                    ->where('projects.isActief', '=', 1)
+                    ->join('categories', 'projects.idCategorie', '=', 'categories.idCategorie')
+                    ->select('categories.naam')
+                    ->distinct()
+                    ->get();
 
         //duplicates filteren
-        $locaties = array_unique(DB::table('projects')
+        $locaties = DB::table('projects')
+                    ->where('projects.isActief', '=', 1)
                     ->select('projects.locatie')
-                    ->get(), SORT_REGULAR);
+                    ->distinct()
+                    ->get();
 
 
 
@@ -42,6 +76,7 @@ class ProjectController extends Controller
             'projecten' => $projecten,
             'categories' => $categories,
             'locaties' => $locaties,
+            'isResetEnabled' => $isResetEnabled
         ]);
     }
 
@@ -69,6 +104,10 @@ class ProjectController extends Controller
         */
         //get project by id
         $project = Project::where('idProject', '=', $id)->first();
+
+        if($project == null || $project->isActief == 0){
+          abort(404);
+        }
         //get phases of project
         $phases = Phase::where('idProject', '=', $id)->get();
         //get all categories
@@ -113,7 +152,23 @@ class ProjectController extends Controller
                     ->get();
 
 
+        $answeredPhases = DB::table('answers')
+                            ->join('questions', 'answers.idVraag', '=', 'questions.idVraag')
+                            ->join('phases', 'questions.idFase', '=', 'phases.idFase')
+                            ->where('phases.idProject', '=', $id)
+                            ->where('idUser', '=', $userId)
+                            ->select('phases.idFase')
+                            ->distinct()
+                            ->get();
 
+        $dataProject = DB::table('phases')
+                        ->where( 'phases.idProject' , '=', $id)
+                        ->join('questions', 'phases.idFase', '=', 'questions.idFase')
+                        ->join('answers', 'questions.idVraag', '=', 'answers.idVraag')
+                        ->get();
+
+
+        $amountAnswered = count($dataProject);
 
         return view('project', [
             'project' => $project,
@@ -122,9 +177,10 @@ class ProjectController extends Controller
             'questions' => $questions,
             'isFollowing' => $isFollowing,
             'antwoorden' => $antwoorden,
+            'answeredPhases' => $answeredPhases,
+            'amountAnswered' => $amountAnswered
 
         ]);
-
     }
 
     public function PostProject($id, Request $request){
@@ -152,7 +208,7 @@ class ProjectController extends Controller
                 ]);
               }
             }
-      return redirect('/project/' . $id)->with('message', 'Bedankt voor het deling van uw mening! We houden hier zeker rekening mee.');
+      return redirect('/project/' . $id)->with('message', 'Bedankt voor het delen van uw mening! We houden hier zeker rekening mee.');
     }
 
     public function PostProjectFollow($id, Request $request) {
