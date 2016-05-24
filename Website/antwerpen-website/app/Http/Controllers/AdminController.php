@@ -42,12 +42,11 @@ class AdminController extends Controller
 
     protected function getAdminVerwijderen($id){
 
+    if (Auth::user()->id != $id) {
       User::where('id', $id)
       ->update([
       'role' => 0
     ]);
-
-    if (Auth::user()->id != $id) {
       $admins = User::orderBy('name', 'asc')
                 ->where('role', '=', 10)
                 ->select('name', 'email', 'id')
@@ -58,9 +57,9 @@ class AdminController extends Controller
               ]);
     }
     else {
-      return redirect('/admin/admin-lijst', [
+      return view('\admin\admin-lijst', [
         'admins' => $admins,
-        'error' => 'U kan uzelf niet verwijderen als administrator.'
+        'message' => 'U kan uzelf niet verwijderen als admin.'
     ]);
     }
 

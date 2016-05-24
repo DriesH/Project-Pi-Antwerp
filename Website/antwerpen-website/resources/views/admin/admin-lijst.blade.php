@@ -38,7 +38,7 @@
                           'class' => 'form-control',
                           'placeholder' => 'Naam of email van nieuwe admin...')) }}
                         <span class="input-group-btn">
-                            <button class="btn btn-primary" type="button">
+                            <button type="submit" class="btn btn-primary" type="button">
                                 <i class="fa fa-btn fa-sign-in"></i>Maak admin
                             </button>
                         </span>
