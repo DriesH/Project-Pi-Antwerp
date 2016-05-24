@@ -98,3 +98,4 @@ Route::get('/testmap', function(){
 
 /*API*/
 Route::get('/API/get/projecten', 'APIController@getProjecten');
+Route::get('/API/post/projecten/antwoord', 'APIController@postAppAntwoorden');
