@@ -45,7 +45,7 @@
     <body>
         <div class="container">
             <div class="content">
-                <img src="pictures/404.png" alt="pagina-bestaat-niet" />
+                <img src="/pictures/404.png" alt="pagina-bestaat-niet" />
                 <div class="title">Deze pagina bestaat niet.</div>
             </div>
         </div>
