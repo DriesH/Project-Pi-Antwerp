@@ -38,7 +38,7 @@
                           'class' => 'form-control',
                           'placeholder' => 'Naam of email van nieuwe admin...')) }}
                         <span class="input-group-btn">
-                            <button class="btn btn-primary" type="button">
+                            <button type="submit" class="btn btn-primary" type="button">
                                 <i class="fa fa-btn fa-sign-in"></i>Maak admin
                             </button>
                         </span>
@@ -49,9 +49,10 @@
                 {{ Form::close() }}
 
                 <div class="col-md-12">
+                    <h4>Huidige administrators</h4>
                     @foreach($admins as $admin)
                         <div class="bs-callout bs-callout-primary col-md-12">
-                            <h4>Huidige administrators</h4>
+
                             <p>
                                 Naam: <strong>{{$admin->name}}</strong>
                             </p>

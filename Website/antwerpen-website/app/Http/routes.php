@@ -86,15 +86,23 @@ Route::get('/admin/admin-lijst', 'AdminController@getAdmins');
 Route::post('/admin/admin-lijst', 'AdminController@postNieuweAdmin');
 Route::get('/admin/admin-lijst/verwijderen/{id}', 'AdminController@getAdminVerwijderen');
 
+/*App vragen*/
+Route::get('/admin/project-bewerken/{id}/appvragen', 'AdminController@getAppVragen');
+Route::get('/admin/project-bewerken/{id}/appvragen/nieuwevraag', 'AdminController@getNieuweAppVraag');
+Route::post('/admin/project-bewerken/{id}/appvragen/nieuwevraag', 'AdminController@postNieuweAppVraag');
+Route::get('/admin/project-bewerken/{id}/appvragen/{vraagid}', 'AdminController@getAppVraagBewerken');
+Route::post('/admin/project-bewerken/{id}/appvragen/{vraagid}', 'AdminController@postAppVraagBewerken');
+Route::get('/admin/project-bewerken/{id}/appvragen/verwijderen/{vraagid}', 'AdminController@getAppVraagVerwijderen');
+Route::post('/admin/project-bewerken/{id}/appvragen/verwijderen/{vraagid}', 'AdminController@postAppVraagVerwijderen');
+
+/*App uitleg*/
+Route::get('/applicatie-uitleg', 'HomeController@getApplicatieUitleg');
+
 /*Project lijst*/
 Route::get('/admin/project-lijst', 'AdminController@getProjectLijst');
 /*Download feedback*/
 Route::get('/admin/download/{id}', 'AdminController@getDownloadFeedback');
 
-/*TEST PAGINA ROUTE*/
-Route::get('/testmap', function(){
-    return view('testmap');
-});
-
 /*API*/
 Route::get('/API/get/projecten', 'APIController@getProjecten');
+Route::get('/API/post/projecten/antwoord', 'APIController@postAppAntwoorden');

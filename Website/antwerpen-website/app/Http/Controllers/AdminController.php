@@ -12,6 +12,7 @@ use App\Categorie;
 use App\Phase;
 use App\Question;
 use App\User;
+use App\Appquestion;
 use Auth;
 use Excel;
 use App\Multiple_choice_answer;
@@ -41,12 +42,11 @@ class AdminController extends Controller
 
     protected function getAdminVerwijderen($id){
 
+    if (Auth::user()->id != $id) {
       User::where('id', $id)
       ->update([
       'role' => 0
     ]);
-
-    if (Auth::user()->id != $id) {
       $admins = User::orderBy('name', 'asc')
                 ->where('role', '=', 10)
                 ->select('name', 'email', 'id')
@@ -57,9 +57,9 @@ class AdminController extends Controller
               ]);
     }
     else {
-      return redirect('/admin/admin-lijst', [
+      return view('\admin\admin-lijst', [
         'admins' => $admins,
-        'error' => 'U kan uzelf niet verwijderen als administrator.'
+        'message' => 'U kan uzelf niet verwijderen als admin.'
     ]);
     }
 
@@ -1044,4 +1044,124 @@ class AdminController extends Controller
       return redirect('/admin/project-lijst/');
 
     }
+
+    protected function getAppVragen($id){
+
+      $project = DB::table('projects')
+                    ->where('idProject', '=', $id)
+                    ->first();
+
+      $appQuestions = Appquestion::where('idProject', '=', $id)
+                      ->get();
+
+
+
+        return view('\admin\appvragen-overzicht', [
+            'project' => $project,
+            'appQuestions' => $appQuestions,
+        ]);
+    }
+
+    protected function getAppVraagBewerken($id, $vraagid){
+
+      $project = DB::table('projects')
+                    ->where('idProject', '=', $id)
+                    ->first();
+
+      $appquestion = Appquestion::where('idAppquestions', '=', $vraagid)
+                      ->first();
+
+
+
+        return view('\admin\appvraag-bewerken', [
+            'project' => $project,
+            'appquestion' => $appquestion,
+        ]);
+    }
+
+    protected function postAppVraagBewerken($id, $vraagid, Request $request){
+
+      $data = Input::all();
+
+      $validator = Validator::make($request->all(), [
+          'vraag' => 'required'
+      ]);
+
+      if ($validator->fails()) {
+           return redirect($request->url())
+                      ->withErrors($validator)
+                      ->withInput();
+      }
+
+      Appquestion::where('idAppquestions', $vraagid)
+      ->update([
+          'question' => $data['vraag']
+      ]);
+
+        return redirect('/admin/project-bewerken/' . $id . '/appvragen')->with('message', 'Appvraag succesvol aangepast.');
+    }
+
+
+    protected function getNieuweAppVraag($id){
+
+      $project = DB::table('projects')
+                    ->where('idProject', '=', $id)
+                    ->first();
+
+
+
+        return view('\admin\nieuwe-appvraag', [
+            'project' => $project
+        ]);
+    }
+
+    protected function postNieuweAppVraag($id, Request $request){
+
+      $data = Input::all();
+
+      $validator = Validator::make($request->all(), [
+          'vraag' => 'required'
+      ]);
+
+      if ($validator->fails()) {
+           return redirect($request->url())
+                      ->withErrors($validator)
+                      ->withInput();
+      }
+
+      Appquestion::create([
+          'question' => $data['vraag'],
+          'idProject' => $id
+      ]);
+
+
+        return redirect('/admin/project-bewerken/' . $id . '/appvragen')->with('message', 'Appvraag succesvol toegevoegd.');
+    }
+
+    protected function getAppVraagVerwijderen($id, $vraagid){
+
+      $project = DB::table('projects')
+                    ->where('idProject', '=', $id)
+                    ->first();
+
+      $appquestion = Appquestion::where('idAppquestions', '=', $vraagid)
+                    ->first();
+
+        return view('\admin\appvraag-verwijderen', [
+            'project' => $project,
+            'appquestion' => $appquestion
+        ]);
+    }
+
+    protected function postAppVraagVerwijderen($id, $vraagid){
+
+      DB::table('Appquestions')->where('idAppquestions', '=', $vraagid)
+                          ->delete();
+
+      return redirect('/admin/project-bewerken/' . $id . '/appvragen')->with('message', 'Appvraag succesvol verwijderd.');
+    }
+
+
+
+
 }

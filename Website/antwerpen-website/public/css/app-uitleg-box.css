@@ -1,0 +1,18 @@
+.container .jumbotron, .jumbotron, .app-uitleg-box{
+    border-radius: 0;
+    color: white;
+    background: white;
+}
+
+.app-uitleg-box img{
+    width: 15%;
+}
+
+.absolute-img-overlay img{
+    width: 15%;
+    position: absolute;
+}
+
+.overlay-banner{
+    
+}

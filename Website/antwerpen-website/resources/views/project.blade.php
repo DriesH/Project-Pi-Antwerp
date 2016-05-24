@@ -4,13 +4,9 @@
     @if ( session()->has('message') )
         <div class="alert alert-success alert-dismissable">{{ session()->get('message') }}</div>
     @endif
-
-
     <div class="project-big-box col-md-10 col-md-push-1 col-xs-12 col-xs-push-0">
         <div class="project-hero-img">
             <div id="svg-banner-ingevuld">
-                <?xml version="1.0" encoding="utf-8"?>
-                <!-- Generator: Adobe Illustrator 19.2.1, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
                 <svg version="1.1" id="Laag_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
                 	 viewBox="0 0 78.2 125.5" style="enable-background:new 0 0 78.2 125.5;" xml:space="preserve" width="55%" height="60%">
                     <style type="text/css">
@@ -59,7 +55,7 @@
                 <!--  VVV - FIX NEEDED HERE - VVV  -->
                 <!--  VVV VVVVVVVVVVVVVVVVVVV VVV  -->
 
-                @if (!Auth::guest() && Auth::user()->role == 10)
+                @if (!$isLoggedIn && $isAdmin)
                     <a href="/admin/project-bewerken/{{$project->idProject}}" class="bewerken-link pull-right"><i class="fa fa-pencil-square-o"></i>Bewerken</a>
                 @endif
             </p>
@@ -82,7 +78,7 @@
         <!--  VVV - FIX NEEDED HERE - VVV  -->
         <!--  VVV VVVVVVVVVVVVVVVVVVV VVV  -->
 
-        @if (Auth::guest())
+        @if ($isLoggedIn)
 
         @else
             {{ Form::open(array(

@@ -46,7 +46,8 @@ i{
 
 
 .navbar-nav>li>#page-title{
-    padding: 30.5px;
+    padding-top: 30.5px;
+    padding-bottom: 30.5px;
 }
 
 .navbar-nav>li>a>h1{
@@ -54,6 +55,31 @@ i{
     font-family: "Antwerpen";
     margin: 0;
 }
+
+#mascot-styling{
+    width: 70px;
+    margin-top: -7px;
+    margin-left: 10px;
+}
+
+.speel-app{
+    display: block;;
+}
+
+@media screen and (min-width: 1px) and (max-width: 990px){
+    #mascot-styling{
+        display: none;
+    }
+
+    .speel-app{
+        display: none;
+    }
+
+    .navbar-nav>li>#page-title{
+        display: none;
+    }
+}
+
 
 #content{
     padding: 0;
