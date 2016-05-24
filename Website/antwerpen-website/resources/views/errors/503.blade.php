@@ -45,7 +45,7 @@
     <body>
         <div class="container">
             <div class="content">
-                <img src="pictures/access-denied.png" alt="geen-toegang" />
+                <img src="/pictures/access-denied.png" alt="geen-toegang" />
                 <div class="title">U hebt niet de juiste rechten om deze pagina te bekijken.</div>
             </div>
         </div>

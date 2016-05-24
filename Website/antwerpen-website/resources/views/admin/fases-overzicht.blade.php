@@ -16,7 +16,7 @@
 
                     @if($fases->count() > 0)
 
-                        <a class="btn btn-success" href="nieuwefase" role="button"><i class="fa fa-plus"></i>Niewe fase aanmaken</a>
+                        <a class="btn btn-success" href="nieuwefase" role="button"><i class="fa fa-plus"></i>Nieuwe fase aanmaken</a>
 
                         @foreach($fases as $fase)
                             <div class="bs-callout bs-callout-primary"><h3>Fase {{$fase->faseNummer}}: {{$fase->title}}</h3>

@@ -18,7 +18,7 @@
                       'files' => true)) }}
 
                     <a class="btn btn-warning" href="/admin/project-bewerken/{{$project->idProject}}" role="button"><i class="fa fa-ban"></i>Annuleren</a>
-                    <button type="submit" class="btn btn-danger pull-right"><i class="fa fa-trash"></i>Project Verwijderen</button>
+                    <button type="submit" class="btn btn-danger pull-right"><i class="fa fa-trash"></i>Project verwijderen</button>
 
                        {{ Form::close() }}
                     </div>
