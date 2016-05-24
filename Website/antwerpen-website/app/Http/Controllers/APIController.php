@@ -8,6 +8,7 @@ use App\Http\Requests;
 
 use DB;
 use Response;
+use File;
 
 class APIController extends Controller
 {
@@ -37,11 +38,10 @@ class APIController extends Controller
 
     }
 
-    protected function postAntwoordenProjecten(){
-
-        //soon...
+    protected function postAppAntwoorden(Request $request){
 
 
+      File::put('testlog.txt', $request['test']);
 
     }
 
