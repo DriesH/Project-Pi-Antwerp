@@ -14,7 +14,7 @@
                 margin: 0;
                 padding: 0;
                 width: 100%;
-                color: #B0BEC5;
+                color: #2e3234;
                 display: table;
                 font-weight: 100;
                 font-family: 'Lato';
@@ -35,11 +35,17 @@
                 font-size: 72px;
                 margin-bottom: 40px;
             }
+
+            img {
+              width: 50%;
+              height: auto;
+            }
         </style>
     </head>
     <body>
         <div class="container">
             <div class="content">
+                <img src="pictures/404.png" alt="pagina-bestaat-niet" />
                 <div class="title">Deze pagina bestaat niet.</div>
             </div>
         </div>
