@@ -10,6 +10,8 @@ use DB;
 use Response;
 use File;
 
+use App\Appanswer;
+
 
 class APIController extends Controller
 {
@@ -26,27 +28,52 @@ class APIController extends Controller
         */
         $projecten = DB::table('projects')
                         ->join('categories', 'projects.idCategorie', '=', 'categories.idCategorie')
-                        ->join('appquestions', 'projects.idProject', '=', 'appquestions.idProject')
-                        ->select('categories.naam as catNaam', 'projects.*', 'appquestions.*')
+                        ->select('categories.naam as catNaam', 'projects.*')
                         ->orderBy('projects.created_at', 'desc')
                         ->get();
 
-        $projecten_array = [
-            'projecten' => $projecten
+        $appvragen = DB::table('appquestions')
+                        ->orderBy('appquestions.idProject', 'asc')
+                        ->get();
+
+        $projecten_vragen_array = [
+            'projecten' => $projecten,
+            'appvragen' => $appvragen
         ];
 
-        return Response::json($projecten_array);
+        return Response::json($projecten_vragen_array);
 
     }
 
     protected function postAppAntwoorden(Request $request){
 
+      Appanswer::create([
+          'answer' => $request['answerUser'],
+          'idAppquestions' => $request['questionID'],
 
+      ]);
 
-      File::put('testlog.txt', $request['projectID']);
-      File::append('testlog.txt', $request['questionID']);
-      File::append('testlog.txt', $request['answerUser']);
+      $allAnswers = DB::table('appanswers')
+                            ->where('appanswers.idAppquestions', '=', $request['questionID'])
+                            ->orderBy('appanswers.answer', 'asc')
+                            ->get();
 
+      $totalAmountOfAnswers = count($allAnswers);
+
+      $sameAnswers = DB::table('appanswers')
+                            ->where('appanswers.idAppquestions', '=', $request['questionID'])
+                            ->where('appanswers.answer', '=', $request['answerUser'])
+                            ->orderBy('appanswers.answer', 'asc')
+                            ->get();
+      $totalSameAnswers = count($sameAnswers);
+
+      $percentageSameAnswer = ($totalSameAnswers / $totalAmountOfAnswers) * 100;
+
+      $appanswers_array = [
+          'percentageSameAnswer' => $percentageSameAnswer
+      ];
+
+      return Response::json($appanswers_array);
 
     }
 
