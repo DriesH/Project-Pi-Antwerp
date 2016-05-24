@@ -8,11 +8,17 @@ public class QuestionLogic : ReadJson {
   public Text loadingText         = null;
   public GameObject questionPanel = null; //the panel that alternatively will be set to hide or appear
 
-  private int currentQuestion     = 0; //so the script knows which question to show
+  protected static int currentQuestion     = 0; //so the script knows which question to show
   private string[] questions;     //to save all the questions for the database
-
-  private SnakeV2 boolChecker;  //to save the script to check the bool in this script
+ 
+  protected SnakeV2 boolChecker;  //to save the script to check the bool in this script
   public GameObject snake;      //also used to check the bool
+
+
+  //nog verder
+  protected string[] projectIDs = null; //mag in string
+  protected string[] questionIDs = null; //mag in string
+  protected string answerUser = "";
 
   void Start()
   {
@@ -48,10 +54,15 @@ public class QuestionLogic : ReadJson {
   void loadInQuestions()
   {
     questionPanel.SetActive(true); //show the panel when the game starts
-    questions = new string[numberOfQuestions]; //make the array as long as the amount of questions found in the database
-    for (int i = 0; i < databaseQuestions.Count; i++) //put each question from the databaselist into the questionArray
+    questions   = new string[numberOfQuestions]; //make the array as long as the amount of questions found in the database
+    projectIDs = new string[numberOfQuestions];
+    questionIDs = new string[numberOfQuestions];
+    
+    for (int i = 0; i < databaseQuestions.Count; i++) 
     {
-      questions[i] = databaseQuestions[i];
+      questions[i]   = databaseQuestions[i]; //put each question from the databaselist into the questionArray
+      projectIDs[i]  = databaseIDQuestions[i]; //put each ID from the database into the array
+      questionIDs[i] = databaseIDProjectQuestions[i]; //put each idproject of the question in the array
     }
     loadingText.enabled = false;
   }

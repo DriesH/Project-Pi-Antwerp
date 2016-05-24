@@ -2,37 +2,82 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
-//using LitJson;
+using LitJson;
 
-public class WriteJson : MonoBehaviour {
+public class WriteJson : QuestionLogic { // ==> andere naam geven
+
+  private JsonData dataForFeedback  = null; //the data that will be used to select the data needed from the json file
   
-  private string writeURL = "";
-  private Dictionary<string, string> answers = new Dictionary<string, string>();
+  //overerven van questionlogic
+  private string writeURL           = "";
+  private string currProjectID      = ""; //mag in string
+  private string currQuestionID     = ""; //mag in string
+  private string answerUser         = ""; //echt het woord typen
 
 	void Start () {
-    answers.Add("Question1", "AnswerA");
 
-    StartCoroutine(writeToFile());
+    //testdata
+   /* currProjectID = "10";
+    currQuestionID = "5";
+    answerUser = "zeer_eens";*/
 	}
 
-  IEnumerator writeToFile () { //Ienum wacht op de yield, wa hier gwn de data ophalen is (is standaard)
-    WWWForm form = new WWWForm();
-    foreach (KeyValuePair<string, string> post_arg in answers)
+  void LateUpdate()
+  { 
+    if (boolChecker.whichFoodwasPickedUp != "") //if an answer is given
     {
-      form.AddField(post_arg.Key, post_arg.Value); //stopt dictionary in een form
+      currProjectID  = projectIDs[currentQuestion];
+      currQuestionID = questionIDs[currentQuestion];
+  
+      WhichAnswer(boolChecker.whichFoodwasPickedUp); //to get answerUser
+      boolChecker.whichFoodwasPickedUp = ""; //reset this variable
+      
+      //DON'T CHANGE URL
+      writeURL = "http://pi.multimediatechnology.be/API/post/projecten/antwoord?projectID=" + currProjectID + "&questionID=" + currQuestionID + "&answerUser=" + answerUser;
+      StartCoroutine(writeToServer());
     }
-    WWW www = new WWW(writeURL, form); //stuurt form naar URL
-    yield return www;
-
- 
-
-    File.WriteAllText(Application.dataPath + "/06 Resources/writeJson.json", www.text);
-    File.WriteAllText(Application.dataPath + "/06 Resources/writeJson.json", form.data[0].ToString());
-    Debug.Log("File written");
   }
 
-}
 
-//postdata: A byte array of data to be posted to the url. => zelfde data als form
-//headers 	A dictionary that contains the header keys and values to pass to the server.s
-//  vb van url voor POSTEN : http://pi.multimediatechnology.be/API/post?antwoord=Juist&?user=1?&project=1
+  IEnumerator writeToServer () { 
+    WWW www = new WWW(writeURL); //stuurt form naar URL
+    yield return www;
+
+    readAllForFeedback(www.text);
+
+    //status teruggestuurd  met www.text ==> uitprinten ==> zien hoe we enkel die status kunnen krijgen (eerste lijn?)
+
+    Debug.Log("Getalkt met server.");
+  }
+
+  void readAllForFeedback(string feedbackURL)
+  {
+     dataForFeedback = JsonMapper.ToObject(feedbackURL); //parse it into a JsonObject
+
+    //data nog inlezen voor feedback, pie chart
+  }
+
+  void WhichAnswer(string food_tag)
+  {
+    switch (food_tag)
+    { 
+      case "food_1":
+        answerUser = "zeer_eens";
+        break;
+      case "food_2":
+        answerUser = "eens";
+        break;
+      case "food_3":
+        answerUser = "oneens";
+        break;
+      case "food_4":
+        answerUser = "zeer_oneens";
+        break;
+      default: //in case a wrong tag is given, this is the defaultanwser
+        answerUser = "zeer_eens";
+        break;
+    }
+  }
+
+
+}

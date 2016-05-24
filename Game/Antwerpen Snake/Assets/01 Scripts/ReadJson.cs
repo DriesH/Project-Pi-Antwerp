@@ -14,7 +14,10 @@ public class ReadJson : MonoBehaviour {
   protected static List<string> databaseDescriptions = new List<string>(); //descriptions of the projects that need to be loaded from the database
   protected static List<string> databaseImages       = new List<string>(); //images of the projects that need to be loaded from the database (saven in longtext in database)
   protected static List<string> databaseIDProjects   = new List<string>(); //the id of the projects that need to be loaded from the database to follow the URL (in string since it has to be a string later on anyway)
+  
   protected static List<string> databaseQuestions    = new List<string>(); //load the questions from the database in this
+  protected static List<string> databaseIDQuestions  = new List<string>(); //load the questions ID from the database in this
+  protected static List<string> databaseIDProjectQuestions = new List<string>(); //load the ID that link to the question from the database in this
 
   protected static int numberOfProjects              = 0; //the number of total projects is standard 0
   protected static int numberOfQuestions             = 0; //the number of total questions is standard 0
@@ -36,7 +39,7 @@ public class ReadJson : MonoBehaviour {
     {
       GetQuestionsFromDatabase(www.text);
     }
-   }
+  }
 
   void GetProjectInfoFromDatabase(string urlApi) //if there is nothing declared before void, the method is always private
   {
@@ -44,6 +47,7 @@ public class ReadJson : MonoBehaviour {
 
     for (int i = 0; i < itemData["projecten"].Count; i++) //for each project
     {
+      //always try to parse them into a string, just to be sure
       databaseTitles.Add((string)itemData["projecten"][i]["naam"]); //read in eveything from the database that has the key 'projecten' and the value 'name'
       databaseDescriptions.Add((string)itemData["projecten"][i]["uitleg"]);//read in eveything from the database that has the key 'projecten' and the value 'uitleg'
       databaseIDProjects.Add((string)itemData["projecten"][i]["idProject"]); //read in eveything from the database that has the key 'projecten' and the value 'idProject'
@@ -60,6 +64,8 @@ public class ReadJson : MonoBehaviour {
     for (int i = 0; i < itemData["Vragen"].Count; i++) //for each project
     {
       databaseQuestions.Add((string)itemData["Vrgan"][i]["nog iets?"]); //==> nog aanpassen
+      databaseIDQuestions.Add((string)itemData["vragen"][i]["id"]); //nog aanpassen
+      databaseIDProjectQuestions.Add((string)itemData["vragen"][i]["idproject"]); //nog aanpassen
     }
     numberOfQuestions = itemData["vragen"].Count; // ==> nog aanpassen
     readyToPlay = true;

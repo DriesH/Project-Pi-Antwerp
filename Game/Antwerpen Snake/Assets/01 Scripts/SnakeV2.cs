@@ -11,9 +11,10 @@ public class SnakeV2 : TouchLogic {
   private float     maxDist               = 1; //the maximumdistance between snake and finger until it moves again
 
   public GameObject food                  = null;
-  public bool       isPlayingGame         =false;// is the game playing or are we answering a question
-
   public GameObject questionPanel         = null; //the panel that alternatively will be set to hide or appear
+  public bool isPlayingGame               = false;// is the game playing or are we answering a question
+
+  public string whichFoodwasPickedUp   = ""; //so the next script knows which answer was given
 
   void Start()
   {
@@ -88,6 +89,7 @@ public class SnakeV2 : TouchLogic {
       transform.position = beginPosSnake; //test zet snake op begin
       isPlayingGame = false;
       questionPanel.SetActive(true);
+      whichFoodwasPickedUp = c.tag;
     }
     else if (c.tag.StartsWith("respawn")) // respawn when player oved to the middle
     {
