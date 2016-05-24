@@ -20,6 +20,8 @@ class HomeController extends Controller
 
         $userId = Auth::id();
 
+        $current_user = Auth::user();
+
         $followingProjectsId = DB::table('user_follows')
                             ->select('user_follows.project_id')
                             ->where('user_follows.user_id', '=', $userId)
@@ -38,6 +40,7 @@ class HomeController extends Controller
 
         return view('\dashboard', [
             'projects' => $projects,
+            'current_user' => $current_user,
         ]);
     }
 

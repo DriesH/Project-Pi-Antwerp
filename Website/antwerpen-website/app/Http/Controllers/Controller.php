@@ -20,9 +20,11 @@ class Controller extends BaseController
 
     public function __construct(){
 
+        //$this->middleware('auth');
+
         $this->current_user = Auth::user();
 
-        dd($this->current_user);
+        //dd($this->current_user);
 
         if(!Auth::guest()){
             $this->current_user = Auth::user();
@@ -39,9 +41,9 @@ class Controller extends BaseController
             $this->isLoggedIn = false;
         }
 
-      View::share('current_user', $this->current_user);
-      View::share('isLoggedIn', $this->isLoggedIn);
-      View::share('isAdmin', $this->isAdmin);
+      view()->share('current_user', $this->current_user);
+      view()->share('isLoggedIn', $this->isLoggedIn);
+      view()->share('isAdmin', $this->isAdmin);
 
     }
 }

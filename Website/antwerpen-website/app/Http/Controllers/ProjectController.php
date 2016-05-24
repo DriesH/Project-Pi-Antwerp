@@ -77,7 +77,7 @@ class ProjectController extends Controller
             'projecten' => $projecten,
             'categories' => $categories,
             'locaties' => $locaties,
-            'isResetEnabled' => $isResetEnabled
+            'isResetEnabled' => $isResetEnabled,
         ]);
     }
 
