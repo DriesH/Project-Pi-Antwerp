@@ -13,32 +13,37 @@ use View;
 class Controller extends BaseController
 {
     use AuthorizesRequests, AuthorizesResources, DispatchesJobs, ValidatesRequests;
+
     protected $current_user;
     protected $isAdmin = false;
     protected $isLoggedIn = false;
 
     public function __construct(){
 
-      $this->current_user = "test";
+        //$this->middleware('auth');
 
-      if(!Auth::guest()){
         $this->current_user = Auth::user();
-        $this->isLoggedIn = true;
 
-        if($this->current_user->role == 10){
-          $this->isAdmin = true;
+        //dd($this->current_user);
+
+        if(!Auth::guest()){
+            $this->current_user = Auth::user();
+            $this->isLoggedIn = true;
+
+            if($this->current_user->role == 10){
+                $this->isAdmin = true;
+            }
+            else {
+                $this->isAdmin = false;
+            }
         }
         else {
-          $this->isAdmin = false;
+            $this->isLoggedIn = false;
         }
-      }
-      else {
-        $this->isLoggedIn = false;
-      }
 
+      view()->share('current_user', $this->current_user);
+      view()->share('isLoggedIn', $this->isLoggedIn);
+      view()->share('isAdmin', $this->isAdmin);
 
-      View::share([ 'current_user' => $this->current_user,
-                    'isLoggedIn' => $this->isLoggedIn,
-                    'isAdmin' => $this->isAdmin]);
     }
 }

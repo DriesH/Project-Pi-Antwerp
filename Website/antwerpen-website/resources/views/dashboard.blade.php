@@ -11,10 +11,10 @@
     <div class="panel panel-default profile-box col-md-3 col-sm-3 col-xs-12">
         <img class="profile-picture-big center-block" src="/pictures/a-logo.svg" alt="" />
         <p>
-            {{Auth::user()->name}}
+            {{$current_user->name}}
         </p>
         <p>
-            {{Auth::user()->email}}
+            {{$current_user->email}}
         </p>
     </div>
 

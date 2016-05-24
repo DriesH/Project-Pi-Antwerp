@@ -16,6 +16,7 @@ use App\Multiple_choice_answer;
 use Auth;
 use Illuminate\Support\Facades\Input;
 
+
 class ProjectController extends Controller
 {
     public function GetProjects(Request $request){
@@ -76,7 +77,7 @@ class ProjectController extends Controller
             'projecten' => $projecten,
             'categories' => $categories,
             'locaties' => $locaties,
-            'isResetEnabled' => $isResetEnabled
+            'isResetEnabled' => $isResetEnabled,
         ]);
     }
 

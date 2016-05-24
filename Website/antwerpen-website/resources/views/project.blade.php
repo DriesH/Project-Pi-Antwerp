@@ -55,7 +55,7 @@
                 <!--  VVV - FIX NEEDED HERE - VVV  -->
                 <!--  VVV VVVVVVVVVVVVVVVVVVV VVV  -->
 
-                @if (!Auth::guest() && Auth::user()->role == 10)
+                @if (!$isLoggedIn && $isAdmin)
                     <a href="/admin/project-bewerken/{{$project->idProject}}" class="bewerken-link pull-right"><i class="fa fa-pencil-square-o"></i>Bewerken</a>
                 @endif
             </p>
@@ -78,7 +78,7 @@
         <!--  VVV - FIX NEEDED HERE - VVV  -->
         <!--  VVV VVVVVVVVVVVVVVVVVVV VVV  -->
 
-        @if (Auth::guest())
+        @if ($isLoggedIn)
 
         @else
             {{ Form::open(array(
