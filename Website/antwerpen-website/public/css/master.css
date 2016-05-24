@@ -46,7 +46,8 @@ i{
 
 
 .navbar-nav>li>#page-title{
-    padding: 30.5px;
+    padding-top: 30.5px;
+    padding-bottom: 30.5px;
 }
 
 .navbar-nav>li>a>h1{
@@ -54,6 +55,22 @@ i{
     font-family: "Antwerpen";
     margin: 0;
 }
+
+#mascot-styling{
+    width: 70px;
+    padding-top: 8px;
+}
+
+@media screen and (min-width: 1px) and (max-width: 767px){
+    #mascot-styling{
+        display: none;
+    }
+
+    .navbar-nav>li>#page-title{
+        display: none;
+    }
+}
+
 
 #content{
     padding: 0;

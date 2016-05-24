@@ -41,7 +41,8 @@
                         <img src="/pictures/a-logo.svg" alt="a-logo" />
                     </a>
                     <ul class="nav navbar-nav navbar-left">
-                        <li><a id="page-title" href="/"><h1>Projecten</h1></a></li>
+                        <li><a id="page-title" href="/"><h1> Projecten</h1></a></li>
+                        <li><a href="#"><img id="mascot-styling" src="/pictures/mascot.png" alt="mascot-van-de-website" /></a></li>
                     </ul>
                 </div>
 
