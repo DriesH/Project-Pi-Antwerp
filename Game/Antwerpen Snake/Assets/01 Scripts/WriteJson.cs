@@ -4,38 +4,38 @@ using System.Collections.Generic;
 using System.IO;
 using LitJson;
 
-public class WriteJson : QuestionLogic { // ==> andere naam geven
+public class WriteJson : MonoBehaviour { // ==> andere naam geven OVERERVEN VAN QUESTIONLOGIC (als je overerft, gaat er iets mis)
 
   private JsonData dataForFeedback  = null; //the data that will be used to select the data needed from the json file
   
   //overerven van questionlogic
   private string writeURL           = "";
-  private string currProjectID      = ""; //mag in string
   private string currQuestionID     = ""; //mag in string
   private string answerUser         = ""; //echt het woord typen
 
 	void Start () {
 
-    //testdata
-   /* currProjectID = "10";
-    currQuestionID = "5";
-    answerUser = "zeer_eens";*/
+   /* //testdata
+    currQuestionID = "23";
+    answerUser = "zeer_eens";
+
+    writeURL = "http://pi.multimediatechnology.be/API/post/projecten/antwoord?questionID=" + currQuestionID + "&answerUser=" + answerUser;
+    StartCoroutine(writeToServer());*/
 	}
 
   void LateUpdate()
   { 
-    if (boolChecker.whichFoodwasPickedUp != "") //if an answer is given
+    /*if (boolChecker.whichFoodwasPickedUp != "") //if an answer is given
     {
-      currProjectID  = projectIDs[currentQuestion];
       currQuestionID = questionIDs[currentQuestion];
   
       WhichAnswer(boolChecker.whichFoodwasPickedUp); //to get answerUser
       boolChecker.whichFoodwasPickedUp = ""; //reset this variable
       
       //DON'T CHANGE URL
-      writeURL = "http://pi.multimediatechnology.be/API/post/projecten/antwoord?projectID=" + currProjectID + "&questionID=" + currQuestionID + "&answerUser=" + answerUser;
+      writeURL = "http://pi.multimediatechnology.be/API/post/projecten/antwoord?questionID=" + currQuestionID + "&answerUser=" + answerUser;
       StartCoroutine(writeToServer());
-    }
+    }*/
   }
 
 
@@ -45,8 +45,6 @@ public class WriteJson : QuestionLogic { // ==> andere naam geven
 
     readAllForFeedback(www.text);
 
-    //status teruggestuurd  met www.text ==> uitprinten ==> zien hoe we enkel die status kunnen krijgen (eerste lijn?)
-
     Debug.Log("Getalkt met server.");
   }
 
@@ -54,7 +52,8 @@ public class WriteJson : QuestionLogic { // ==> andere naam geven
   {
      dataForFeedback = JsonMapper.ToObject(feedbackURL); //parse it into a JsonObject
 
-    //data nog inlezen voor feedback, pie chart
+    //data nog inlezen voor feedback, pie chart ==> nog percent toevoegen
+    //==> enkel feedback voor gekozen antwoord
   }
 
   void WhichAnswer(string food_tag)
@@ -78,6 +77,4 @@ public class WriteJson : QuestionLogic { // ==> andere naam geven
         break;
     }
   }
-
-
 }

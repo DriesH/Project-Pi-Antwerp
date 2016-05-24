@@ -22,25 +22,14 @@ public class QuestionLogic : ReadJson {
 
   void Start()
   {
-//    StartCoroutine(GetDatabase(urlProject, "Question")); //start the method from ReadJson so it's the first to begin
+    StartCoroutine(GetDatabase(urlProject, "Question")); //start the method from ReadJson so it's the first to begin
 
     boolChecker = snake.GetComponent<SnakeV2>(); //and get the script from this gameobject to check the bool later
     loadingText.enabled = true;
   }
 
 	void Update() {
-    if (!boolChecker.isPlayingGame) //if the game is NOT playing (checks from snakeV2 script)
-    {
-      if (currentQuestion < numberOfQuestions) //there are still questions left
-      {
-        questionText.text = questions[currentQuestion]; //show the current question
-        questionPanel.SetActive(true); // and show the panel
-      }
-      else if (currentQuestion >= numberOfQuestions) //no questions left
-      {
-        questionText.text = "Je hebt alle vragen beantwoord!";
-      }
-    }
+    
 	}
 
   void LateUpdate(){
@@ -51,13 +40,13 @@ public class QuestionLogic : ReadJson {
     }
   }
 
-  void loadInQuestions()
+  void loadInQuestions() //moet vele later beginnen
   {
     questionPanel.SetActive(true); //show the panel when the game starts
     questions   = new string[numberOfQuestions]; //make the array as long as the amount of questions found in the database
     projectIDs = new string[numberOfQuestions];
     questionIDs = new string[numberOfQuestions];
-    
+
     for (int i = 0; i < databaseQuestions.Count; i++) 
     {
       questions[i]   = databaseQuestions[i]; //put each question from the databaselist into the questionArray
@@ -65,6 +54,27 @@ public class QuestionLogic : ReadJson {
       questionIDs[i] = databaseIDProjectQuestions[i]; //put each idproject of the question in the array
     }
     loadingText.enabled = false;
+
+    ShowQuestion();
+  }
+
+  void ShowQuestion()
+  {
+    if (questionText != null)
+    {
+      if (!boolChecker.isPlayingGame) //if the game is NOT playing (checks from snakeV2 script)
+      {
+        if (currentQuestion < numberOfQuestions) //there are still questions left
+        {
+          questionText.text = questions[currentQuestion]; //show the current question  ===> methode moet later opstarten
+          questionPanel.SetActive(true); // and show the panel
+        }
+        else if (currentQuestion >= numberOfQuestions) //no questions left
+        {
+          questionText.text = "Je hebt alle vragen beantwoord!";
+        }
+      }
+    }
   }
 
   public void QuestionButtonPress(){ //when the button on the questionPanel is pressed
