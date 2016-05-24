@@ -38,10 +38,16 @@ class HomeController extends Controller
                     ->whereIn('projects.idProject', $followingProjectIdArray)
                     ->get();
 
-        return view('\dashboard', [
+        return view('dashboard', [
             'projects' => $projects,
             'current_user' => $current_user,
         ]);
+    }
+
+
+    public function getApplicatieUitleg(){
+        return view('applicatie-overzicht');
+
     }
 
 }

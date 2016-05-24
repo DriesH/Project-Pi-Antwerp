@@ -15,7 +15,7 @@
                       'url' => Request::fullUrl(),
                       'class' => 'form-horizontal',
                       'role' => 'form')) }}
-                    <button type="submit" class="btn btn-danger"><i class="fa fa-edit"></i>Vraag Verwijderen</button>
+                    <button type="submit" class="btn btn-danger"><i class="fa fa-edit"></i>Vraag verwijderen</button>
                     <a class="btn btn-default" href="/admin/project-bewerken/{{$project->idProject}}/fases/{{$fase->faseNummer}}/vragen" role="button"><i class="fa fa-edit"></i>Annuleren</a>
                        {{ Form::close() }}
                     </div>

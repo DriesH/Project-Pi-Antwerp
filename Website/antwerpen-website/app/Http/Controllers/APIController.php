@@ -42,7 +42,11 @@ class APIController extends Controller
     protected function postAppAntwoorden(Request $request){
 
 
-      File::put('testlog.txt', $request['test']);
+
+      File::put('testlog.txt', $request['projectID']);
+      File::append('testlog.txt', $request['questionID']);
+      File::append('testlog.txt', $request['answerUser']);
+
 
     }
 
