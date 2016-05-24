@@ -113,7 +113,7 @@
 
             <div class="panel panel-info">
                 <div class="panel-heading">
-                    <h4><img src="/pictures/mascot.png" alt="app-mascot"/>Appvragen bewerken</h4>
+                    <h4><img id="small-mascot-icon" src="/pictures/mascot.png" alt="app-mascot" />Appvragen bewerken</h4>
                 </div>
                 <div class="panel-body">
                     <a class="btn btn-primary center-block" href="{{$project->idProject}}/appvragen" role="button"><i class="fa fa-edit"></i>Appvragen bewerken</a>

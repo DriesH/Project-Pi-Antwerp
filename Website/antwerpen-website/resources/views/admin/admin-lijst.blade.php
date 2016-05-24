@@ -49,9 +49,10 @@
                 {{ Form::close() }}
 
                 <div class="col-md-12">
+                    <h4>Huidige administrators</h4>
                     @foreach($admins as $admin)
                         <div class="bs-callout bs-callout-primary col-md-12">
-                            <h4>Huidige administrators</h4>
+
                             <p>
                                 Naam: <strong>{{$admin->name}}</strong>
                             </p>
