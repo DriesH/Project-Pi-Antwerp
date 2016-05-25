@@ -53,7 +53,7 @@ public class PanelProject : ReadJson //the only thing to check ==> setparent met
       if (www.error == null)
       { 
         Sprite sprite = new Sprite();
-        sprite = Sprite.Create(www.texture, new Rect(0, 0, 925, 450), new Vector2(0.5f, 0.5f)); //same size and pivot as the prefabimage
+        sprite = Sprite.Create(www.texture, new Rect(0, 0, www.texture.width, www.texture.height), new Vector2(0.5f, 0.5f)); //same size and pivot as the prefabimage
         savedSprites[i] = sprite; //save the sprites in an array for the MakePanels()-method
         www.Dispose(); //get rid of the www so the next one can be loaded
       }

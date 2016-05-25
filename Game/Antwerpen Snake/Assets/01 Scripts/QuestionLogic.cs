@@ -11,27 +11,31 @@ public class QuestionLogic : ReadJson {
   protected static int currentQuestion     = 0; //so the script knows which question to show
   private string[] questions      = null;  //to save all the questions for the database
  
-  //to get the script from the player so the variables of that script can be used
-  public GameObject snake         = null;      
-  protected SnakeV2 snakeScript   = null;  
-
   protected string[] projectIDs   = null; //saved in string to prevent constant converting, 
-  protected string[] questionIDs  = null; //mag in string
-  protected string answerUser     = "";
+  protected static string[] questionIDs  = null; //mag in string
+  protected string whatWasPickedUp = "";
+  private bool questionsLoaded = false;
 
   void Start()
   {
-    StartCoroutine(GetDatabase(urlProject, "Question")); //start the method from ReadJson so it's the first to begin
-
-    snakeScript = snake.GetComponent<SnakeV2>(); //and get the script from this gameobject to check the bool later
     loadingText.enabled = true; //when the game starts, show the loadingtext
+    if (this.tag == "Buttontest") //make sure that this script that is linked to several objects, only is excecuted when it's linked to the tag Buttontest
+    { 
+    StartCoroutine(GetDatabase(urlProject, "Question")); //start the method from ReadJson so it's the first to begin
+    }
   }
 
-  void LateUpdate(){
-    if (readyToPlay) //check if all questions are loaded from the database
+  void Update(){
+    while (readyToPlay) //check if all questions are loaded from the database
     {
       readyToPlay = false; //immediatly turn this false to prevent further looping
       loadInQuestions();
+    } 
+    whatWasPickedUp = SnakeV2.whichFoodwasPickedUp;
+    if (questionsLoaded == true)
+    {
+      questionsLoaded = false;
+    ShowQuestion(); //retrieve the data of which question to show
     }
   }
 
@@ -40,7 +44,7 @@ public class QuestionLogic : ReadJson {
     if (numberOfQuestions > 0)
     { 
       questions   = new string[numberOfQuestions]; //make the array as long as the amount of questions found in the database
-      questionIDs = new string[numberOfQuestions]; 
+      questionIDs = new string[numberOfQuestions];
 
       for (int i = 0; i < databaseQuestions.Count; i++) 
       {
@@ -49,15 +53,15 @@ public class QuestionLogic : ReadJson {
       }
     }
     loadingText.enabled = false; //hide the loadingtext
-
-    ShowQuestion(); //retrieve the data of which question to show
+    questionsLoaded = true;
   }
 
   void ShowQuestion()
   {
-    if (questionText != null)
+    questionPanel.SetActive(true); // and show the panel
+    if (questionText != null && questions != null)
     {
-      if (!snakeScript.isPlayingGame) //if the game is NOT playing (checks from snakeV2 script)
+      if (!SnakeV2.isPlayingGame) //if the game is NOT playing (checks from snakeV2 script)
       {
         if (currentQuestion < numberOfQuestions) //there are still questions left
         {
@@ -73,12 +77,15 @@ public class QuestionLogic : ReadJson {
     {
       questionText.text = "Je hebt waarschijnlijk geen internetverbinding"; 
     }
-    questionPanel.SetActive(true); // and show the panel
   }
 
   public void QuestionButtonPress(){ //when the button on the questionPanel is pressed
-    snakeScript.isPlayingGame = true; //make sure the player can play the game
+    SnakeV2.isPlayingGame = true; //make sure the player can play the game
     questionPanel.SetActive(false); //hide the panel
-    currentQuestion++; //flip to the next question
+    if (currentQuestion < numberOfQuestions)
+    { 
+      currentQuestion++; //flip to the next question
+    }
+    questionsLoaded = true;
   }
 }

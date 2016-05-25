@@ -17,9 +17,9 @@ public class SnakeV2 : TouchLogic {
 
   public GameObject food                  = null;
   public GameObject questionPanel         = null; //the panel that alternatively will be set to hide or appear
-  public bool       isPlayingGame         = false;// is the game playing or are we answering a question
-
-  public string whichFoodwasPickedUp      = ""; //so the next script knows which answer was given
+  
+  public static bool       isPlayingGame         = false;// is the game playing or are we answering a question    
+  public static string whichFoodwasPickedUp      = ""; //so the next script knows which answer was given
 
 
   void Start()

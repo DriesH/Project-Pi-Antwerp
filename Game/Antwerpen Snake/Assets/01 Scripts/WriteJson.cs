@@ -4,46 +4,35 @@ using System.Collections.Generic;
 using System.IO;
 using LitJson;
 
-public class WriteJson : MonoBehaviour { // ==> andere naam geven OVERERVEN VAN QUESTIONLOGIC (als je overerft, gaat er iets mis)
+public class WriteJson : QuestionLogic { // ==> andere naam geven OVERERVEN VAN QUESTIONLOGIC (als je overerft, gaat er iets mis)
 
-  private JsonData dataForFeedback  = null; //the data that will be used to select the data needed from the json file
+ // private JsonData dataForFeedback  = null; //the data that will be used to select the data needed from the json file
   
   //overerven van questionlogic
   private string writeURL           = "";
   private string currQuestionID     = ""; //mag in string
-  private string answerUser         = ""; //echt het woord typen
-
-	void Start () {
-
-   /* //testdata
-    currQuestionID = "23";
-    answerUser = "zeer_eens";
-
-    writeURL = "http://pi.multimediatechnology.be/API/post/projecten/antwoord?questionID=" + currQuestionID + "&answerUser=" + answerUser;
-    StartCoroutine(writeToServer());*/
-	}
+  private string currAnswerUser     = ""; //echt het woord typen
 
   void LateUpdate()
   {
-    /*if (snakeScript.whichFoodwasPickedUp != "") //if an answer is given
+    if (whatWasPickedUp != null && whatWasPickedUp != "") //if an answer is given
     {
-      currQuestionID = questionIDs[currentQuestion];
-  
-      WhichAnswer(boolChecker.whichFoodwasPickedUp); //to get answerUser
-      boolChecker.whichFoodwasPickedUp = ""; //reset this variable
+      currQuestionID = questionIDs[currentQuestion-1]; //because the next question is already loaded
+      WhichAnswer(whatWasPickedUp); //to get answerUser
+      SnakeV2.whichFoodwasPickedUp = null; //reset the whole pickedupvariable
       
       //DON'T CHANGE URL
-      writeURL = "http://pi.multimediatechnology.be/API/post/projecten/antwoord?questionID=" + currQuestionID + "&answerUser=" + answerUser;
-      StartCoroutine(writeToServer());
-    }*/
+      writeURL = "http://pi.multimediatechnology.be/API/post/projecten/antwoord?questionID=" + currQuestionID + "&answerUser=" + currAnswerUser;
+      StartCoroutine(writeToServer(currQuestionID, currAnswerUser));
+    }
   }
 
 
-  IEnumerator writeToServer () { 
-    WWW www = new WWW(writeURL); //stuurt form naar URL
+  IEnumerator writeToServer (string questionID, string answerUser) { 
+    WWW www = new WWW(writeURL); 
     yield return www;
 
-    if (www.error == null)
+    if (www.error == null || !www.text.StartsWith("<!DOCTYPE html>")) //if there is not an error and the page isn't a normal html file
     { 
       readAllForFeedback(www.text);
     }
@@ -53,7 +42,7 @@ public class WriteJson : MonoBehaviour { // ==> andere naam geven OVERERVEN VAN 
 
   void readAllForFeedback(string feedbackURL)
   {
-     dataForFeedback = JsonMapper.ToObject(feedbackURL); //parse it into a JsonObject
+     //dataForFeedback = JsonMapper.ToObject(feedbackURL); //parse it into a JsonObject
 
     //data nog inlezen voor feedback => nog percentteken toevoegen
     //==> enkel feedback voor gekozen antwoord
@@ -64,19 +53,19 @@ public class WriteJson : MonoBehaviour { // ==> andere naam geven OVERERVEN VAN 
     switch (food_tag)
     { 
       case "food_1":
-        answerUser = "zeer_eens";
+        currAnswerUser = "zeer_eens";
         break;
       case "food_2":
-        answerUser = "eens";
+        currAnswerUser = "eens";
         break;
       case "food_3":
-        answerUser = "oneens";
+        currAnswerUser = "oneens";
         break;
       case "food_4":
-        answerUser = "zeer_oneens";
+        currAnswerUser = "zeer_oneens";
         break;
       default: //in case a wrong tag is given, this is the defaultanwser
-        answerUser = "zeer_eens";
+        currAnswerUser = "zeer_eens";
         break;
     }
   }

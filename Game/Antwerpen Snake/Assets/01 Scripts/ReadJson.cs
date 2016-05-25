@@ -58,7 +58,7 @@ public class ReadJson : MonoBehaviour
         databaseDescriptions.Add((string)itemData["projecten"][i]["uitleg"]);     //read in all from database that has the key 'projecten' and the value 'uitleg'
         databaseIDProjects.Add  ((string)itemData["projecten"][i]["idProject"]);  //read in all from database that has the key 'projecten' and the value 'idProject'
         databaseImages.Add      ((string)itemData["projecten"][i]["foto"]);       //read in all from database that has the key 'projecten' and the value 'foto'
-        numberOfProjects++; //so the rest of the scripts know how many projects there are
+        numberOfProjects = itemData["projecten"].Count;//so the rest of the scripts know how many projects there are
       }
     }
     else //if the database couldn't be loaded
@@ -78,8 +78,8 @@ public class ReadJson : MonoBehaviour
       {
         databaseQuestions.Add         ((string)itemData["appvragen"][i]["question"]);       //read in all from database that has the key 'appvragen' and the value 'question'
         databaseIDQuestions.Add       ((string)itemData["appvragen"][i]["idAppquestions"]); //read in all from database that has the key 'appvragen' and the value 'idAppquestions'
-        numberOfQuestions++;
       }
+      numberOfQuestions = itemData["appvragen"].Count;
     }
     else //if the database couldn't be loaded
     {
