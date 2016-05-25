@@ -62,12 +62,14 @@ article {
     float: left;
     margin-top: 0;
     margin-bottom: 0;
+    width: 200px;
+    text-align: left;
+    margin-left: 20px;
 }
 
 .location h5 a{
     font-family: "Antwerpen";
     width: 200px;
-    margin-left: 20px;
     margin-top: 1.5px;
     margin-bottom: 0;
 }
