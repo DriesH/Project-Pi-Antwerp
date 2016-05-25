@@ -1,11 +1,10 @@
 @extends('layouts.app')
 
 @section('content')
-
-  @if ( isset($message) )
-    <div class="alert alert-success alert-dismissable">{{ $message }}</div>
-  @elseif(isset($error))
-    <div class="alert alert-danger alert-dismissable">{{ $error }}</div>
+  @if ( session()->has('message') )
+    <div class="alert alert-success alert-dismissable">{{ session()->get('message') }}</div>
+  @elseif(session()->has('error'))
+    <div class="alert alert-danger alert-dismissable">{{ session()->get('error') }}</div>
   @endif
     <div class="col-md-12">
         <div class="panel panel-default">
