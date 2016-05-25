@@ -47,20 +47,10 @@ class AdminController extends Controller
       ->update([
       'role' => 0
     ]);
-      $admins = User::orderBy('name', 'asc')
-                ->where('role', '=', 10)
-                ->select('name', 'email', 'id')
-                ->get();
-      return redirect('/admin/admin-lijst', [
-                  'admins' => $admins,
-                  'message' => 'Gebruiker is succesvol van zijn administratorrol ontdaan.'
-              ]);
+      return redirect('/admin/admin-lijst')->with('message', 'Gebruiker is succesvol van zijn administratorrol ontdaan.');
     }
     else {
-      return view('/admin/admin-lijst', [
-        'admins' => $admins,
-        'message' => 'U kan uzelf niet verwijderen als admin.'
-    ]);
+      return redirect('/admin/admin-lijst')->with('error', 'U kan uzelf niet verwijderen als admin.');
     }
 
     }
@@ -96,15 +86,7 @@ class AdminController extends Controller
     ]);
       }
       else {
-        $admins = User::orderBy('name', 'asc')
-                  ->where('role', '=', 10)
-                  ->select('name', 'email')
-                  ->get();
-
-        return view('/admin/admin-lijst', [
-        'admins' => $admins,
-        'error' => $data['admin'] . ' is geen bestaande gebruiker. Probeer opnieuw.'
-    ]);
+        return redirect('/admin/admin-lijst')->with('error', $data['admin'] . ' is geen bestaande gebruiker. Probeer opnieuw.');
       }
 
 
@@ -113,10 +95,7 @@ class AdminController extends Controller
                 ->select('name', 'email')
                 ->get();
 
-      return view('/admin/admin-lijst', [
-        'admins' => $admins,
-        'message' => $user->name . ' is succesvol gepromoveerd tot administrator.'
-    ]);
+      return redirect('/admin/admin-lijst')->with('message', $user->name . ' is succesvol gepromoveerd tot administrator.');
     }
 
     /*-----PROJECTEN-----*/
