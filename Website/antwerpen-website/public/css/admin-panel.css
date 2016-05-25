@@ -49,25 +49,29 @@
 }
 
 .round-image>div{
-    width: 100%;
+    width: 100px;
     height: 100%;
     border-radius: 50%;
     background-color: rgba(223, 70, 97, 0.45);
     transition: 0.3s background-color;
 }
 
-.round-image>div>a>i{
-    padding: 43px;
+.round-image>div>a{
+    width: 100px;
+    line-height: 100px;
+    vertical-align: middle;
+    text-align: center;
     color: white;
     opacity: 0.8;
     transition: 0.3s opacity;
+    display: inline-block;
 }
 
 .round-image>div:hover{
     background-color: rgba(223, 70, 97, 0.65);
 }
 
-.round-image>div>a>i:hover{
+.round-image>div>a:hover{
     opacity: 1;
 }
 

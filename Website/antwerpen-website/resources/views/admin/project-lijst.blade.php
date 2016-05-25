@@ -20,7 +20,7 @@
 
                     <div id="project-round-image" class="round-image" style='background-image: url({{ $project->foto }})'>
                         <div>
-                            <a href="/admin/project-bewerken/{{$project->idProject}}"><i class="fa fa-pencil-square-o"></i></a>
+                            <a href="/admin/project-bewerken/{{$project->idProject}}">bewerken</a>
                         </div>
                     </div>
 
