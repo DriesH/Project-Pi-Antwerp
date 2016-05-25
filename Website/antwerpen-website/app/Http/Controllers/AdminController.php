@@ -517,7 +517,7 @@ class AdminController extends Controller
                         ->withInput();
         }
 
-            Phase::where('idFase', '=', $faseid)
+            Phase::where('faseNummer', '=', $faseid)
                     ->where('idProject', '=', $id)
             ->update([
             'title' => $data['title'],
@@ -557,7 +557,7 @@ class AdminController extends Controller
 
     protected function postFaseVerwijderen($id, $faseid){
 
-        DB::table('Phases')->where('faseNummer', '=', $faseid)
+        DB::table('phases')->where('faseNummer', '=', $faseid)
                             ->where('idProject', '=', $id)
                             ->delete();
 
@@ -771,7 +771,7 @@ class AdminController extends Controller
 
         $vraag_soort_before = Question::where('idvraag', '=', $vraagid)->first()->soort_vraag;
         if ($vraag_soort_before == "Meerkeuze" && $data['soort_vraag'] != "Meerkeuze") {
-          DB::table('Multiple_choice_answers')->where('idVraag', '=', $vraagid)
+          DB::table('multiple_choice_answers')->where('idVraag', '=', $vraagid)
                                 ->delete();
         }
         else if ($vraag_soort_before != "Meerkeuze" && $data['soort_vraag'] == "Meerkeuze") {
@@ -838,7 +838,7 @@ class AdminController extends Controller
 
     protected function postVraagVerwijderen($id, $faseid, $vraagid){
 
-        DB::table('Questions')->where('idVraag', '=', $vraagid)
+        DB::table('questions')->where('idVraag', '=', $vraagid)
                               ->delete();
 
         return redirect('/admin/project-bewerken/'. $id . '/fases/' . $faseid . '/vragen')->with('message', 'Vraag succesvol verwijderd.');
