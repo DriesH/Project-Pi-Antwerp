@@ -3,7 +3,8 @@
     <head>
         <title>Be right back.</title>
 
-        <link href="https://fonts.googleapis.com/css?family=Lato:100" rel="stylesheet" type="text/css">
+        <link rel="stylesheet" href="/fonts/Antwerpen-Regular.css" media="screen" title="no title" charset="utf-8">
+        <link rel="stylesheet" href="/fonts/Sun-Antwerpen.css" media="screen" title="no title" charset="utf-8">
 
         <style>
             html, body {
@@ -17,7 +18,7 @@
                 color: #2e3234;
                 display: table;
                 font-weight: 100;
-                font-family: 'Lato';
+                font-family: 'Antwerpen';
             }
 
             .container {
@@ -37,7 +38,7 @@
             }
 
             img {
-              width: 20%;
+              width: 40%;
               height: auto;
             }
         </style>
@@ -46,7 +47,8 @@
         <div class="container">
             <div class="content">
                 <img src="/pictures/access-denied.png" alt="geen-toegang" />
-                <div class="title">U hebt niet de juiste rechten om deze pagina te bekijken.</div>
+                <div class="title">U bent geen admin!</div>
+                <a href="/">&lt; Keer terug!</a>
             </div>
         </div>
     </body>
