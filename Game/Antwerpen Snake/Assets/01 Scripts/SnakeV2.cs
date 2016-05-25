@@ -4,23 +4,23 @@ using System.Collections.Generic;
 
 public class SnakeV2 : TouchLogic {
 
-  private Vector3 fingerPos; //coördinates of fingertouch
+  private Vector3   fingerPos;            //coördinates of fingertouch
+  private Vector3 beginPosSnake;          //to reset the snake to the center position
   private Transform snakeTrans, camTrans; //transform from snake and camera
-  private float speed = 10f; //speed of the snake
-  private Vector3 beginPosSnake; //to reset the snake to the center position
-  private float maxDist = 1; //the maximumdistance between snake and finger until it moves again
+  private float     speed                 = 10f; //speed of the snake
+  private float     maxDist               = 1; //the maximumdistance between snake and finger until it moves again
 
-  public GameObject food = null;
-  public bool isPlayingGame; // is the game playing or are we answering a question
+  public GameObject food                  = null;
+  public GameObject questionPanel         = null; //the panel that alternatively will be set to hide or appear
+  public bool isPlayingGame               = false;// is the game playing or are we answering a question
 
-  public GameObject questionPanel = null; //drag UI questionpanel to the inspector
+  public string whichFoodwasPickedUp   = ""; //so the next script knows which answer was given
 
   void Start()
   {
-    snakeTrans = this.transform; //save startposition and -rotation of the snake
-    camTrans = Camera.main.transform; // save de startposition and -rotation of the camera
+    snakeTrans    = this.transform; //save startposition and -rotation of the snake
+    camTrans      = Camera.main.transform; // save de startposition and -rotation of the camera
     beginPosSnake = this.transform.position; //save startposition and -rotation of the snake
-    isPlayingGame = false;
 
     for (int i = 1; i <= 4; i++)
     {
@@ -89,6 +89,7 @@ public class SnakeV2 : TouchLogic {
       transform.position = beginPosSnake; //test zet snake op begin
       isPlayingGame = false;
       questionPanel.SetActive(true);
+      whichFoodwasPickedUp = c.tag;
     }
     else if (c.tag.StartsWith("respawn")) // respawn when player oved to the middle
     {

@@ -4,7 +4,7 @@ using System.Collections;
 public class TouchLogic : MonoBehaviour //contains all touch logic
 {
   public static int currTouch = 0; //is needed for other scripts, so they know which touch is active
-  public int touch2Watch = 0; //other script know at which touch they have to look
+  public int touch2Watch      = 0; //other script know at which touch they have to look
 
   void Update()
   {
