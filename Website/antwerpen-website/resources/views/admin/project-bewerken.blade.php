@@ -17,6 +17,9 @@
                       'files' => true)) }}
 
                     <div>
+                      @if(session()->has('error'))
+                        <div class="alert alert-danger alert-dismissable">{{ session()->get('error') }}</div>
+                      @endif
                         @if (count($errors) > 0)
                             <div class="alert alert-danger">
                                 <ul>

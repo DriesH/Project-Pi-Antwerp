@@ -48,6 +48,7 @@ class APIController extends Controller
 
     protected function postAppAntwoorden(Request $request){
 
+
       Appanswer::create([
           'answer' => $request['answerUser'],
           'idAppquestions' => $request['questionID'],
