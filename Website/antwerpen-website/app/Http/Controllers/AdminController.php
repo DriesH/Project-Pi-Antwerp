@@ -963,6 +963,7 @@ class AdminController extends Controller
                       ->join('questions', 'phases.idFase', '=', 'questions.idFase')
                       ->join('answers', 'questions.idVraag', '=', 'answers.idVraag')
                       ->orderBy('phases.idFase', 'asc')
+                      ->orderBy('answers.antwoord', 'asc')
                       ->get();
 
 
@@ -972,18 +973,45 @@ class AdminController extends Controller
         $excel->sheet('ProjectInfo', function($sheet) use($project, $dataProject) {
 
           $sheet->row(1, array(
-            'naam', 'uitleg', 'Locatie', 'aangemaakt op'
-            ))->setStyle(array(
-              'font' => array(
-              'bold'      =>  true
-              )
-            ))->setWidth('B', 10);
+            'Naam', 'Uitleg', 'Locatie', 'Aangemaakt op'
+            ))->setWidth(array(
+            'A'     =>  60,
+            'B'     =>  30,
+            'C'     =>  40,
+            'D'     =>  40
+            ));
 
-            $sheet->setfitToHeight('true');
+            $sheet->cells('A4:D4', function($cells) {
+              $cells->setBackground('#000000');
+            });
+            $sheet->cells('A1:D1', function($cells) {
+              $cells->setFontWeight('bold');
+            });
+            $sheet->cells('A6:B6', function($cells) {
+              $cells->setFontWeight('bold');
+            });
+
+
 
           $sheet->row(2, array(
             $project->naam, $project->uitleg, $project->locatie, $project->created_at
           ));
+
+          $sheet->row(6, array(
+            'Appvraag', 'Antwoord'
+          ));
+
+          $allAppAnswersOfProject = DB::table('appanswers')
+                                ->join('appquestions', 'appanswers.idAppquestions', '=', 'appquestions.idAppquestions')
+                                ->where('appquestions.idProject', '=', $project->idProject)
+                                ->orderBy('appanswers.answer', 'asc')
+                                ->get();
+
+          foreach ($allAppAnswersOfProject as $appAnswer_Question) {
+            $sheet->appendRow(array(
+              $appAnswer_Question->question, $appAnswer_Question->answer
+            ));
+          }
 
       });
 
@@ -1007,10 +1035,16 @@ class AdminController extends Controller
                   'font' => array(
                   'bold'      =>  false
                   )
+                ))->setWidth(array(
+                'A'     =>  60,
+                'B'     =>  30
                 ));
               }
-
             }
+            $sheet->cells('A1:B1', function($cells) {
+              $cells->setFontWeight('bold');
+            });
+
 
 
         });
