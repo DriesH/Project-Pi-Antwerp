@@ -116,3 +116,7 @@
     width: 50px;
     margin-right: 5px;
 }
+
+.admin-panel-col a, .admin-project-lijst-col a{
+    margin-bottom: 20px;
+}

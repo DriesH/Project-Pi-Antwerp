@@ -9,65 +9,63 @@ public class QuestionLogic : ReadJson {
   public GameObject questionPanel = null; //the panel that alternatively will be set to hide or appear
 
   protected static int currentQuestion     = 0; //so the script knows which question to show
-  private string[] questions;     //to save all the questions for the database
+  private string[] questions      = null;  //to save all the questions for the database
  
-  protected SnakeV2 boolChecker;  //to save the script to check the bool in this script
-  public GameObject snake;      //also used to check the bool
-
-
-  //nog verder
-  protected string[] projectIDs = null; //mag in string
-  protected string[] questionIDs = null; //mag in string
-  protected string answerUser = "";
+  protected string[] projectIDs   = null; //saved in string to prevent constant converting, 
+  protected static string[] questionIDs  = null; //mag in string
+  protected string whatWasPickedUp = "";
+  private bool questionsLoaded = false;
 
   void Start()
   {
+    loadingText.enabled = true; //when the game starts, show the loadingtext
+    if (this.tag == "Buttontest") //make sure that this script that is linked to several objects, only is excecuted when it's linked to the tag Buttontest
+    { 
     StartCoroutine(GetDatabase(urlProject, "Question")); //start the method from ReadJson so it's the first to begin
-
-    boolChecker = snake.GetComponent<SnakeV2>(); //and get the script from this gameobject to check the bool later
-    loadingText.enabled = true;
+    }
   }
 
-	void Update() {
-    
-	}
-
-  void LateUpdate(){
-    if (readyToPlay)
+  void Update(){
+    while (readyToPlay) //check if all questions are loaded from the database
     {
-      readyToPlay = false;
+      readyToPlay = false; //immediatly turn this false to prevent further looping
       loadInQuestions();
+    } 
+    whatWasPickedUp = SnakeV2.whichFoodwasPickedUp;
+    if (questionsLoaded == true)
+    {
+      questionsLoaded = false;
+    ShowQuestion(); //retrieve the data of which question to show
     }
   }
 
   void loadInQuestions() //moet vele later beginnen
   {
-    questionPanel.SetActive(true); //show the panel when the game starts
-    questions   = new string[numberOfQuestions]; //make the array as long as the amount of questions found in the database
-    projectIDs = new string[numberOfQuestions];
-    questionIDs = new string[numberOfQuestions];
+    if (numberOfQuestions > 0)
+    { 
+      questions   = new string[numberOfQuestions]; //make the array as long as the amount of questions found in the database
+      questionIDs = new string[numberOfQuestions];
 
-    for (int i = 0; i < databaseQuestions.Count; i++) 
-    {
-      questions[i]   = databaseQuestions[i]; //put each question from the databaselist into the questionArray
-      projectIDs[i]  = databaseIDQuestions[i]; //put each ID from the database into the array
-      questionIDs[i] = databaseIDProjectQuestions[i]; //put each idproject of the question in the array
+      for (int i = 0; i < databaseQuestions.Count; i++) 
+      {
+        questions[i]   = databaseQuestions[i]; //put each question from the databaselist into the questionArray
+        questionIDs[i]  = databaseIDQuestions[i]; //put each ID from the database into the array
+      }
     }
-    loadingText.enabled = false;
-
-    ShowQuestion();
+    loadingText.enabled = false; //hide the loadingtext
+    questionsLoaded = true;
   }
 
   void ShowQuestion()
   {
-    if (questionText != null)
+    questionPanel.SetActive(true); // and show the panel
+    if (questionText != null && questions != null)
     {
-      if (!boolChecker.isPlayingGame) //if the game is NOT playing (checks from snakeV2 script)
+      if (!SnakeV2.isPlayingGame) //if the game is NOT playing (checks from snakeV2 script)
       {
         if (currentQuestion < numberOfQuestions) //there are still questions left
         {
           questionText.text = questions[currentQuestion]; //show the current question  ===> methode moet later opstarten
-          questionPanel.SetActive(true); // and show the panel
         }
         else if (currentQuestion >= numberOfQuestions) //no questions left
         {
@@ -75,11 +73,19 @@ public class QuestionLogic : ReadJson {
         }
       }
     }
+    else //if questiontext was null ==> use the next defaulttext
+    {
+      questionText.text = "Je hebt waarschijnlijk geen internetverbinding"; 
+    }
   }
 
   public void QuestionButtonPress(){ //when the button on the questionPanel is pressed
-    boolChecker.isPlayingGame = true; //make sure the player can play the game
+    SnakeV2.isPlayingGame = true; //make sure the player can play the game
     questionPanel.SetActive(false); //hide the panel
-    currentQuestion++; //flip to the next question
+    if (currentQuestion < numberOfQuestions)
+    { 
+      currentQuestion++; //flip to the next question
+    }
+    questionsLoaded = true;
   }
 }
