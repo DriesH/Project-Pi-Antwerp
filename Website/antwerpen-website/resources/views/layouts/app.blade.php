@@ -8,8 +8,7 @@
 
         <!-- BOOTSTRAP & FONT-AWESOME -->
         <link rel="shortcut icon" href="/pictures/favicon/favicon-32x32.png" type="image/png">
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
-        <link rel="stylesheet" type="text/css" href="http://cdn.jsdelivr.net/jquery.slick/1.5.9/slick.css"/>
+        <link rel="stylesheet" href="/css/bootstrap.min.css">
         <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" type="text/css">
         <link rel="stylesheet" href="/css/bootstrap-datepicker3.standalone.min.css" type="text/css">
         <!-- FONTS -->
@@ -70,10 +69,8 @@
         </div>
 
         <!-- JQUERY & plugins -->
-        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCkN_qoobIjk7OOThbtXZAP4axJuTZOZ4E&region=BE&language=nl&callback=window.initMap" defer></script>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
-        <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery.slick/1.5.9/slick.min.js"></script>
+        <script src="/js/jquery-2.2.4.min.js"></script>
+        <script src="/js/bootstrap.min.js"></script>
 
         <script src="/js/readmore.min.js"></script>
         <script src="/js/salvatorre.min.js" charset="utf-8"></script>
