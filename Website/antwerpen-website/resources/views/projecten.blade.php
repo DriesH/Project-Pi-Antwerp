@@ -53,9 +53,9 @@
                 <h5>
                     <a href="project/{{$project->idProject}}">{{ $project->naam }}</a>
                 </h5>
-                <a href='#'>
+                <p>
                     <i class="fa fa-map-marker"></i> {{ $project->locatie }}
-                </a>
+                </p>
             </div>
             <article>
 
@@ -71,9 +71,9 @@
                 @if ($isLoggedIn && $isAdmin)
                     <a href="/admin/project-bewerken/{{$project->idProject}}" class="bewerken-link"><i class="fa fa-pencil-square-o"></i>Bewerken</a>
                 @endif
-                    <a href="#" class="footer-link">
+                    <p class="footer-link">
                         <i class="{{$project->icon_class}}"></i> {{$project->catNaam}}
-                    </a>
+                    </p>
             </div>
         </div>
       @endif
