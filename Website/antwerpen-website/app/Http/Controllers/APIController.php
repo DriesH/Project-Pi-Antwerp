@@ -28,6 +28,7 @@ class APIController extends Controller
         */
         $projecten = DB::table('projects')
                         ->join('categories', 'projects.idCategorie', '=', 'categories.idCategorie')
+                        ->where('projects.isActief', '=', '1')
                         ->select('categories.naam as catNaam', 'projects.*')
                         ->orderBy('projects.created_at', 'desc')
                         ->get();
