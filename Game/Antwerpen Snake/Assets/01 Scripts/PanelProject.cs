@@ -18,6 +18,9 @@ public class PanelProject : ReadJson //the only thing to check ==> setparent met
   private const float startValueScrollbar = 1f; //makes sure the scrollbar is always starting at the top of the page
   private string[]    imageUrls           = null; //to get the images from the website
   private Sprite[]    savedSprites        = null; //to save the images that came from the website
+  private const short lenghtOfDescrp      = 250; //the length of description to show in the panel
+  private const short lenghtOfTitle       = 22; //the length of the title to show in panel ==> can't be higher than this or it crashes
+  private const float pivotPoint          = 0.5f; //the pivotpoint of the picture
 
   void Start()
   { 
@@ -53,7 +56,7 @@ public class PanelProject : ReadJson //the only thing to check ==> setparent met
       if (www.error == null)
       { 
         Sprite sprite = new Sprite();
-        sprite = Sprite.Create(www.texture, new Rect(0, 0, www.texture.width, www.texture.height), new Vector2(0.5f, 0.5f)); //same size and pivot as the prefabimage
+        sprite = Sprite.Create(www.texture, new Rect(0, 0, www.texture.width, www.texture.height), new Vector2(pivotPoint, pivotPoint)); //same size and pivot as the prefabimage
         savedSprites[i] = sprite; //save the sprites in an array for the MakePanels()-method
         www.Dispose(); //get rid of the www so the next one can be loaded
       }
@@ -71,8 +74,8 @@ public class PanelProject : ReadJson //the only thing to check ==> setparent met
     {
       for (int i = 0; i < numberOfProjects; i++) //for every project
       {
-        projectDescrText.text = databaseDescriptions[i]; //reads in all the database descriptions
-        projectTitleText.text = databaseTitles[i]; //reads in all the database titles
+        projectDescrText.text = databaseDescriptions[i].Substring(0,lenghtOfDescrp) + "..."; //reads in all the database descriptions and shortens them so they always fit
+        projectTitleText.text = databaseTitles[i].Substring(0, lenghtOfTitle) + "..."; //reads in all the database titles and shortens them so they always fit
         projectImage.sprite = savedSprites[i]; //reads in the sprites 
 
         //make a new panel with all the parameters from above and place it within listOfPanels

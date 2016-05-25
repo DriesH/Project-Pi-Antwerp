@@ -11,10 +11,10 @@ public class QuestionLogic : ReadJson {
   protected static int currentQuestion     = 0; //so the script knows which question to show
   private string[] questions      = null;  //to save all the questions for the database
  
-  protected string[] projectIDs   = null; //saved in string to prevent constant converting, 
-  protected static string[] questionIDs  = null; //mag in string
-  protected string whatWasPickedUp = "";
-  private bool questionsLoaded = false;
+  protected static string[] projectIDs   = null; //saved in string to prevent constant converting, to save the data from the database
+  protected static string[] questionIDs  = null; //saved in string to prevent constant converting, to save the data from the database
+  protected string whatWasPickedUp = ""; //make sure nothing was picked up at the start
+  private bool questionsLoaded     = false; //show the question when the questions are loaded
 
   void Start()
   {
@@ -31,12 +31,13 @@ public class QuestionLogic : ReadJson {
       readyToPlay = false; //immediatly turn this false to prevent further looping
       loadInQuestions();
     } 
-    whatWasPickedUp = SnakeV2.whichFoodwasPickedUp;
-    if (questionsLoaded == true)
+
+    while (questionsLoaded) //when the questions have been loaded
     {
-      questionsLoaded = false;
-    ShowQuestion(); //retrieve the data of which question to show
+      questionsLoaded = false; //immediatly turn this to false to prevent further looper
+      ShowQuestion(); //retrieve the data of which question to show
     }
+    whatWasPickedUp = SnakeV2.whichFoodwasPickedUp; //check if the snake picked up some food
   }
 
   void loadInQuestions() //moet vele later beginnen
@@ -82,10 +83,10 @@ public class QuestionLogic : ReadJson {
   public void QuestionButtonPress(){ //when the button on the questionPanel is pressed
     SnakeV2.isPlayingGame = true; //make sure the player can play the game
     questionPanel.SetActive(false); //hide the panel
-    if (currentQuestion < numberOfQuestions)
+    if (currentQuestion < numberOfQuestions) //stop counting when there are no questions left
     { 
       currentQuestion++; //flip to the next question
     }
-    questionsLoaded = true;
+    questionsLoaded = true; //load the next question
   }
 }
