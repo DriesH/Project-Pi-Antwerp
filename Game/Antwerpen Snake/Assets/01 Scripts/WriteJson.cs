@@ -24,8 +24,8 @@ public class WriteJson : MonoBehaviour { // ==> andere naam geven OVERERVEN VAN 
 	}
 
   void LateUpdate()
-  { 
-    /*if (boolChecker.whichFoodwasPickedUp != "") //if an answer is given
+  {
+    /*if (snakeScript.whichFoodwasPickedUp != "") //if an answer is given
     {
       currQuestionID = questionIDs[currentQuestion];
   
@@ -43,7 +43,10 @@ public class WriteJson : MonoBehaviour { // ==> andere naam geven OVERERVEN VAN 
     WWW www = new WWW(writeURL); //stuurt form naar URL
     yield return www;
 
-    readAllForFeedback(www.text);
+    if (www.error == null)
+    { 
+      readAllForFeedback(www.text);
+    }
 
     Debug.Log("Getalkt met server.");
   }
@@ -52,11 +55,11 @@ public class WriteJson : MonoBehaviour { // ==> andere naam geven OVERERVEN VAN 
   {
      dataForFeedback = JsonMapper.ToObject(feedbackURL); //parse it into a JsonObject
 
-    //data nog inlezen voor feedback, pie chart ==> nog percent toevoegen
+    //data nog inlezen voor feedback => nog percentteken toevoegen
     //==> enkel feedback voor gekozen antwoord
   }
 
-  void WhichAnswer(string food_tag)
+  void WhichAnswer(string food_tag) //to see which answer was given to it can be sent to the server
   {
     switch (food_tag)
     { 
