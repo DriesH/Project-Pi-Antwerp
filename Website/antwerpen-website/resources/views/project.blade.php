@@ -6,38 +6,37 @@
     @endif
     <div class="project-big-box col-md-10 col-md-push-1 col-xs-12 col-xs-push-0">
         <div class="project-hero-img">
-            <div id="svg-banner-ingevuld">
-                <svg version="1.1" id="Laag_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-                	 viewBox="0 0 78.2 125.5" style="enable-background:new 0 0 78.2 125.5;" xml:space="preserve" width="55%" height="60%">
-                    <style type="text/css">
-                    	.st0{fill:#480F0F;}
-                    	.st1{fill:#DA291C;}
-                    	.st2{fill:#FFFFFF;}
-                    	.st3{font-family:'Antwerpen';}
-                    	.st4{font-size:49.2952px;}
-                    	.st5{font-size:10.1389px;}
-                    	.st6{font-size:12px;}
-                        .st7{font-size:35px;}
-                        .st8{font-family:'Sun-Antwerpen 500';}
-                    </style>
-                    <polygon class="st0" points="39.1,99.8 78.2,125.5 78.2,2 39.1,2 0,2 0,125.5 "/>
-                    <polygon class="st1" points="39.1,97.8 78.2,123.5 78.2,0 39.1,0 0,0 0,123.5 "/>
-                    @if($amountAnswered < 10)
-                        <text transform="matrix(1 0 0 1 26.9738 61.7319)" class="st2 st8 st4">{{ $amountAnswered }}</text>
-
-                    @elseif($amountAnswered > 10)
-                        <text transform="matrix(1 0 0 1 15.9738 61.7319)" class="st2 st8 st4">{{ $amountAnswered }}</text>
-                    @endif
-
-                    <text transform="matrix(1 0 0 1 23.5 74.0208)" class="st2 st3 st5">vragen</text>
-                    <text transform="matrix(1 0 0 1 19.6256 84.0208)" class="st2 st3 st5">ingevuld</text>
-
-                </svg>
-
-
-            </div>
             @if($project->foto != null)
-              <img src="{{$project->foto}}" alt="">
+                <div id="svg-banner-ingevuld">
+                    <svg version="1.1" id="Laag_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                    	 viewBox="0 0 78.2 125.5" style="enable-background:new 0 0 78.2 125.5;" xml:space="preserve" width="55%" height="60%">
+                        <style type="text/css">
+                        	.st0{fill:#480F0F;}
+                        	.st1{fill:#DA291C;}
+                        	.st2{fill:#FFFFFF;}
+                        	.st3{font-family:'Antwerpen';}
+                        	.st4{font-size:49.2952px;}
+                        	.st5{font-size:10.1389px;}
+                        	.st6{font-size:12px;}
+                            .st7{font-size:35px;}
+                            .st8{font-family:'Sun-Antwerpen 500';}
+                        </style>
+                        <polygon class="st0" points="39.1,99.8 78.2,125.5 78.2,2 39.1,2 0,2 0,125.5 "/>
+                        <polygon class="st1" points="39.1,97.8 78.2,123.5 78.2,0 39.1,0 0,0 0,123.5 "/>
+                        @if($amountAnswered < 10)
+                            <text transform="matrix(1 0 0 1 26.9738 61.7319)" class="st2 st8 st4">{{ $amountAnswered }}</text>
+
+                        @elseif($amountAnswered > 10)
+                            <text transform="matrix(1 0 0 1 15.9738 61.7319)" class="st2 st8 st4">{{ $amountAnswered }}</text>
+                        @endif
+
+                        <text transform="matrix(1 0 0 1 23.5 74.0208)" class="st2 st3 st5">vragen</text>
+                        <text transform="matrix(1 0 0 1 19.6256 84.0208)" class="st2 st3 st5">ingevuld</text>
+
+                    </svg>
+                </div>
+
+                <img src="{{$project->foto}}" alt="">
             @endif
         </div>
 
@@ -53,7 +52,7 @@
                 <!--  VVV - FIX NEEDED HERE - VVV  -->
                 <!--  VVV VVVVVVVVVVVVVVVVVVV VVV  -->
 
-                @if (!$isLoggedIn && $isAdmin)
+                @if (!Auth::guest() && Auth::user()->role == 10)
                     <a href="/admin/project-bewerken/{{$project->idProject}}" class="bewerken-link pull-right"><i class="fa fa-pencil-square-o"></i>Bewerken</a>
                 @endif
             </p>
@@ -76,7 +75,7 @@
         <!--  VVV - FIX NEEDED HERE - VVV  -->
         <!--  VVV VVVVVVVVVVVVVVVVVVV VVV  -->
 
-        @if ($isLoggedIn)
+        @if (Auth::guest())
 
         @else
             {{ Form::open(array(
