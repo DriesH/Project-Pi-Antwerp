@@ -1183,7 +1183,7 @@ class AdminController extends Controller
 
     protected function postAppVraagVerwijderen($id, $vraagid){
 
-      DB::table('Appquestions')->where('idAppquestions', '=', $vraagid)
+      DB::table('appquestions')->where('idAppquestions', '=', $vraagid)
                           ->delete();
 
       return redirect('/admin/project-bewerken/' . $id . '/appvragen')->with('message', 'Appvraag succesvol verwijderd.');
