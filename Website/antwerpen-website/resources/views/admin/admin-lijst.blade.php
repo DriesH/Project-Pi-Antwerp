@@ -6,7 +6,8 @@
   @elseif(session()->has('error'))
     <div class="alert alert-danger alert-dismissable">{{ session()->get('error') }}</div>
   @endif
-    <div class="col-md-12">
+    <div class="col-md-12 admin-panel-col">
+        <a href="/admin" class="btn btn-primary"><i class="fa fa-arrow-left"></i>Terug</a>
         <div class="panel panel-default">
             <div class="panel-heading">
                 <h1>Admin lijst</h1>

@@ -153,42 +153,49 @@ class AdminController extends Controller
             *
             *@var file
             */
+            $maxWidth = 1000;
+            $maxHeight = 1000;
             $afbeelding = Input::file('foto');
+            $imageDimensions = getimagesize($afbeelding);
 
-            /**
-            *de extensie van afbeelding
-            *
-            *@var string
-            */
-            $extensie = $afbeelding->getClientOriginalExtension();
+            if ($imageDimensions['0'] <= $maxWidth && $imageDimensions['1'] <= $maxHeight ) {
+              /**
+              *de extensie van afbeelding
+              *
+              *@var string
+              */
+              $extensie = $afbeelding->getClientOriginalExtension();
 
-            /**
-            *nieuwe unieke naam van de afbeelding
-            *
-            *@var string
-            */
-            $nieuwe_naam = uniqid() . "." . $extensie;
+              /**
+              *nieuwe unieke naam van de afbeelding
+              *
+              *@var string
+              */
+              $nieuwe_naam = uniqid() . "." . $extensie;
 
-            $afbeelding->move('pictures/uploads', $nieuwe_naam);
+              $afbeelding->move('pictures/uploads', $nieuwe_naam);
 
-            /**
-            *nieuw pad naar afbeelding
-            *
-            *@var string
-            */
-            $foto_path = '/pictures/uploads/' . $nieuwe_naam;
+              /**
+              *nieuw pad naar afbeelding
+              *
+              *@var string
+              */
+              $foto_path = '/pictures/uploads/' . $nieuwe_naam;
 
-            //dd($foto_path);
+              //dd($foto_path);
 
-            $nieuwProject = Project::create([
-                'naam' => $data['naam'],
-                'uitleg' => $data['uitleg'],
-                'locatie' => $data['locatie'],
-                'foto' => $foto_path,
-                'isActief' => $isActief,
-                'idCategorie' => $data['categorie']
-            ]);
-
+              $nieuwProject = Project::create([
+                  'naam' => $data['naam'],
+                  'uitleg' => $data['uitleg'],
+                  'locatie' => $data['locatie'],
+                  'foto' => $foto_path,
+                  'isActief' => $isActief,
+                  'idCategorie' => $data['categorie']
+              ]);
+            }
+            else {
+              return redirect('/admin/nieuwproject/')->withInput()->with('error', 'Afbeelding mag maximaal ' . $maxWidth . 'x' . $maxHeight . ' pixels zijn.');
+            }
         }
         else {
             $nieuwProject = Project::create([
@@ -259,7 +266,6 @@ class AdminController extends Controller
 
     protected function postProjectBewerken($id, Request $request)
     {
-
         //dd( Input::all() );  // om input data te testen.
 
         /**
@@ -304,48 +310,57 @@ class AdminController extends Controller
             *@var file
             */
             $afbeelding = Input::file('foto');
+            $maxWidth = 1000;
+            $maxHeight = 1000;
+            $imageDimensions = getimagesize($afbeelding);
 
-            /**
-            *de extensie van afbeelding
-            *
-            *@var string
-            */
-            $extensie = $afbeelding->getClientOriginalExtension();
+            if ($imageDimensions['0'] <= $maxWidth && $imageDimensions['1'] <= $maxHeight ) {
+              /**
+              *de extensie van afbeelding
+              *
+              *@var string
+              */
+              $extensie = $afbeelding->getClientOriginalExtension();
 
-            /**
-            *nieuwe unieke naam van de afbeelding
-            *
-            *@var string
-            */
-            $nieuwe_naam = uniqid() . "." . $extensie;
+              /**
+              *nieuwe unieke naam van de afbeelding
+              *
+              *@var string
+              */
+              $nieuwe_naam = uniqid() . "." . $extensie;
 
-            //nieuwe afbeelding in uploads plaatsen
-            $afbeelding->move('pictures/uploads', $nieuwe_naam);
+              //nieuwe afbeelding in uploads plaatsen
+              $afbeelding->move('pictures/uploads', $nieuwe_naam);
 
-            /**
-            *nieuw pad naar afbeelding
-            *
-            *@var string
-            */
-            $foto_path = '/pictures/uploads/' . $nieuwe_naam;
+              /**
+              *nieuw pad naar afbeelding
+              *
+              *@var string
+              */
+              $foto_path = '/pictures/uploads/' . $nieuwe_naam;
 
-            //oude afbeelding verwijderen uit uploads map
-            $project = Project::where('idProject', '=', $id)->first();
-            $oude_afbeelding = substr($project->foto, 1);
+              //oude afbeelding verwijderen uit uploads map
+              $project = Project::where('idProject', '=', $id)->first();
+              $oude_afbeelding = substr($project->foto, 1);
 
-            if (File::exists($oude_afbeelding)){
-                unlink($oude_afbeelding);
+              if (File::exists($oude_afbeelding)){
+                  unlink($oude_afbeelding);
+              }
+
+              Project::where('idProject', $id)
+              ->update([
+                  'naam' => $data['naam'],
+                  'uitleg' => $data['uitleg'],
+                  'locatie' => $data['locatie'],
+                  'foto' => $foto_path,
+                  'isActief' => $isActief,
+                  'idCategorie' => $data['categorie'],
+              ]);
+            }
+            else {
+              return redirect('/admin/project-bewerken/' . $id)->withInput()->with('error', 'Afbeelding mag maximaal ' . $maxWidth . 'x' . $maxHeight . ' pixels zijn.');
             }
 
-            Project::where('idProject', $id)
-            ->update([
-                'naam' => $data['naam'],
-                'uitleg' => $data['uitleg'],
-                'locatie' => $data['locatie'],
-                'foto' => $foto_path,
-                'isActief' => $isActief,
-                'idCategorie' => $data['categorie'],
-            ]);
         }
         else {
             Project::where('idProject', $id)
