@@ -41,7 +41,6 @@ public class FollowProjectURL : ReadJson {
         IDprojectNumber = i;
       }
     }
-
     Application.OpenURL("http://pi.multimediatechnology.be/project/" + databaseIDProjects[IDprojectNumber]);
   }
 }
