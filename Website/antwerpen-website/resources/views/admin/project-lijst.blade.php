@@ -2,7 +2,8 @@
 
 @section('content')
 
-    <div class="container">
+    <div class="container admin-project-lijst-col">
+        <a href="/admin" class="btn btn-primary"><i class="fa fa-arrow-left"></i>Terug</a>
         <div id="#projecten-lijst">
             @foreach($projecten as $project)
 
@@ -22,7 +23,7 @@
                             <a href="/admin/project-bewerken/{{$project->idProject}}"><i class="fa fa-pencil-square-o"></i></a>
                         </div>
                     </div>
-                    
+
                     <div class="titel-time-adminpanel">
                         <h2><a href="/project/{{$project->idProject}}">{{ $project->naam }}</a></h2>
                         <time><strong>Aangemaakt:</strong> {{ date('d F, Y', strtotime($project->created_at)) }}</time>
