@@ -5,11 +5,11 @@ using UnityEngine.UI;
 
 public class FollowProjectURL : ReadJson {
 
-  private Object[] allButtons; //to gather all the buttons in the list
-  private Object[] oddButtons; //to gather the "Meer lezen" buttons
-  private int j = 0; //used to go to the next position in the oddButtons when one is added to the array
-  private int IDprojectNumber = 0; //store the IDnumber of the project for the URL
-  private Object clickedButton = null; //to see on which button has been clicked
+  private Object[] allButtons;  //to gather all the buttons in the list
+  private Object[] oddButtons;  //to gather the "Meer lezen" buttons
+  private int j                 = 0; //used to go to the next position in the oddButtons when one is added to the array
+  private int IDprojectNumber   = 0; //store the IDnumber of the project for the URL
+  private Object clickedButton  = null; //to see on which button has been clicked
 
   private static bool IsOdd(int value) //check if the button is odd or zero ('meer lezen' and not 'geef mening')
   {

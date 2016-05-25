@@ -6,36 +6,73 @@ using System.Collections.Generic;
 
 public class ReadJson : MonoBehaviour {
   
-  private JsonData itemData; //the data that will be used to select the data needed from the json file
-  protected string urlString                         = "http://pi.multimediatechnology.be/API/get/projecten"; //the url where to find the json file
+  private JsonData itemData                         = null; //the data that will be used to select the data needed from the json file
+  protected string urlProject                       = "http://pi.multimediatechnology.be/API/get/projecten"; //the url where to find the json file
 
-  protected static List<string> databaseTitles       = new List<string>(); //titels of the projects that need to be loaded from the database
+  protected static List<string> databaseTitles       = new List<string>(); //titles of the projects that need to be loaded from the database
   protected static List<string> databaseDescriptions = new List<string>(); //descriptions of the projects that need to be loaded from the database
   protected static List<string> databaseImages       = new List<string>(); //images of the projects that need to be loaded from the database (saven in longtext in database)
   protected static List<string> databaseIDProjects   = new List<string>(); //the id of the projects that need to be loaded from the database to follow the URL (in string since it has to be a string later on anyway)
+  
+  protected static List<string> databaseQuestions    = new List<string>(); //load the questions from the database in this
+  protected static List<string> databaseIDQuestions  = new List<string>(); //load the questions ID from the database in this
+  protected static List<string> databaseIDProjectQuestions = new List<string>(); //load the ID that link to the question from the database in this
 
   protected static int numberOfProjects              = 0; //the number of total projects is standard 0
+  protected static int numberOfQuestions             = 0; //the number of total questions is standard 0
   protected static bool readyToBuild                 = false; //so the other scripts know when to start builing the panels
-	
-  protected IEnumerator GetDatabase(string url)
+  protected static bool readyToPlay                  = false; //so the other scripts know when to start playing the game
+	// ==> readtoPLay nog terug op false zetten!!
+
+  protected IEnumerator GetDatabase(string url, string GetInfoFromThisDatabase)
   {
     WWW www = new WWW(url);      // Start a download of the given URL
     yield return www;      // Wait for download to complete
-    GetInfoFromDatabase(www.text);
-   }
 
-  void GetInfoFromDatabase(string urlApi) //if there is nothing declared before void, the method is always private
+    if (GetInfoFromThisDatabase == "Project") //get the data from the ProjectApi
+    {
+      GetProjectInfoFromDatabase(www.text);
+    }
+    else if (GetInfoFromThisDatabase == "Question") //get the data from the QuestionApi
+    {
+      GetQuestionsFromDatabase(www.text);
+    }
+  }
+
+  void GetProjectInfoFromDatabase(string urlApi) //if there is nothing declared before void, the method is always private
+  {
+    if (!urlApi.StartsWith("<!DOCTYPE html>")) //if the database couldn't load
+    {
+      itemData = JsonMapper.ToObject(urlApi); //parse it into a JsonObject
+
+      for (int i = 0; i < itemData["projecten"].Count; i++) //for each project
+      {
+        //always try to parse them into a string, just to be sure
+        databaseTitles.Add((string)itemData["projecten"][i]["naam"]); //read in eveything from the database that has the key 'projecten' and the value 'name'
+        databaseDescriptions.Add((string)itemData["projecten"][i]["uitleg"]);//read in eveything from the database that has the key 'projecten' and the value 'uitleg'
+        databaseIDProjects.Add((string)itemData["projecten"][i]["idProject"]); //read in eveything from the database that has the key 'projecten' and the value 'idProject'
+        databaseImages.Add((string)itemData["projecten"][i]["foto"]); //read in eveything from the database that has the key 'projecten' and the value 'foto'
+        numberOfProjects++; //so the rest of the scripts know how many projects there are
+      }
+      readyToBuild = true; //so the other scripts know when they can start
+    }
+    else {
+      numberOfProjects = 0;
+      readyToBuild = true;
+    }
+  }
+
+  void GetQuestionsFromDatabase(string urlApi)
   {
     itemData = JsonMapper.ToObject(urlApi); //parse it into a JsonObject
 
-    for (int i = 0; i < itemData["projecten"].Count; i++) //for each project
+    for (int i = 0; i < itemData["appvragen"].Count; i++) //for each project
     {
-      databaseTitles.Add((string)itemData["projecten"][i]["naam"]); //read in eveything from the database that has the key 'projecten' and the value 'name'
-      databaseDescriptions.Add((string)itemData["projecten"][i]["uitleg"]);//read in eveything from the database that has the key 'projecten' and the value 'uitleg'
-      databaseIDProjects.Add((string)itemData["projecten"][i]["idProject"]); //read in eveything from the database that has the key 'projecten' and the value 'idProject'
-      databaseImages.Add((string)itemData["projecten"][i]["foto"]); //read in eveything from the database that has the key 'projecten' and the value 'foto'
+      databaseQuestions.Add((string)itemData["appvragen"][i]["question"]); 
+      databaseIDQuestions.Add((string)itemData["appvragen"][i]["idAppquestions"]);
+      databaseIDProjectQuestions.Add((string)itemData["appvragen"][i]["idProject"]);
+      numberOfQuestions++;
     }
-    numberOfProjects = itemData["projecten"].Count; //so the rest of the scripts know how many projects there are
-    readyToBuild = true; //so the other scripts know when they can start
+    readyToPlay = true;
   }
  }

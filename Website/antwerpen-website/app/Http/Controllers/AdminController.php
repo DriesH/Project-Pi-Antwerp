@@ -26,7 +26,7 @@ class AdminController extends Controller
 
 
     protected function panel(){
-        return view('\admin\admin-panel');
+        return view('/admin/admin-panel');
     }
 
     protected function getAdmins(){
@@ -35,7 +35,7 @@ class AdminController extends Controller
                 ->where('role', '=', 10)
                 ->select('name', 'email', 'id')
                 ->get();
-      return view('\admin\admin-lijst', [
+      return view('/admin/admin-lijst', [
       'admins' => $admins
   ]);
     }
@@ -47,20 +47,10 @@ class AdminController extends Controller
       ->update([
       'role' => 0
     ]);
-      $admins = User::orderBy('name', 'asc')
-                ->where('role', '=', 10)
-                ->select('name', 'email', 'id')
-                ->get();
-      return redirect('/admin/admin-lijst', [
-                  'admins' => $admins,
-                  'message' => 'Gebruiker is succesvol van zijn administratorrol ontdaan.'
-              ]);
+      return redirect('/admin/admin-lijst')->with('message', 'Gebruiker is succesvol van zijn administratorrol ontdaan.');
     }
     else {
-      return view('\admin\admin-lijst', [
-        'admins' => $admins,
-        'message' => 'U kan uzelf niet verwijderen als admin.'
-    ]);
+      return redirect('/admin/admin-lijst')->with('error', 'U kan uzelf niet verwijderen als admin.');
     }
 
     }
@@ -96,15 +86,7 @@ class AdminController extends Controller
     ]);
       }
       else {
-        $admins = User::orderBy('name', 'asc')
-                  ->where('role', '=', 10)
-                  ->select('name', 'email')
-                  ->get();
-
-        return view('\admin\admin-lijst', [
-        'admins' => $admins,
-        'error' => $data['admin'] . ' is geen bestaande gebruiker. Probeer opnieuw.'
-    ]);
+        return redirect('/admin/admin-lijst')->with('error', $data['admin'] . ' is geen bestaande gebruiker. Probeer opnieuw.');
       }
 
 
@@ -113,10 +95,7 @@ class AdminController extends Controller
                 ->select('name', 'email')
                 ->get();
 
-      return view('\admin\admin-lijst', [
-        'admins' => $admins,
-        'message' => $user->name . ' is succesvol gepromoveerd tot administrator.'
-    ]);
+      return redirect('/admin/admin-lijst')->with('message', $user->name . ' is succesvol gepromoveerd tot administrator.');
     }
 
     /*-----PROJECTEN-----*/
@@ -130,7 +109,7 @@ class AdminController extends Controller
         */
         $categorien = Categorie::orderBy('naam', 'asc')->get()->pluck('naam', 'idCategorie');
 
-        return view('\admin\nieuw-project', [
+        return view('/admin/nieuw-project', [
         'categorien' => $categorien
     ]);
     }
@@ -270,7 +249,7 @@ class AdminController extends Controller
         */
         $categorien = Categorie::orderBy('naam', 'asc')->get()->pluck('naam', 'idCategorie');
 
-        return view('\admin\project-bewerken', [
+        return view('/admin/project-bewerken', [
         'project' => $project,
         'isActief' => $isActief,
         'picpath' => $picpath,
@@ -391,7 +370,7 @@ class AdminController extends Controller
         */
         $project = Project::where('idProject', '=', $id)->first();
 
-        return view('\admin\project-verwijderen', [
+        return view('/admin/project-verwijderen', [
         'project' => $project
 
     ]);
@@ -440,7 +419,7 @@ class AdminController extends Controller
         $fases = Phase::where('idProject', '=', $id)->orderBy('faseNummer', 'asc')->get();
 
 
-        return view('\admin\fases-overzicht', [
+        return view('/admin/fases-overzicht', [
         'fases' => $fases,
         'project' => $project
 
@@ -479,7 +458,7 @@ class AdminController extends Controller
         //dd($fase);
 
 
-        return view('\admin\fase-bewerken', [
+        return view('/admin/fase-bewerken', [
         'fase' => $fase,
         'project' => $project
 
@@ -553,7 +532,7 @@ class AdminController extends Controller
         $fase = Phase::where('faseNummer', '=', $faseid)
                     ->where('idProject', '=', $id)->first();
 
-        return view('\admin\fase-verwijderen', [
+        return view('/admin/fase-verwijderen', [
         'fase' => $fase,
         'project' => $project
 
@@ -586,7 +565,7 @@ class AdminController extends Controller
         */
         $project = Project::where('idProject', '=', $id)->first();
 
-        return view('\admin\nieuwe-fase', [
+        return view('/admin/nieuwe-fase', [
         'project' => $project
 
     ]);
@@ -695,7 +674,7 @@ class AdminController extends Controller
         $vragen = Question::where('idFase', '=', $fase->idFase)
                  ->get();
 
-        return view('\admin\vragen-overzicht', [
+        return view('/admin/vragen-overzicht', [
         'fase' => $fase,
         'project' => $project,
         'vragen' => $vragen
@@ -731,7 +710,7 @@ class AdminController extends Controller
         $antwoorden = null;
       }
 
-      return view('\admin\vraag-bewerken', [
+      return view('/admin/vraag-bewerken', [
           'project' => $project,
           'fase' => $fase,
           'vraag' => $vraag,
@@ -833,7 +812,7 @@ class AdminController extends Controller
 
         $vraag = Question::where('idvraag', '=', $vraagid)->first();
 
-        return view('\admin\vraag-verwijderen', [
+        return view('/admin/vraag-verwijderen', [
         'fase' => $fase,
         'project' => $project,
         'vraag' => $vraag
@@ -869,7 +848,7 @@ class AdminController extends Controller
         $fase = Phase::where('idProject', '=', $id)->orderBy('faseNummer', 'asc')
                  ->where('faseNummer', '=', $faseid)->first();
 
-        return view('\admin\nieuwe-vraag', [
+        return view('/admin/nieuwe-vraag', [
             'project' => $project,
             'fase' => $fase
         ]);
@@ -964,7 +943,7 @@ class AdminController extends Controller
         $amountFollowers = 0;
         $prevUser        = 0;
 
-        return view('\admin\project-lijst', [
+        return view('/admin/project-lijst', [
             'projecten' => $projecten,
             'dataProject' => $dataProject,
             'usersProject' => $usersProject,
@@ -984,6 +963,7 @@ class AdminController extends Controller
                       ->join('questions', 'phases.idFase', '=', 'questions.idFase')
                       ->join('answers', 'questions.idVraag', '=', 'answers.idVraag')
                       ->orderBy('phases.idFase', 'asc')
+                      ->orderBy('answers.antwoord', 'asc')
                       ->get();
 
 
@@ -993,18 +973,45 @@ class AdminController extends Controller
         $excel->sheet('ProjectInfo', function($sheet) use($project, $dataProject) {
 
           $sheet->row(1, array(
-            'naam', 'uitleg', 'Locatie', 'aangemaakt op'
-            ))->setStyle(array(
-              'font' => array(
-              'bold'      =>  true
-              )
-            ))->setWidth('B', 10);
+            'Naam', 'Uitleg', 'Locatie', 'Aangemaakt op'
+            ))->setWidth(array(
+            'A'     =>  60,
+            'B'     =>  30,
+            'C'     =>  40,
+            'D'     =>  40
+            ));
 
-            $sheet->setfitToHeight('true');
+            $sheet->cells('A4:D4', function($cells) {
+              $cells->setBackground('#000000');
+            });
+            $sheet->cells('A1:D1', function($cells) {
+              $cells->setFontWeight('bold');
+            });
+            $sheet->cells('A6:B6', function($cells) {
+              $cells->setFontWeight('bold');
+            });
+
+
 
           $sheet->row(2, array(
             $project->naam, $project->uitleg, $project->locatie, $project->created_at
           ));
+
+          $sheet->row(6, array(
+            'Appvraag', 'Antwoord'
+          ));
+
+          $allAppAnswersOfProject = DB::table('appanswers')
+                                ->join('appquestions', 'appanswers.idAppquestions', '=', 'appquestions.idAppquestions')
+                                ->where('appquestions.idProject', '=', $project->idProject)
+                                ->orderBy('appanswers.answer', 'asc')
+                                ->get();
+
+          foreach ($allAppAnswersOfProject as $appAnswer_Question) {
+            $sheet->appendRow(array(
+              $appAnswer_Question->question, $appAnswer_Question->answer
+            ));
+          }
 
       });
 
@@ -1028,10 +1035,16 @@ class AdminController extends Controller
                   'font' => array(
                   'bold'      =>  false
                   )
+                ))->setWidth(array(
+                'A'     =>  60,
+                'B'     =>  30
                 ));
               }
-
             }
+            $sheet->cells('A1:B1', function($cells) {
+              $cells->setFontWeight('bold');
+            });
+
 
 
         });
@@ -1056,7 +1069,7 @@ class AdminController extends Controller
 
 
 
-        return view('\admin\appvragen-overzicht', [
+        return view('/admin/appvragen-overzicht', [
             'project' => $project,
             'appQuestions' => $appQuestions,
         ]);
@@ -1073,7 +1086,7 @@ class AdminController extends Controller
 
 
 
-        return view('\admin\appvraag-bewerken', [
+        return view('/admin/appvraag-bewerken', [
             'project' => $project,
             'appquestion' => $appquestion,
         ]);
@@ -1110,7 +1123,7 @@ class AdminController extends Controller
 
 
 
-        return view('\admin\nieuwe-appvraag', [
+        return view('/admin/nieuwe-appvraag', [
             'project' => $project
         ]);
     }
@@ -1147,7 +1160,7 @@ class AdminController extends Controller
       $appquestion = Appquestion::where('idAppquestions', '=', $vraagid)
                     ->first();
 
-        return view('\admin\appvraag-verwijderen', [
+        return view('/admin/appvraag-verwijderen', [
             'project' => $project,
             'appquestion' => $appquestion
         ]);
