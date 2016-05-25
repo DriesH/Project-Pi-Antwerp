@@ -27,7 +27,6 @@
             <div class="panel-body">
                 @foreach($projects as $project)
                 <div class="media">
-
                         <div class="media-left media-top">
                             <a href="#">
                                 <img class="media-object profile-picture-small" src="/pictures/a-logo.svg" alt="a-logo">
