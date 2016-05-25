@@ -1,5 +1,6 @@
 .btn-info{
     background-color: #2C5697 !important;
+    border-color: #0064B4 !important;
 }
 
 .btn-danger{
@@ -14,7 +15,7 @@
     background-color: #4AA32C !important;
 }
 
-.btn-success{
+.btn-primary{
     background-color: #2C5697 !important;
 }
 
@@ -35,6 +36,6 @@
     background-color: #81d066 !important;
 }
 
-.btn-success:hover{
+.btn-primary:hover{
     background-color: #4b6a9a !important;
 }
