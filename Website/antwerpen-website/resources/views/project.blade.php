@@ -18,21 +18,19 @@
                     	.st5{font-size:10.1389px;}
                     	.st6{font-size:12px;}
                         .st7{font-size:35px;}
+                        .st8{font-family:'Sun-Antwerpen 500';}
                     </style>
                     <polygon class="st0" points="39.1,99.8 78.2,125.5 78.2,2 39.1,2 0,2 0,125.5 "/>
                     <polygon class="st1" points="39.1,97.8 78.2,123.5 78.2,0 39.1,0 0,0 0,123.5 "/>
                     @if($amountAnswered < 10)
-                        <text transform="matrix(1 0 0 1 26.9738 61.7319)" class="st2 st3 st4">{{ $amountAnswered }}</text>
-                        <text transform="matrix(1 0 0 1 54.8056 61.7318)" class="st2 st3 st6">x</text>
-                    @elseif(99 >= $amountAnswered && $amountAnswered >= 10)
-                        <text transform="matrix(1 0 0 1 5 62.7319)" class="st2 st3 st4">{{ $amountAnswered }}</text>
-                        <text transform="matrix(1 0 0 1 62 61.7318)" class="st2 st3 st6">x</text>
-                    @elseif($amountAnswered > 99)
-                        <text transform="matrix(1 0 0 1 10 62.7319)" class="st2 st3 st7">{{ $amountAnswered }}</text>
-                        <text transform="matrix(1 0 0 1 65 61.7318)" class="st2 st3 st6">x</text>
+                        <text transform="matrix(1 0 0 1 26.9738 61.7319)" class="st2 st8 st4">{{ $amountAnswered }}</text>
+
+                    @elseif($amountAnswered > 10)
+                        <text transform="matrix(1 0 0 1 15.9738 61.7319)" class="st2 st8 st4">{{ $amountAnswered }}</text>
                     @endif
 
-                    <text transform="matrix(1 0 0 1 19.6256 74.0208)" class="st2 st3 st5">ingevuld</text>
+                    <text transform="matrix(1 0 0 1 23.5 74.0208)" class="st2 st3 st5">vragen</text>
+                    <text transform="matrix(1 0 0 1 19.6256 84.0208)" class="st2 st3 st5">ingevuld</text>
 
                 </svg>
 
