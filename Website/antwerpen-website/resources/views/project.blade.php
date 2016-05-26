@@ -61,7 +61,7 @@
                 <h1>{{$project->naam}}</h1>
             </div>
 
-            <time> {{ date('d F, Y', strtotime($project->created_at)) }} </time>
+            <time> {{ Date::parse($project->created_at)->format('j F Y')}} </time>
 
             <p>
                 {{$project->uitleg}}
@@ -70,7 +70,7 @@
         </article>
         @if(count($questions) > 0)
           <a href="#in-progress" class="btn btn-info test pull-left"><i class="fa fa-comments"></i>Geef je mening</a>
-        @endif       
+        @endif
 
         <!--  VVV VVVVVVVVVVVVVVVVVVV VVV  -->
         <!--  VVV - FIX NEEDED HERE - VVV  -->
@@ -107,7 +107,7 @@
         		<div class="cd-timeline-content" data-id="{{$phase->idFase}}">
         			<h5>{{$phase->title}}</h5>
         			<p>{{$phase->uitleg}}</p>
-        			<span class="cd-date">{{ date('d F, Y', strtotime($phase->start_datum)) }}</span>
+        			<span class="cd-date">{{ Date::parse($phase->start_datum)->format('j F Y') }}</span>
 
                     <?php $isAlreadyAnswered = false; ?>
 
