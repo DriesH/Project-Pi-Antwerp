@@ -35,7 +35,8 @@
 }
 
 #navbar-login{
-    height: 100px;
+    background-color: #2C5697;
+    overflow-y: hidden;
 }
 
 #navbar-login li{
