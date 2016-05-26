@@ -15,7 +15,6 @@ use App\Answer;
 use App\Multiple_choice_answer;
 use Auth;
 use Illuminate\Support\Facades\Input;
-
 use Carbon\Carbon;
 use Jenssegers\Date\Date;
 
