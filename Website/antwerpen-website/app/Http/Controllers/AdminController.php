@@ -517,7 +517,7 @@ class AdminController extends Controller
                         ->withInput();
         }
 
-            Phase::where('idFase', '=', $faseid)
+            Phase::where('faseNummer', '=', $faseid)
                     ->where('idProject', '=', $id)
             ->update([
             'title' => $data['title'],
@@ -557,7 +557,7 @@ class AdminController extends Controller
 
     protected function postFaseVerwijderen($id, $faseid){
 
-        DB::table('Phases')->where('faseNummer', '=', $faseid)
+        DB::table('phases')->where('faseNummer', '=', $faseid)
                             ->where('idProject', '=', $id)
                             ->delete();
 
@@ -771,7 +771,7 @@ class AdminController extends Controller
 
         $vraag_soort_before = Question::where('idvraag', '=', $vraagid)->first()->soort_vraag;
         if ($vraag_soort_before == "Meerkeuze" && $data['soort_vraag'] != "Meerkeuze") {
-          DB::table('Multiple_choice_answers')->where('idVraag', '=', $vraagid)
+          DB::table('multiple_choice_answers')->where('idVraag', '=', $vraagid)
                                 ->delete();
         }
         else if ($vraag_soort_before != "Meerkeuze" && $data['soort_vraag'] == "Meerkeuze") {
@@ -838,7 +838,7 @@ class AdminController extends Controller
 
     protected function postVraagVerwijderen($id, $faseid, $vraagid){
 
-        DB::table('Questions')->where('idVraag', '=', $vraagid)
+        DB::table('questions')->where('idVraag', '=', $vraagid)
                               ->delete();
 
         return redirect('/admin/project-bewerken/'. $id . '/fases/' . $faseid . '/vragen')->with('message', 'Vraag succesvol verwijderd.');
@@ -944,14 +944,14 @@ class AdminController extends Controller
                         ->join('phases', 'projects.idProject', '=', 'phases.idProject')
                         ->join('questions', 'phases.idFase', '=', 'questions.idFase')
                         ->join('answers', 'questions.idVraag', '=', 'answers.idVraag')
-                        ->join('user_follows', 'user_follows.project_id', '=', 'projects.idProject')
-                        ->select('projects.*', 'questions.*', 'answers.*', 'user_follows.*')
+                        ->select('projects.*', 'questions.*', 'answers.*')
                         ->get();
 
         $usersProject = DB::table('projects')
                         ->join('user_follows', 'projects.idProject', '=', 'user_follows.project_id')
                         ->select('user_follows.*')
                         ->get();
+
 
 
         $amountAnswers   = 0;
@@ -1183,7 +1183,7 @@ class AdminController extends Controller
 
     protected function postAppVraagVerwijderen($id, $vraagid){
 
-      DB::table('Appquestions')->where('idAppquestions', '=', $vraagid)
+      DB::table('appquestions')->where('idAppquestions', '=', $vraagid)
                           ->delete();
 
       return redirect('/admin/project-bewerken/' . $id . '/appvragen')->with('message', 'Appvraag succesvol verwijderd.');

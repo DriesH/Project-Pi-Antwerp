@@ -68,8 +68,9 @@
             </p>
 
         </article>
-
-        <a href="#in-progress" class="btn btn-info test pull-left"><i class="fa fa-comments"></i>Geef je mening</a>
+        @if(count($questions) > 0)
+          <a href="#in-progress" class="btn btn-info test pull-left"><i class="fa fa-comments"></i>Geef je mening</a>
+        @endif       
 
         <!--  VVV VVVVVVVVVVVVVVVVVVV VVV  -->
         <!--  VVV - FIX NEEDED HERE - VVV  -->
@@ -118,67 +119,69 @@
                     @endforeach
 
                     @if($phase->status == "in-progress" && !$isAlreadyAnswered)
-                    <a id="form-reveal" class="btn btn-info"><i class="fa fa-arrow-circle-down"></i>Vul de vragen in!</a>
-                    <div class="cd-timeline-question-form" data-id="{{$phase->idFase}}">
-                        <h3>Uw mening telt!</h3>
-                        {{ Form::open(array(
-                            'url' => '/project/' . $project->idProject . '/done',
-                            'class' => 'form-horizontal',
-                            'role' => 'form',
-                            'files' => false)) }}
+                      @if(count($questions) > 0)
+                        <a id="form-reveal" class="btn btn-info"><i class="fa fa-arrow-circle-down"></i>Vul de vragen in!</a>
+                        <div class="cd-timeline-question-form" data-id="{{$phase->idFase}}">
+                            <h3>Uw mening telt!</h3>
+                            {{ Form::open(array(
+                                'url' => '/project/' . $project->idProject . '/done',
+                                'class' => 'form-horizontal',
+                                'role' => 'form',
+                                'files' => false)) }}
 
-                                @foreach($questions as $key_questions => $question)
-                                    @if($question->idFase == $phase->idFase)
-                                        <div class="form-group col-md-12">
-                                            {{ Form::label($question->idVraag, $question->vraag, array(
-                                                'class' => 'control-label')) }}
+                                    @foreach($questions as $key_questions => $question)
+                                        @if($question->idFase == $phase->idFase)
+                                            <div class="form-group col-md-12">
+                                                {{ Form::label($question->idVraag, $question->vraag, array(
+                                                    'class' => 'control-label')) }}
 
-                                            @if($question->soort_vraag == "Open")
-                                                <div class="form-group col-md-12">
-                                                  {{ Form::text($question->idVraag, '', array(
-                                                    'class' => 'form-control',
-                                                    'placeholder' => 'Antwoord...',
-                                                    'required' => 'required',
-                                                    'maxlength' => 100 )) }}
-                                                </div>
-                                            @elseif($question->soort_vraag == "Ja/Nee")
-                                                <div class="form-group col-md-12">
-                                                  <div class="radio">
-                                                    <label><input type="radio" name="{{$question->idVraag}}" value="Ja" required>Ja</label>
-                                                  </div>
-                                                  <div class="radio">
-                                                      <label><input type="radio" name="{{$question->idVraag}}" value="Nee" required>Nee</label>
-                                                  </div>
-                                                </div>
-                                            @elseif($question->soort_vraag == "Meerkeuze")
-                                                @foreach($antwoorden as $key_antwoord => $antwoord)
-                                                    @if($antwoord->idVraag == $question->idVraag)
-                                                        @for( $j = 1; $j < 5;  $j++)
-                                                          @if($antwoord->{'antwoord_' . $j} != null && $antwoord->{'antwoord_' . $j} != "")
-                                                            <div class="form-group col-md-12">
-                                                              <div class="radio">
-                                                                  <label><input type="radio" name="{{$question->idVraag}}" value="{{ $antwoord->{'antwoord_' . $j} }}" required>{{ $antwoord->{'antwoord_' . $j} }}</label>
-                                                              </div>
-                                                            </div>
-                                                          @endif
+                                                @if($question->soort_vraag == "Open")
+                                                    <div class="form-group col-md-12">
+                                                      {{ Form::text($question->idVraag, '', array(
+                                                        'class' => 'form-control',
+                                                        'placeholder' => 'Antwoord...',
+                                                        'required' => 'required',
+                                                        'maxlength' => 100 )) }}
+                                                    </div>
+                                                @elseif($question->soort_vraag == "Ja/Nee")
+                                                    <div class="form-group col-md-12">
+                                                      <div class="radio">
+                                                        <label><input type="radio" name="{{$question->idVraag}}" value="Ja" required>Ja</label>
+                                                      </div>
+                                                      <div class="radio">
+                                                          <label><input type="radio" name="{{$question->idVraag}}" value="Nee" required>Nee</label>
+                                                      </div>
+                                                    </div>
+                                                @elseif($question->soort_vraag == "Meerkeuze")
+                                                    @foreach($antwoorden as $key_antwoord => $antwoord)
+                                                        @if($antwoord->idVraag == $question->idVraag)
+                                                            @for( $j = 1; $j < 5;  $j++)
+                                                              @if($antwoord->{'antwoord_' . $j} != null && $antwoord->{'antwoord_' . $j} != "")
+                                                                <div class="form-group col-md-12">
+                                                                  <div class="radio">
+                                                                      <label><input type="radio" name="{{$question->idVraag}}" value="{{ $antwoord->{'antwoord_' . $j} }}" required>{{ $antwoord->{'antwoord_' . $j} }}</label>
+                                                                  </div>
+                                                                </div>
+                                                              @endif
 
-                                                        @endfor
-                                                    @endif
-                                                @endforeach
-                                            @endif
+                                                            @endfor
+                                                        @endif
+                                                    @endforeach
+                                                @endif
+                                            </div>
+                                        @endif
+                                    @endforeach
+
+                                    <div class="form-group">
+                                        <div class="col-md-12">
+                                            <button type="submit" class="btn btn-success form-control">
+                                                <i class="fa fa-paper-plane"></i> Vragen verzenden
+                                            </button>
                                         </div>
-                                    @endif
-                                @endforeach
-
-                                <div class="form-group">
-                                    <div class="col-md-12">
-                                        <button type="submit" class="btn btn-success form-control">
-                                            <i class="fa fa-paper-plane"></i> Vragen verzenden
-                                        </button>
                                     </div>
-                                </div>
-                        {{ Form::close() }}
-                    </div>
+                            {{ Form::close() }}
+                        </div>
+                      @endif
                     @elseif($phase->status == "in-progress" && $isAlreadyAnswered)
                        <div class="">
                            <p>
