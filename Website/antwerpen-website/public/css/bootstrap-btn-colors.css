@@ -39,3 +39,16 @@
 .btn-primary:hover{
     background-color: #4b6a9a !important;
 }
+
+.alert-success{
+    background-color: #4AA32C !important;
+    border-color: #3b8721 !important;
+    color: white !important;
+}
+
+
+.alert-danger{
+    background-color: #DA291C !important;
+    border-color: #690902 !important;
+    color: white !important;
+}
