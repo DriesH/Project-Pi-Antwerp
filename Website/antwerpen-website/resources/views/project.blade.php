@@ -86,9 +86,9 @@
               'files' => true)) }}
 
                 @if($isFollowing)
-                    <button type="submit" id="following-btn" class="btn btn-success pull-right"><i class="fa fa-check"></i>Aan het volgen</button>
+                    <button type="submit" id="following-btn" class="btn btn-success pull-right"><i class="fa fa-check following-icon"></i>Aan het volgen</button>
                 @else
-                    <button type="submit" id="follow-btn" class="btn btn-default pull-right"><i class="fa fa-plus"></i>Project volgen</button>
+                    <button type="submit" id="follow-btn" class="btn btn-default pull-right"><i class="fa fa-plus following-icon"></i>Project volgen</button>
                 @endif
 
             {{ Form::close() }}
