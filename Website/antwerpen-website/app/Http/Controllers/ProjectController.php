@@ -140,6 +140,7 @@ class ProjectController extends Controller
                     ->join('phases', 'projects.idProject' , '=', 'phases.idProject')
                     ->join('questions', 'phases.idFase', '=', 'questions.idFase')
                     ->where('projects.idProject', '=', $id)
+                    ->where('phases.status', '=', 'in-progress')
                     ->select('questions.*')
                     ->get();
 
@@ -149,6 +150,7 @@ class ProjectController extends Controller
                     ->join('questions', 'phases.idFase', '=', 'questions.idFase')
                     ->join('multiple_choice_answers', 'questions.idVraag', '=', 'multiple_choice_answers.idVraag')
                     ->where('projects.idProject', '=', $id)
+                    ->where('phases.status', '=', 'in-progress')
                     ->select('multiple_choice_answers.*')
                     ->get();
 
