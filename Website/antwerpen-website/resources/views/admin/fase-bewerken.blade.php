@@ -75,7 +75,7 @@
                             <div class="input-group date">
                                 {{ Form::text('start_datum', substr($fase->start_datum, 0, 10), array(
                                   'class' => 'form-control',
-                                  'placeholder' => 'jjjj/dd/mm')) }}<span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
+                                  'placeholder' => 'jjjj/dd/mm')) }}<span class="input-group-addon"><i class="fa fa-calendar-o"></i></span>
                             </div>
                         </div>
                     </div>

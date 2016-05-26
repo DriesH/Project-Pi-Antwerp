@@ -26,18 +26,13 @@
 
                     <div class="titel-time-adminpanel">
                         <h2><a href="/project/{{$project->idProject}}">{{ $project->naam }}</a></h2>
-                        <time><strong>Aangemaakt:</strong> {{ date('d F, Y', strtotime($project->created_at)) }}</time>
+                        <time><strong>Aangemaakt:</strong> {{ Date::parse($project->created_at)->format('j F Y') }}</time>
                     </div>
 
                     @for($i = 0; $i < count($dataProject); $i++)
                         @if($dataProject[$i]->idProject == $project->idProject)
                             <?php
-                                $user = $dataProject[$i]->user_id;
-                                $userAnswered = $dataProject[$i]->idUser;
-
-                                if($user == $userAnswered){
-                                    ++$amountAnswers;
-                                }
+                                ++$amountAnswers;
                             ?>
                         @endif
                     @endfor

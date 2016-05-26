@@ -15,11 +15,16 @@ use App\Answer;
 use App\Multiple_choice_answer;
 use Auth;
 use Illuminate\Support\Facades\Input;
+use Carbon\Carbon;
+use Jenssegers\Date\Date;
+
 
 
 class ProjectController extends Controller
 {
     public function GetProjects(Request $request){
+
+      Date::setLocale('nl');
 
         if (isset($request->categorie)) {
           $categorie = $request->categorie;
@@ -140,6 +145,7 @@ class ProjectController extends Controller
                     ->join('phases', 'projects.idProject' , '=', 'phases.idProject')
                     ->join('questions', 'phases.idFase', '=', 'questions.idFase')
                     ->where('projects.idProject', '=', $id)
+                    ->where('phases.status', '=', 'in-progress')
                     ->select('questions.*')
                     ->get();
 
@@ -149,6 +155,7 @@ class ProjectController extends Controller
                     ->join('questions', 'phases.idFase', '=', 'questions.idFase')
                     ->join('multiple_choice_answers', 'questions.idVraag', '=', 'multiple_choice_answers.idVraag')
                     ->where('projects.idProject', '=', $id)
+                    ->where('phases.status', '=', 'in-progress')
                     ->select('multiple_choice_answers.*')
                     ->get();
 
