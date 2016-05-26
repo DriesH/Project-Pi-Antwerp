@@ -16,10 +16,16 @@ use App\Multiple_choice_answer;
 use Auth;
 use Illuminate\Support\Facades\Input;
 
+use Carbon\Carbon;
+use Jenssegers\Date\Date;
+
+
 
 class ProjectController extends Controller
 {
     public function GetProjects(Request $request){
+
+      Date::setLocale('nl');
 
         if (isset($request->categorie)) {
           $categorie = $request->categorie;

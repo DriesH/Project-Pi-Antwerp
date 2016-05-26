@@ -58,9 +58,8 @@
                 </p>
             </div>
             <article>
-
                 <time>
-                    {{ date('d F, Y', strtotime($project->created_at)) }}
+                    {{ Date::parse($project->created_at)->format('j F Y') }}
                 </time>
                 <p>{{ str_limit($project->uitleg, $limit = 250, $end='...')  }}</p>
                 <div>
