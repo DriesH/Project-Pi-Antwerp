@@ -32,12 +32,7 @@
                     @for($i = 0; $i < count($dataProject); $i++)
                         @if($dataProject[$i]->idProject == $project->idProject)
                             <?php
-                                $user = $dataProject[$i]->user_id;
-                                $userAnswered = $dataProject[$i]->idUser;
-
-                                if($user == $userAnswered){
-                                    ++$amountAnswers;
-                                }
+                                ++$amountAnswers;
                             ?>
                         @endif
                     @endfor
