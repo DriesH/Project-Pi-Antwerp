@@ -944,7 +944,7 @@ class AdminController extends Controller
                         ->join('phases', 'projects.idProject', '=', 'phases.idProject')
                         ->join('questions', 'phases.idFase', '=', 'questions.idFase')
                         ->join('answers', 'questions.idVraag', '=', 'answers.idVraag')
-                        ->join('user_follows', 'projects.idProject', '=', 'user_follows.project_id')
+                        ->join('user_follows', 'user_follows.project_id', '=', 'projects.idProject')
                         ->select('projects.*', 'questions.*', 'answers.*', 'user_follows.*')
                         ->get();
 

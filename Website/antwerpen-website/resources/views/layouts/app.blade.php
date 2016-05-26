@@ -36,19 +36,18 @@
             <div class="container">
                 <div class="navbar-header">
                     <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#inlog-field">
-                        <span class="fa fa-bars"></span>
+                        <span class="fa fa-bars burger-menu"></span>
                     </button>
                     <a href="/" class="navbar-brand">
                         <img src="/pictures/a-logo.svg" alt="a-logo" />
                     </a>
                     <ul class="nav navbar-nav navbar-left">
                         <li><a id="page-title" href="/"><h1> Projecten</h1></a></li>
-
                     </ul>
                 </div>
 
                 <div class="collapse navbar-collapse" id="inlog-field">
-                    <ul class="nav navbar-nav navbar-right dropdown" id="navbar-login">
+                    <ul class="nav navbar-nav navbar-right" id="navbar-login">
                             <li class="speel-app"><a href="/applicatie-uitleg">Speel de app! <img id="mascot-styling" src="/pictures/mascot.png" alt="mascot-van-de-website" /></a></li>
                         @if (Auth::guest())
         					<li><a href="/auth/register"><i class="fa fa-pencil-square-o"></i>Registreren</a></li>
@@ -64,6 +63,11 @@
                 </div>
             </div>
         </nav>
+
+
+
+
+
 
         <div class="container" id="content">
             @yield('content')
