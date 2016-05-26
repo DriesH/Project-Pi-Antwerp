@@ -1,27 +1,25 @@
 ﻿using UnityEngine;
 using System.Collections;
-using System.Collections.Generic;
-using System.IO;
 using LitJson;
 
-public class SendData_grabFeedback : QuestionLogic
-{
- // private JsonData dataForFeedback  = null; //the data that will be used to select the data needed from the json file
+public class SendData_GrabFeedback1 : QuestionLogic {
+
+  private JsonData dataForFeedback  = null; //the data that will be used to select the data needed from the json file
   
   //overerven van questionlogic
-  private string writeURL           = "";
-  private string currQuestionID     = ""; //mag in string
-  private string currAnswerUser     = ""; //echt het woord typen
+  private string writeURL           = ""; //the url to write to
+  private string currQuestionID     = ""; //used to get the ID of the current quesion
+  private string currAnswerUser     = ""; //used to get the current question
 
   void LateUpdate()
   {
     if (whatWasPickedUp != null && whatWasPickedUp != "") //if an answer is given
     {
-      currQuestionID = questionIDs[currentQuestion-1]; //because the next question is already loaded
+      currQuestionID = questionIDs[currentQuestion-1]; //because the next question is already loaded, so you need to get the previous question
       WhichAnswer(whatWasPickedUp); //to get answerUser
       SnakeV2.whichFoodwasPickedUp = null; //reset the whole pickedupvariable
       
-      //DON'T CHANGE URL
+      //DON'T CHANGE URL, post the anwser to the URL down here using the parameters
       writeURL = "http://pi.multimediatechnology.be/API/post/projecten/antwoord?questionID=" + currQuestionID + "&answerUser=" + currAnswerUser;
       StartCoroutine(writeToServer(currQuestionID, currAnswerUser));
     }
@@ -29,20 +27,19 @@ public class SendData_grabFeedback : QuestionLogic
 
 
   IEnumerator writeToServer (string questionID, string answerUser) { 
-    WWW www = new WWW(writeURL); 
-    yield return www;
+    WWW www = new WWW(writeURL); //use the given url to sent the data to
+    yield return www; //wait till it's done
 
     if (www.error == null || !www.text.StartsWith("<!DOCTYPE html>")) //if there is not an error and the page isn't a normal html file
     { 
-      readAllForFeedback(www.text);
+      readAllForFeedback(www.text); //also read in the feedback that you get from this url
     }
-
-    Debug.Log("Getalkt met server.");
   }
 
   void readAllForFeedback(string feedbackURL)
   {
-     //dataForFeedback = JsonMapper.ToObject(feedbackURL); //parse it into a JsonObject
+     dataForFeedback = JsonMapper.ToObject(feedbackURL); //parse it into a JsonObject
+     Debug.Log(dataForFeedback.ToString());
 
     //data nog inlezen voor feedback => nog percentteken toevoegen
     //==> enkel feedback voor gekozen antwoord
