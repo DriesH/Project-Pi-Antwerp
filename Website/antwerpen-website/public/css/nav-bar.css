@@ -34,9 +34,26 @@
     padding-right: 0;
 }
 
+.navbar-nav{
+    margin-bottom: 0px;
+}
+
 #navbar-login{
     background-color: #2C5697;
     overflow-y: hidden;
+}
+
+#inlog-field{
+    border-top: none;
+}
+
+#navbar-login.navbar-nav{
+    margin: 0px 0px 0px 0px;
+}
+
+.navbar-collapse{
+    padding-left: 0px;
+    padding-right: 0px;
 }
 
 #navbar-login li{
