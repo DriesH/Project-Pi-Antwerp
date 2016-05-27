@@ -18,7 +18,7 @@ public class QuestionLogic : ReadJson {
 
   void Start()
   {
-    okButton.enabled = false; //don't show button when the questions haven't loaded
+    okButton.interactable = false; //make the button disabled so it can't be clicked when the questions haven't loaded
     if (this.tag == "Buttontest") //make sure that this script that is linked to several objects, only is excecuted when it's linked to the tag Buttontest
     { 
     StartCoroutine(GetDatabase(urlProject, "Question")); //start the method from ReadJson so it's the first to begin
@@ -53,7 +53,7 @@ public class QuestionLogic : ReadJson {
         questionIDs[i]  = databaseIDQuestions[i]; //put each ID from the database into the array
       }
     }
-    okButton.enabled = true; //the questions have loaded so show the button
+    okButton.interactable = true; //the questions have loaded so make the button interactable
     questionsLoaded = true;
   }
 
