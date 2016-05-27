@@ -2,11 +2,11 @@
 
 @section('content')
 <div class="container">
-   <a href="/admin" class="btn btn-primary"><i class="fa fa-arrow-left"></i>Terug</a>
+    <a href="/admin" class="btn btn-primary"><i class="fa fa-arrow-left"></i>Terug</a>
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
-                <div class="panel-heading"><h1>Project toevoegen</h1></div>
+                <div class="panel-heading"><h1>Nieuw project toevoegen</h1></div>
                 <div class="panel-body">
                     {{ Form::open(array(
                       'action' => 'AdminController@postNieuwProject',
@@ -15,6 +15,9 @@
                       'files' => true)) }}
 
                     <div>
+                      @if(session()->has('error'))
+                        <div class="alert alert-danger alert-dismissable">{{ session()->get('error') }}</div>
+                      @endif
                         @if (count($errors) > 0)
                             <div class="alert alert-danger">
                                 <ul>
@@ -88,7 +91,7 @@
                             </button>
                         </div>
                     </div>
-                    
+
                     {{ Form::close() }}
                 </div>
             </div>

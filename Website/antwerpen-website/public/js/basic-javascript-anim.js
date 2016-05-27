@@ -3,22 +3,22 @@ jQuery(document).ready(function($){
     //follow button
     $('#follow-btn').mouseenter(function(){
         $(this).addClass('btn-success').removeClass('btn-default');
-        $('.fa.fa-plus').addClass('fa-check').removeClass('fa-plus');
+        $('.fa.fa-plus.following-icon').addClass('fa-check').removeClass('fa-plus');
     });
 
     $('#follow-btn').mouseleave(function(){
         $(this).addClass('btn-default').removeClass('btn-success');
-        $('.fa.fa-check').addClass('fa-plus').removeClass('fa-check');
+        $('.fa.fa-check.following-icon').addClass('fa-plus').removeClass('fa-check');
     });
 
     $('#following-btn').mouseenter(function(){
         $(this).addClass('btn-danger').removeClass('btn-success');
-        $('.fa.fa-check').addClass('fa-times').removeClass('fa-check');
+        $('.fa.fa-check.following-icon').addClass('fa-times').removeClass('fa-check');
     });
 
     $('#following-btn').mouseleave(function(){
         $(this).addClass('btn-success').removeClass('btn-danger');
-        $('.fa.fa-times').addClass('fa-check').removeClass('fa-times');
+        $('.fa.fa-times.following-icon').addClass('fa-check').removeClass('fa-times');
 
     });
 
@@ -73,5 +73,19 @@ jQuery(document).ready(function($){
             showMeerkeuze();
         }
     });
+
+
+    //change pencil to 'bewerken' in admin panel info page
+    // $('#project-round-image').mouseenter(function(){
+    //     $('#project-round-image div a i').removeClass('fa fa-pencil-square-o');
+    //     $('#project-round-image div a i').html('Bewerken');
+    // });
+    //
+    // $('#project-round-image').mouseleave(function(){
+    //     $('#project-round-image div a i').addClass('fa fa-pencil-square-o');
+    //     $('#project-round-image div a i').html('');
+    // });
+
+
 
 });

@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="container">
-   <a href="./" class="btn btn-primary"><i class="fa fa-arrow-left"></i>Terug</a>
+    <a href="{{ URL::previous() }}" class="btn btn-primary"><i class="fa fa-arrow-left"></i>Terug</a>
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
@@ -65,7 +65,7 @@
                     <div class="form-group">
                         <div class="col-md-6 col-md-offset-4">
                             <button type="submit" class="btn btn-primary">
-                                <i class="fa fa-btn fa-sign-in"></i>Bewerken
+                                <i class="fa fa-btn fa-sign-in"></i>Aanpassen
                             </button>
                         </div>
                     </div>

@@ -4,25 +4,31 @@ using System.Collections.Generic;
 
 public class SnakeV2 : TouchLogic {
 
-  private Vector3 fingerPos; //coördinates of fingertouch
+  private Vector3   fingerPos;            //coördinates of fingertouch
+  private Vector3   beginPosSnake;        //to reset the snake to the center position
   private Transform snakeTrans, camTrans; //transform from snake and camera
-  private float speed = 5f; //speed of the snake
-  private Vector3 beginPosSnake; //to reset the snake to the center position
-  private float maxDist = 1; //the maximumdistance between snake and finger until it moves again
+  private float     speed                 = 10f; //speed of the snake
+  private float     maxDist               = 1; //the maximumdistance between snake and finger until it moves again
+  private Vector3 upperLeftCorner         = new Vector3(-4.63f, 0.5f, 6.51f);
+  private Vector3 upperRightCorner        = new Vector3(4.63f, 0.5f, 6.51f);
+  private Vector3 lowerLeftCorner         = new Vector3(-4.63f, 0.5f, -8.11f);
+  private Vector3 lowerRightCorner        = new Vector3(4.63f, 0.5f, -8.11f);
+  private short   numberOfAnswers         = 4; //the number of possible answers
 
-  public GameObject food = null;
-  public bool isPlayingGame;
+  public GameObject food                  = null;
+  public GameObject questionPanel         = null; //the panel that alternatively will be set to hide or appear
+  
+  public static bool       isPlayingGame         = false;// is the game playing or are we answering a question    
+  public static string whichFoodwasPickedUp      = ""; //so the next script knows which answer was given
 
-  public GameObject questionPanel = null;
 
   void Start()
   {
-    snakeTrans = this.transform; //save startposition and -rotation of the snake
-    camTrans = Camera.main.transform; // save de startposition and -rotation of the camera
-    beginPosSnake = this.transform.position; //save startposition and -rotation of the snake
-    isPlayingGame = false;
+    snakeTrans    = this.transform;           //save startposition and -rotation of the snake
+    camTrans      = Camera.main.transform;    // save de startposition and -rotation of the camera
+    beginPosSnake = this.transform.position;  //save startposition and -rotation of the snake
 
-    for (int i = 1; i <= 4; i++)
+    for (int i = 1; i <= numberOfAnswers; i++) //make the 4 pickups with the tag "food_i" (so from 1 to 4)
     {
       SpawnPickup("food_" + i);
     }
@@ -46,6 +52,29 @@ public class SnakeV2 : TouchLogic {
     }
   }
 
+  void SpawnPickup(string number) //spawnt in 4 corners
+  {
+      switch (number)
+      { 
+        case "food_1":
+          food.tag = "food_1"; //give the object the following tag
+          Instantiate(food, upperLeftCorner, Quaternion.identity); //upper left position
+          break;
+        case "food_2":
+          food.tag = "food_2";
+          Instantiate(food, upperRightCorner, Quaternion.identity); //upper right position
+          break;
+        case "food_3":
+          food.tag = "food_3";
+          Instantiate(food, lowerLeftCorner, Quaternion.identity); //lower left position
+          break;
+        case "food_4":
+          food.tag = "food_4";
+          Instantiate(food, lowerRightCorner, Quaternion.identity); //lower right position
+          break;
+      }
+  }
+
   void OnTouchMoved() //if the touch has moved
   { LookAtFinger(); }
 
@@ -53,34 +82,12 @@ public class SnakeV2 : TouchLogic {
   { LookAtFinger(); }
 
   void OnTouchBegan() //if there is a touch
-  { touch2Watch = TouchLogic.currTouch; //the currtouch is converted to the touch that the whole script has to look at 
+  {
+    touch2Watch = TouchLogic.currTouch; //the currtouch is converted to the touch that the whole script has to look at 
   }
 
   void OnTouchEnded() //if a touch has ended (needed to be here of unity might give an error)
   { }
-
-  void SpawnPickup(string number) //spawnt in 4 corners
-  {
-      switch (number)
-      { 
-        case "food_1":
-          food.tag = "food_1"; //give the object the following tag
-          Instantiate(food, new Vector3(-4.63f, 0.5f, 6.51f), Quaternion.identity); //upper left position
-          break;
-        case "food_2":
-          food.tag = "food_2";
-          Instantiate(food, new Vector3(4.63f, 0.5f, 6.51f), Quaternion.identity); //upper right position
-          break;
-        case "food_3":
-          food.tag = "food_3";
-          Instantiate(food, new Vector3(-4.63f, 0.5f, -8.11f), Quaternion.identity); //lower left position
-          break;
-        case "food_4":
-          food.tag = "food_4";
-          Instantiate(food, new Vector3(4.63f, 0.5f, -8.11f), Quaternion.identity); //lower right position
-          break;
-      }
-  }
 
   void OnTriggerEnter(Collider c) //als de snake botst tegen iets
   {
@@ -89,6 +96,7 @@ public class SnakeV2 : TouchLogic {
       transform.position = beginPosSnake; //test zet snake op begin
       isPlayingGame = false;
       questionPanel.SetActive(true);
+      whichFoodwasPickedUp = c.tag;
     }
     else if (c.tag.StartsWith("respawn")) // respawn when player oved to the middle
     {

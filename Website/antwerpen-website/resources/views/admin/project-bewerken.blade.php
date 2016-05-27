@@ -2,13 +2,12 @@
 
 @section('content')
 <div class="container">
-   <a href="/" class="btn btn-primary"><i class="fa fa-arrow-left"></i>Terug</a>
+    <a href="/admin" class="btn btn-primary"><i class="fa fa-arrow-left"></i>Terug</a>
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
-                <div class="panel-heading"><h1>Project <ins>{{$project->naam}}</ins> aanpassen</h1>
-                <a class="btn btn-primary" href="{{$project->idProject}}/fases" role="button"><i class="fa fa-edit"></i>Fases en vragen bewerken</a>
-                <a class="btn btn-danger pull-right" href="{{$project->idProject}}/verwijderen" role="button"><i class="fa fa-edit"></i>Project verwijderen</a>
+                <div class="panel-heading">
+                    <h1>Project <em>{{$project->naam}}</em> aanpassen</h1>
                 </div>
                 <div class="panel-body">
                     {{ Form::open(array(
@@ -18,6 +17,9 @@
                       'files' => true)) }}
 
                     <div>
+                      @if(session()->has('error'))
+                        <div class="alert alert-danger alert-dismissable">{{ session()->get('error') }}</div>
+                      @endif
                         @if (count($errors) > 0)
                             <div class="alert alert-danger">
                                 <ul>
@@ -94,8 +96,44 @@
                         </div>
                     </div>
                     {{ Form::close() }}
+
+
+
+                </div>
+
+
+            </div>
+
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <h4><i class="fa fa-pencil-square-o"></i>Fases bewerken</h4>
+                </div>
+                <div class="panel-body">
+                    <a class="btn btn-primary center-block" href="{{$project->idProject}}/fases" role="button"><i class="fa fa-edit"></i>Fases en vragen bewerken</a>
+                </div>
+
+            </div>
+
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <h4><img id="small-mascot-icon" src="/pictures/mascot.png" alt="app-mascot" />Appvragen bewerken</h4>
+                </div>
+                <div class="panel-body">
+                    <a class="btn btn-primary center-block" href="{{$project->idProject}}/appvragen" role="button"><i class="fa fa-edit"></i>Appvragen bewerken</a>
                 </div>
             </div>
+
+
+            <div class="panel panel-danger">
+                <div class="panel-heading">
+                    <h4><i class="fa fa-ban"></i>Gevarenzone!</h4>
+                </div>
+                <div class="panel-body">
+                    <a class="btn btn-danger center-block" href="{{$project->idProject}}/verwijderen" role="button"><i class="fa fa-trash"></i>Project verwijderen</a>
+                </div>
+
+            </div>
+
         </div>
     </div>
 </div>

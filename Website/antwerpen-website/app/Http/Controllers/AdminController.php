@@ -11,8 +11,14 @@ use App\Project;
 use App\Categorie;
 use App\Phase;
 use App\Question;
+use App\User;
+use App\Appquestion;
+use Auth;
+use Excel;
 use App\Multiple_choice_answer;
 use DB;
+use Carbon\Carbon;
+use Jenssegers\Date\Date;
 
 class AdminController extends Controller
 {
@@ -22,7 +28,76 @@ class AdminController extends Controller
 
 
     protected function panel(){
-        return view('\admin\admin-panel');
+        return view('/admin/admin-panel');
+    }
+
+    protected function getAdmins(){
+
+      $admins = User::orderBy('name', 'asc')
+                ->where('role', '=', 10)
+                ->select('name', 'email', 'id')
+                ->get();
+      return view('/admin/admin-lijst', [
+      'admins' => $admins
+  ]);
+    }
+
+    protected function getAdminVerwijderen($id){
+
+    if (Auth::user()->id != $id) {
+      User::where('id', $id)
+      ->update([
+      'role' => 0
+    ]);
+      return redirect('/admin/admin-lijst')->with('message', 'Gebruiker is succesvol van zijn administratorrol ontdaan.');
+    }
+    else {
+      return redirect('/admin/admin-lijst')->with('error', 'U kan uzelf niet verwijderen als admin.');
+    }
+
+    }
+
+    protected function postNieuweAdmin(Request $request){
+
+      /**
+      *Data bevat de values van inputfields.
+      *
+      *@var array
+      */
+      $data = Input::all();
+
+      $validator = Validator::make($request->all(), [
+          'admin' => 'required'
+      ]);
+
+      if ($validator->fails()) {
+           return redirect('/admin/admin-lijst')
+                      ->withErrors($validator)
+                      ->withInput();
+      }
+
+      $user = User::where('name', $data['admin'])
+      ->orWhere('email', $data['admin'])
+      ->first();
+
+      if ($user != null) {
+        User::where('name', $data['admin'])
+        ->orWhere('email', $data['admin'])
+        ->update([
+        'role' => 10
+    ]);
+      }
+      else {
+        return redirect('/admin/admin-lijst')->with('error', $data['admin'] . ' is geen bestaande gebruiker. Probeer opnieuw.');
+      }
+
+
+      $admins = User::orderBy('name', 'asc')
+                ->where('role', '=', 10)
+                ->select('name', 'email')
+                ->get();
+
+      return redirect('/admin/admin-lijst')->with('message', $user->name . ' is succesvol gepromoveerd tot administrator.');
     }
 
     /*-----PROJECTEN-----*/
@@ -36,7 +111,7 @@ class AdminController extends Controller
         */
         $categorien = Categorie::orderBy('naam', 'asc')->get()->pluck('naam', 'idCategorie');
 
-        return view('\admin\nieuw-project', [
+        return view('/admin/nieuw-project', [
         'categorien' => $categorien
     ]);
     }
@@ -80,42 +155,49 @@ class AdminController extends Controller
             *
             *@var file
             */
+            $maxWidth = 1000;
+            $maxHeight = 1000;
             $afbeelding = Input::file('foto');
+            $imageDimensions = getimagesize($afbeelding);
 
-            /**
-            *de extensie van afbeelding
-            *
-            *@var string
-            */
-            $extensie = $afbeelding->getClientOriginalExtension();
+            if ($imageDimensions['0'] <= $maxWidth && $imageDimensions['1'] <= $maxHeight ) {
+              /**
+              *de extensie van afbeelding
+              *
+              *@var string
+              */
+              $extensie = $afbeelding->getClientOriginalExtension();
 
-            /**
-            *nieuwe unieke naam van de afbeelding
-            *
-            *@var string
-            */
-            $nieuwe_naam = uniqid() . "." . $extensie;
+              /**
+              *nieuwe unieke naam van de afbeelding
+              *
+              *@var string
+              */
+              $nieuwe_naam = uniqid() . "." . $extensie;
 
-            $afbeelding->move('pictures/uploads', $nieuwe_naam);
+              $afbeelding->move('pictures/uploads', $nieuwe_naam);
 
-            /**
-            *nieuw pad naar afbeelding
-            *
-            *@var string
-            */
-            $foto_path = '/pictures/uploads/' . $nieuwe_naam;
+              /**
+              *nieuw pad naar afbeelding
+              *
+              *@var string
+              */
+              $foto_path = '/pictures/uploads/' . $nieuwe_naam;
 
-            //dd($foto_path);
+              //dd($foto_path);
 
-            $nieuwProject = Project::create([
-                'naam' => $data['naam'],
-                'uitleg' => $data['uitleg'],
-                'locatie' => $data['locatie'],
-                'foto' => $foto_path,
-                'isActief' => $isActief,
-                'idCategorie' => $data['categorie']
-            ]);
-
+              $nieuwProject = Project::create([
+                  'naam' => $data['naam'],
+                  'uitleg' => $data['uitleg'],
+                  'locatie' => $data['locatie'],
+                  'foto' => $foto_path,
+                  'isActief' => $isActief,
+                  'idCategorie' => $data['categorie']
+              ]);
+            }
+            else {
+              return redirect('/admin/nieuwproject/')->withInput()->with('error', 'Afbeelding mag maximaal ' . $maxWidth . 'x' . $maxHeight . ' pixels zijn.');
+            }
         }
         else {
             $nieuwProject = Project::create([
@@ -176,7 +258,7 @@ class AdminController extends Controller
         */
         $categorien = Categorie::orderBy('naam', 'asc')->get()->pluck('naam', 'idCategorie');
 
-        return view('\admin\project-bewerken', [
+        return view('/admin/project-bewerken', [
         'project' => $project,
         'isActief' => $isActief,
         'picpath' => $picpath,
@@ -186,7 +268,6 @@ class AdminController extends Controller
 
     protected function postProjectBewerken($id, Request $request)
     {
-
         //dd( Input::all() );  // om input data te testen.
 
         /**
@@ -231,48 +312,57 @@ class AdminController extends Controller
             *@var file
             */
             $afbeelding = Input::file('foto');
+            $maxWidth = 1000;
+            $maxHeight = 1000;
+            $imageDimensions = getimagesize($afbeelding);
 
-            /**
-            *de extensie van afbeelding
-            *
-            *@var string
-            */
-            $extensie = $afbeelding->getClientOriginalExtension();
+            if ($imageDimensions['0'] <= $maxWidth && $imageDimensions['1'] <= $maxHeight ) {
+              /**
+              *de extensie van afbeelding
+              *
+              *@var string
+              */
+              $extensie = $afbeelding->getClientOriginalExtension();
 
-            /**
-            *nieuwe unieke naam van de afbeelding
-            *
-            *@var string
-            */
-            $nieuwe_naam = uniqid() . "." . $extensie;
+              /**
+              *nieuwe unieke naam van de afbeelding
+              *
+              *@var string
+              */
+              $nieuwe_naam = uniqid() . "." . $extensie;
 
-            //nieuwe afbeelding in uploads plaatsen
-            $afbeelding->move('pictures/uploads', $nieuwe_naam);
+              //nieuwe afbeelding in uploads plaatsen
+              $afbeelding->move('pictures/uploads', $nieuwe_naam);
 
-            /**
-            *nieuw pad naar afbeelding
-            *
-            *@var string
-            */
-            $foto_path = '/pictures/uploads/' . $nieuwe_naam;
+              /**
+              *nieuw pad naar afbeelding
+              *
+              *@var string
+              */
+              $foto_path = '/pictures/uploads/' . $nieuwe_naam;
 
-            //oude afbeelding verwijderen uit uploads map
-            $project = Project::where('idProject', '=', $id)->first();
-            $oude_afbeelding = substr($project->foto, 1);
+              //oude afbeelding verwijderen uit uploads map
+              $project = Project::where('idProject', '=', $id)->first();
+              $oude_afbeelding = substr($project->foto, 1);
 
-            if (File::exists($oude_afbeelding)){
-                unlink($oude_afbeelding);
+              if (File::exists($oude_afbeelding)){
+                  unlink($oude_afbeelding);
+              }
+
+              Project::where('idProject', $id)
+              ->update([
+                  'naam' => $data['naam'],
+                  'uitleg' => $data['uitleg'],
+                  'locatie' => $data['locatie'],
+                  'foto' => $foto_path,
+                  'isActief' => $isActief,
+                  'idCategorie' => $data['categorie'],
+              ]);
+            }
+            else {
+              return redirect('/admin/project-bewerken/' . $id)->withInput()->with('error', 'Afbeelding mag maximaal ' . $maxWidth . 'x' . $maxHeight . ' pixels zijn.');
             }
 
-            Project::where('idProject', $id)
-            ->update([
-                'naam' => $data['naam'],
-                'uitleg' => $data['uitleg'],
-                'locatie' => $data['locatie'],
-                'foto' => $foto_path,
-                'isActief' => $isActief,
-                'idCategorie' => $data['categorie'],
-            ]);
         }
         else {
             Project::where('idProject', $id)
@@ -297,7 +387,7 @@ class AdminController extends Controller
         */
         $project = Project::where('idProject', '=', $id)->first();
 
-        return view('\admin\project-verwijderen', [
+        return view('/admin/project-verwijderen', [
         'project' => $project
 
     ]);
@@ -305,6 +395,14 @@ class AdminController extends Controller
     }
 
     protected function postProjectVerwijderen($id){
+
+        $project = Project::where('idProject', '=', $id)->first();
+
+        $oude_afbeelding = substr($project->foto, 1);
+
+        if (File::exists($oude_afbeelding)){
+            unlink($oude_afbeelding);
+        }
 
         DB::table('projects')->where('idProject', '=', $id)
                             ->delete();
@@ -338,7 +436,7 @@ class AdminController extends Controller
         $fases = Phase::where('idProject', '=', $id)->orderBy('faseNummer', 'asc')->get();
 
 
-        return view('\admin\fases-overzicht', [
+        return view('/admin/fases-overzicht', [
         'fases' => $fases,
         'project' => $project
 
@@ -377,7 +475,7 @@ class AdminController extends Controller
         //dd($fase);
 
 
-        return view('\admin\fase-bewerken', [
+        return view('/admin/fase-bewerken', [
         'fase' => $fase,
         'project' => $project
 
@@ -421,7 +519,7 @@ class AdminController extends Controller
                         ->withInput();
         }
 
-            Phase::where('idFase', '=', $faseid)
+            Phase::where('faseNummer', '=', $faseid)
                     ->where('idProject', '=', $id)
             ->update([
             'title' => $data['title'],
@@ -451,7 +549,7 @@ class AdminController extends Controller
         $fase = Phase::where('faseNummer', '=', $faseid)
                     ->where('idProject', '=', $id)->first();
 
-        return view('\admin\fase-verwijderen', [
+        return view('/admin/fase-verwijderen', [
         'fase' => $fase,
         'project' => $project
 
@@ -461,7 +559,7 @@ class AdminController extends Controller
 
     protected function postFaseVerwijderen($id, $faseid){
 
-        DB::table('Phases')->where('faseNummer', '=', $faseid)
+        DB::table('phases')->where('faseNummer', '=', $faseid)
                             ->where('idProject', '=', $id)
                             ->delete();
 
@@ -484,7 +582,7 @@ class AdminController extends Controller
         */
         $project = Project::where('idProject', '=', $id)->first();
 
-        return view('\admin\nieuwe-fase', [
+        return view('/admin/nieuwe-fase', [
         'project' => $project
 
     ]);
@@ -593,7 +691,7 @@ class AdminController extends Controller
         $vragen = Question::where('idFase', '=', $fase->idFase)
                  ->get();
 
-        return view('\admin\vragen-overzicht', [
+        return view('/admin/vragen-overzicht', [
         'fase' => $fase,
         'project' => $project,
         'vragen' => $vragen
@@ -629,7 +727,7 @@ class AdminController extends Controller
         $antwoorden = null;
       }
 
-      return view('\admin\vraag-bewerken', [
+      return view('/admin/vraag-bewerken', [
           'project' => $project,
           'fase' => $fase,
           'vraag' => $vraag,
@@ -675,7 +773,7 @@ class AdminController extends Controller
 
         $vraag_soort_before = Question::where('idvraag', '=', $vraagid)->first()->soort_vraag;
         if ($vraag_soort_before == "Meerkeuze" && $data['soort_vraag'] != "Meerkeuze") {
-          DB::table('Multiple_choice_answers')->where('idVraag', '=', $vraagid)
+          DB::table('multiple_choice_answers')->where('idVraag', '=', $vraagid)
                                 ->delete();
         }
         else if ($vraag_soort_before != "Meerkeuze" && $data['soort_vraag'] == "Meerkeuze") {
@@ -731,7 +829,7 @@ class AdminController extends Controller
 
         $vraag = Question::where('idvraag', '=', $vraagid)->first();
 
-        return view('\admin\vraag-verwijderen', [
+        return view('/admin/vraag-verwijderen', [
         'fase' => $fase,
         'project' => $project,
         'vraag' => $vraag
@@ -742,7 +840,7 @@ class AdminController extends Controller
 
     protected function postVraagVerwijderen($id, $faseid, $vraagid){
 
-        DB::table('Questions')->where('idVraag', '=', $vraagid)
+        DB::table('questions')->where('idVraag', '=', $vraagid)
                               ->delete();
 
         return redirect('/admin/project-bewerken/'. $id . '/fases/' . $faseid . '/vragen')->with('message', 'Vraag succesvol verwijderd.');
@@ -767,7 +865,7 @@ class AdminController extends Controller
         $fase = Phase::where('idProject', '=', $id)->orderBy('faseNummer', 'asc')
                  ->where('faseNummer', '=', $faseid)->first();
 
-        return view('\admin\nieuwe-vraag', [
+        return view('/admin/nieuwe-vraag', [
             'project' => $project,
             'fase' => $fase
         ]);
@@ -835,4 +933,265 @@ class AdminController extends Controller
 
         return redirect('/admin/project-bewerken/'. $id . '/fases/' . $faseid . '/vragen')->with('message', 'Vraag succesvol toegevoegd.');
     }
-  }
+
+    protected function getProjectLijst(){
+
+        $projecten = DB::table('projects')
+                      ->select('naam', 'foto', 'created_at', 'uitleg', 'idProject', 'isActief')
+                      ->orderBy('projects.isActief', 'desc')
+                      ->orderBy('projects.created_at', 'desc')
+                      ->get();
+
+        $dataProject = DB::table('projects')
+                        ->join('phases', 'projects.idProject', '=', 'phases.idProject')
+                        ->join('questions', 'phases.idFase', '=', 'questions.idFase')
+                        ->join('answers', 'questions.idVraag', '=', 'answers.idVraag')
+                        ->select('projects.*', 'questions.*', 'answers.*')
+                        ->get();
+
+        $usersProject = DB::table('projects')
+                        ->join('user_follows', 'projects.idProject', '=', 'user_follows.project_id')
+                        ->select('user_follows.*')
+                        ->get();
+
+
+
+        $amountAnswers   = 0;
+        $amountFollowers = 0;
+        $prevUser        = 0;
+
+        return view('/admin/project-lijst', [
+            'projecten' => $projecten,
+            'dataProject' => $dataProject,
+            'usersProject' => $usersProject,
+            'amountAnswers' => $amountAnswers,
+            'amountFollowers' => $amountFollowers,
+            'prevUser' => $prevUser,
+        ]);
+    }
+    protected function getDownloadFeedback($id){
+
+      $project = DB::table('projects')
+                    ->where('idProject', '=', $id)
+                    ->first();
+
+      $dataProject = DB::table('phases')
+                      ->where( 'phases.idProject' , '=', $id)
+                      ->join('questions', 'phases.idFase', '=', 'questions.idFase')
+                      ->join('answers', 'questions.idVraag', '=', 'answers.idVraag')
+                      ->orderBy('phases.idFase', 'asc')
+                      ->orderBy('answers.antwoord', 'asc')
+                      ->get();
+
+
+      Excel::create('Feedback_Project_' . $project->naam, function($excel) use($project, $dataProject) {
+
+
+        $excel->sheet('ProjectInfo', function($sheet) use($project, $dataProject) {
+
+          $sheet->row(1, array(
+            'Naam', 'Uitleg', 'Locatie', 'Aangemaakt op'
+            ))->setWidth(array(
+            'A'     =>  60,
+            'B'     =>  30,
+            'C'     =>  40,
+            'D'     =>  40
+            ));
+
+            $sheet->cells('A4:D4', function($cells) {
+              $cells->setBackground('#000000');
+            });
+            $sheet->cells('A1:D1', function($cells) {
+              $cells->setFontWeight('bold');
+            });
+            $sheet->cells('A6:B6', function($cells) {
+              $cells->setFontWeight('bold');
+            });
+
+
+
+          $sheet->row(2, array(
+            $project->naam, $project->uitleg, $project->locatie, $project->created_at
+          ));
+
+          $sheet->row(6, array(
+            'Appvraag', 'Antwoord'
+          ));
+
+          $allAppAnswersOfProject = DB::table('appanswers')
+                                ->join('appquestions', 'appanswers.idAppquestions', '=', 'appquestions.idAppquestions')
+                                ->where('appquestions.idProject', '=', $project->idProject)
+                                ->orderBy('appanswers.answer', 'asc')
+                                ->get();
+
+          foreach ($allAppAnswersOfProject as $appAnswer_Question) {
+            $sheet->appendRow(array(
+              $appAnswer_Question->question, $appAnswer_Question->answer
+            ));
+          }
+
+      });
+
+      $currentPhase = 0;
+
+      for ($i=0; $i < count($dataProject); $i++) {
+        if($dataProject[$i]->idFase !=  $currentPhase){
+          $currentPhase = $dataProject[$i]->idFase;
+
+          $excel->sheet('Fase_' . $dataProject[$i]->faseNummer, function($sheet) use($project, $dataProject, $currentPhase) {
+
+            $sheet->appendRow(array(
+              'Vraag', 'Antwoord'
+            ));
+
+            for ($i=0; $i < count($dataProject); $i++) {
+              if ($dataProject[$i]->idFase ==  $currentPhase) {
+                $sheet->appendRow(array(
+                  $dataProject[$i]->vraag, $dataProject[$i]->antwoord
+                ))->setStyle(array(
+                  'font' => array(
+                  'bold'      =>  false
+                  )
+                ))->setWidth(array(
+                'A'     =>  60,
+                'B'     =>  30
+                ));
+              }
+            }
+            $sheet->cells('A1:B1', function($cells) {
+              $cells->setFontWeight('bold');
+            });
+
+
+
+        });
+
+        }
+      }
+
+    })->export('xlsx');
+
+      return redirect('/admin/project-lijst/');
+
+    }
+
+    protected function getAppVragen($id){
+
+      $project = DB::table('projects')
+                    ->where('idProject', '=', $id)
+                    ->first();
+
+      $appQuestions = Appquestion::where('idProject', '=', $id)
+                      ->get();
+
+
+
+        return view('/admin/appvragen-overzicht', [
+            'project' => $project,
+            'appQuestions' => $appQuestions,
+        ]);
+    }
+
+    protected function getAppVraagBewerken($id, $vraagid){
+
+      $project = DB::table('projects')
+                    ->where('idProject', '=', $id)
+                    ->first();
+
+      $appquestion = Appquestion::where('idAppquestions', '=', $vraagid)
+                      ->first();
+
+
+
+        return view('/admin/appvraag-bewerken', [
+            'project' => $project,
+            'appquestion' => $appquestion,
+        ]);
+    }
+
+    protected function postAppVraagBewerken($id, $vraagid, Request $request){
+
+      $data = Input::all();
+
+      $validator = Validator::make($request->all(), [
+          'vraag' => 'required'
+      ]);
+
+      if ($validator->fails()) {
+           return redirect($request->url())
+                      ->withErrors($validator)
+                      ->withInput();
+      }
+
+      Appquestion::where('idAppquestions', $vraagid)
+      ->update([
+          'question' => $data['vraag']
+      ]);
+
+        return redirect('/admin/project-bewerken/' . $id . '/appvragen')->with('message', 'Appvraag succesvol aangepast.');
+    }
+
+
+    protected function getNieuweAppVraag($id){
+
+      $project = DB::table('projects')
+                    ->where('idProject', '=', $id)
+                    ->first();
+
+
+
+        return view('/admin/nieuwe-appvraag', [
+            'project' => $project
+        ]);
+    }
+
+    protected function postNieuweAppVraag($id, Request $request){
+
+      $data = Input::all();
+
+      $validator = Validator::make($request->all(), [
+          'vraag' => 'required'
+      ]);
+
+      if ($validator->fails()) {
+           return redirect($request->url())
+                      ->withErrors($validator)
+                      ->withInput();
+      }
+
+      Appquestion::create([
+          'question' => $data['vraag'],
+          'idProject' => $id
+      ]);
+
+
+        return redirect('/admin/project-bewerken/' . $id . '/appvragen')->with('message', 'Appvraag succesvol toegevoegd.');
+    }
+
+    protected function getAppVraagVerwijderen($id, $vraagid){
+
+      $project = DB::table('projects')
+                    ->where('idProject', '=', $id)
+                    ->first();
+
+      $appquestion = Appquestion::where('idAppquestions', '=', $vraagid)
+                    ->first();
+
+        return view('/admin/appvraag-verwijderen', [
+            'project' => $project,
+            'appquestion' => $appquestion
+        ]);
+    }
+
+    protected function postAppVraagVerwijderen($id, $vraagid){
+
+      DB::table('appquestions')->where('idAppquestions', '=', $vraagid)
+                          ->delete();
+
+      return redirect('/admin/project-bewerken/' . $id . '/appvragen')->with('message', 'Appvraag succesvol verwijderd.');
+    }
+
+
+
+
+}

@@ -1,7 +1,5 @@
 C:\Users\Gebruiker\Documents\GitHub\Project-Pi-Antwerp\Game\Antwerpen Snake\Temp\bin\Debug\Assembly-CSharp.dll
 C:\Users\Gebruiker\Documents\GitHub\Project-Pi-Antwerp\Game\Antwerpen Snake\Temp\bin\Debug\Assembly-CSharp.pdb
-C:\Users\Gebruiker\Documents\GitHub\Project-Pi-Antwerp\Game\Antwerpen Snake\Temp\bin\Debug\I18N.dll
-C:\Users\Gebruiker\Documents\GitHub\Project-Pi-Antwerp\Game\Antwerpen Snake\Temp\bin\Debug\I18N.West.dll
 C:\Users\Gebruiker\Documents\GitHub\Project-Pi-Antwerp\Game\Antwerpen Snake\Temp\bin\Debug\LitJson.dll
 C:\Users\Gebruiker\Documents\GitHub\Project-Pi-Antwerp\Game\Antwerpen Snake\Temp\bin\Debug\UnityEditor.dll
 C:\Users\Gebruiker\Documents\GitHub\Project-Pi-Antwerp\Game\Antwerpen Snake\Temp\bin\Debug\UnityEditor.iOS.Extensions.Xcode.dll
