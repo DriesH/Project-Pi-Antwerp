@@ -9,7 +9,7 @@ use App\Http\Requests;
 use DB;
 use Response;
 use File;
-
+use stdClass;
 use App\Appanswer;
 
 
@@ -58,24 +58,20 @@ class APIController extends Controller
       $allAnswers = DB::table('appanswers')
                             ->where('appanswers.idAppquestions', '=', $request['questionID'])
                             ->orderBy('appanswers.answer', 'asc')
-                            ->get();
-
-      $totalAmountOfAnswers = count($allAnswers);
+                            ->count();
 
       $sameAnswers = DB::table('appanswers')
                             ->where('appanswers.idAppquestions', '=', $request['questionID'])
                             ->where('appanswers.answer', '=', $request['answerUser'])
                             ->orderBy('appanswers.answer', 'asc')
-                            ->get();
-      $totalSameAnswers = count($sameAnswers);
+                            ->count();
 
-      $percentageSameAnswer = ($totalSameAnswers / $totalAmountOfAnswers) * 100;
 
-      $appanswers_array = [
-          'percentageSameAnswer' => $percentageSameAnswer
-      ];
+      $percentageSameAnswer = ($sameAnswers / $allAnswers) * 100;
+      $object = (object) ['percentage' => $percentageSameAnswer];
+      $objectToReturn = ["feedback"=>[$object]];
 
-      return Response::json($appanswers_array);
+      return Response::json($objectToReturn);
 
     }
 
