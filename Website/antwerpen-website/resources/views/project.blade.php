@@ -69,12 +69,8 @@
 
         </article>
         @if(count($questions) > 0)
-          <a href="#in-progress" class="btn btn-info test pull-left"><i class="fa fa-comments"></i>Geef je mening</a>
+          <a href="#in-progress" class="btn btn-info button pull-left"><i class="fa fa-comments"></i>Scroll naar beneden om je mening te geven</a>
         @endif
-
-        <!--  VVV VVVVVVVVVVVVVVVVVVV VVV  -->
-        <!--  VVV - FIX NEEDED HERE - VVV  -->
-        <!--  VVV VVVVVVVVVVVVVVVVVVV VVV  -->
 
         @if (Auth::guest())
 
