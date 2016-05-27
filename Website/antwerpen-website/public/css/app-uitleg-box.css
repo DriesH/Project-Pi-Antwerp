@@ -1,18 +1,13 @@
-.container .jumbotron, .jumbotron, .app-uitleg-box{
-    border-radius: 0;
-    color: white;
-    background: white;
+.phone-img{
+    width: 100%;
 }
 
-.app-uitleg-box img{
-    width: 15%;
+.carousel-img{
+    width: 30%;
+    margin-right: 20px;
 }
 
-.absolute-img-overlay img{
-    width: 15%;
-    position: absolute;
-}
-
-.overlay-banner{
-    
+.carousel-container{
+    margin-top: 50px;
+    margin-bottom: 30px;
 }
