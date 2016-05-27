@@ -17,6 +17,7 @@ use Auth;
 use Illuminate\Support\Facades\Input;
 use Carbon\Carbon;
 use Jenssegers\Date\Date;
+use Illuminate\Cookie\CookieJar;
 
 
 
@@ -191,7 +192,7 @@ class ProjectController extends Controller
         ]);
     }
 
-    public function PostProject($id, Request $request){
+    public function PostProject($id, $faseid, Request $request, CookieJar $cookieJar){
 
       /**
       *Data bevat de values van inputfields van het nieuwe project.
@@ -206,6 +207,8 @@ class ProjectController extends Controller
       }
       else {
         $user = 0;
+        $cookieJar->queue(cookie($faseid, "true", 365 * 24 * 60));
+
       }
 
 
