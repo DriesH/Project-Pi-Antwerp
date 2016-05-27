@@ -16,7 +16,7 @@
 
                     @if($vragen->count() > 0)
 
-                        <a class="btn btn-success" href="nieuwevraag" role="button"><i class="fa fa-plus"></i>Niewe vraag aanmaken</a>
+                        <a class="btn btn-success" href="nieuwevraag" role="button"><i class="fa fa-plus"></i>Nieuwe vraag aanmaken</a>
 
                         @foreach($vragen as $vraag)
                             <div class="bs-callout bs-callout-primary"><h4>{{$vraag->vraag}}</h4>
@@ -31,7 +31,7 @@
                    @else
                        <div>
                            <h4>Er zijn nog geen vragen voor deze fases.</h4>
-                           <a class="btn btn-success" href="nieuwevraag" role="button"><i class="fa fa-plus"></i>Niewe vraag aanmaken</a>
+                           <a class="btn btn-success" href="nieuwevraag" role="button"><i class="fa fa-plus"></i>Nieuwe vraag aanmaken</a>
                        </div>
                    @endif
                 </div>
