@@ -1,20 +1,31 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 using LitJson;
 
 public class SendData_GrabFeedback1 : QuestionLogic {
 
   private JsonData dataForFeedback  = null; //the data that will be used to select the data needed from the json file
+  private int data;
+  private int nData;
+  private int hundred = 100;
   
   //overerven van questionlogic
   private string writeURL           = ""; //the url to write to
   private string currQuestionID     = ""; //used to get the ID of the current quesion
   private string currAnswerUser     = ""; //used to get the current question
 
+  public Text percentage = null;//content of feedback
+  public Text nPercentage = null;
+
   void LateUpdate()
   {
     if (whatWasPickedUp != null && whatWasPickedUp != "") //if an answer is given
     {
+        if (currentQuestion < numberOfQuestions)
+        {
+            
+        
       currQuestionID = questionIDs[currentQuestion-1]; //because the next question is already loaded, so you need to get the previous question
       WhichAnswer(whatWasPickedUp); //to get answerUser
       SnakeV2.whichFoodwasPickedUp = null; //reset the whole pickedupvariable
@@ -23,10 +34,12 @@ public class SendData_GrabFeedback1 : QuestionLogic {
       writeURL = "http://pi.multimediatechnology.be/API/post/projecten/antwoord?questionID=" + currQuestionID + "&answerUser=" + currAnswerUser;
       StartCoroutine(writeToServer(currQuestionID, currAnswerUser));
     }
+        }
   }
 
 
-  IEnumerator writeToServer (string questionID, string answerUser) { 
+  IEnumerator writeToServer (string questionID, string answerUser) {
+    
     WWW www = new WWW(writeURL); //use the given url to sent the data to
     yield return www; //wait till it's done
 
@@ -39,7 +52,11 @@ public class SendData_GrabFeedback1 : QuestionLogic {
   void readAllForFeedback(string feedbackURL)
   {
      dataForFeedback = JsonMapper.ToObject(feedbackURL); //parse it into a JsonObject
-     Debug.Log(dataForFeedback.ToString());
+     data = (int)dataForFeedback["feedback"][0]["percentage"]; //read in the data needed for the feedback
+     percentage.text = data + "% is met u eens";
+     nData = hundred - data;
+     nPercentage.text = nData + "% is niet met u eens";
+     //Debug.Log(data.ToString());
 
     //data nog inlezen voor feedback => nog percentteken toevoegen
     //==> enkel feedback voor gekozen antwoord

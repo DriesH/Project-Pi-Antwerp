@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
 
@@ -18,6 +18,11 @@ public class QuestionLogic : ReadJson {
 
   void Start()
   {
+	// PlayerPrefs.DeleteKey("questionNr");//delete key for testing purposes
+     if (PlayerPrefs.HasKey("questionNr"))//tests if key exists before it uses it
+    {
+     currentQuestion = PlayerPrefs.GetInt("questionNr");
+    }  
     okButton.interactable = false; //make the button disabled so it can't be clicked when the questions haven't loaded
     if (this.tag == "Buttontest") //make sure that this script that is linked to several objects, only is excecuted when it's linked to the tag Buttontest
     { 
@@ -86,6 +91,7 @@ public class QuestionLogic : ReadJson {
     if (currentQuestion < numberOfQuestions) //stop counting when there are no questions left
     { 
       currentQuestion++; //flip to the next question
+	  PlayerPrefs.SetInt("questionNr",currentQuestion);//saves currentQuestion as in in playerprefs to save progress
     }
     questionsLoaded = true; //load the next question
   }

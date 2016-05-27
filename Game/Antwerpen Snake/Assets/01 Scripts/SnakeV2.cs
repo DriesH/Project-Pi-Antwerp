@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -9,13 +9,8 @@ public class SnakeV2 : TouchLogic {
   private Transform snakeTrans, camTrans; //transform from snake and camera
   private float     speed                 = 10f; //speed of the snake
   private float     maxDist               = 1; //the maximumdistance between snake and finger until it moves again
-  private Vector3 upperLeftCorner         = new Vector3(-4.63f, 0.5f, 6.51f);
-  private Vector3 upperRightCorner        = new Vector3(4.63f, 0.5f, 6.51f);
-  private Vector3 lowerLeftCorner         = new Vector3(-4.63f, 0.5f, -8.11f);
-  private Vector3 lowerRightCorner        = new Vector3(4.63f, 0.5f, -8.11f);
-  private short   numberOfAnswers         = 4; //the number of possible answers
-
-  public GameObject food                  = null;
+  private float     resetDelay            = 0.5f;
+	
   public GameObject questionPanel         = null; //the panel that alternatively will be set to hide or appear
   
   public static bool       isPlayingGame         = false;// is the game playing or are we answering a question    
@@ -27,11 +22,6 @@ public class SnakeV2 : TouchLogic {
     snakeTrans    = this.transform;           //save startposition and -rotation of the snake
     camTrans      = Camera.main.transform;    // save de startposition and -rotation of the camera
     beginPosSnake = this.transform.position;  //save startposition and -rotation of the snake
-
-    for (int i = 1; i <= numberOfAnswers; i++) //make the 4 pickups with the tag "food_i" (so from 1 to 4)
-    {
-      SpawnPickup("food_" + i);
-    }
   }
 
   void LookAtFinger() //move and look at fingertouch
@@ -52,29 +42,6 @@ public class SnakeV2 : TouchLogic {
     }
   }
 
-  void SpawnPickup(string number) //spawnt in 4 corners
-  {
-      switch (number)
-      { 
-        case "food_1":
-          food.tag = "food_1"; //give the object the following tag
-          Instantiate(food, upperLeftCorner, Quaternion.identity); //upper left position
-          break;
-        case "food_2":
-          food.tag = "food_2";
-          Instantiate(food, upperRightCorner, Quaternion.identity); //upper right position
-          break;
-        case "food_3":
-          food.tag = "food_3";
-          Instantiate(food, lowerLeftCorner, Quaternion.identity); //lower left position
-          break;
-        case "food_4":
-          food.tag = "food_4";
-          Instantiate(food, lowerRightCorner, Quaternion.identity); //lower right position
-          break;
-      }
-  }
-
   void OnTouchMoved() //if the touch has moved
   { LookAtFinger(); }
 
@@ -93,17 +60,24 @@ public class SnakeV2 : TouchLogic {
   {
     if (c.tag.StartsWith("food"))
     {
-      transform.position = beginPosSnake; //test zet snake op begin
+      reset();
       isPlayingGame = false;
       questionPanel.SetActive(true);
       whichFoodwasPickedUp = c.tag;
     }
-    else if (c.tag.StartsWith("respawn")) // respawn when player oved to the middle
+	else if (c.tag.StartsWith("reset"))
     {
-      SpawnPickup("food_1");
-      SpawnPickup("food_2");
-      SpawnPickup("food_3");
-      SpawnPickup("food_4");
+        reset();
+        StartCoroutine(waitAfterReset());
     }
+  }
+	
+  void reset() { transform.position = beginPosSnake; }//resets snake position
+	
+  public IEnumerator waitAfterReset(){
+      isPlayingGame = false;
+      yield return new WaitForSeconds(resetDelay);//waits half a second before game is playable again to prevent possible spastic movements
+      isPlayingGame = true;
+      
   }
 }
