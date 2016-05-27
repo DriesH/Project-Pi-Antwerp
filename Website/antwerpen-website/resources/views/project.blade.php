@@ -118,13 +118,17 @@
                         @endif
                     @endforeach
 
+                    @if(Auth::guest() && Cookie::get($phase->idFase))
+                      <?php $isAlreadyAnswered = true; ?>
+                    @endif
+
                     @if($phase->status == "in-progress" && !$isAlreadyAnswered)
                       @if(count($questions) > 0)
                         <a id="form-reveal" class="btn btn-info"><i class="fa fa-arrow-circle-down"></i>Vul de vragen in!</a>
                         <div class="cd-timeline-question-form" data-id="{{$phase->idFase}}">
                             <h3>Uw mening telt!</h3>
                             {{ Form::open(array(
-                                'url' => '/project/' . $project->idProject . '/done',
+                                'url' => '/project/' . $project->idProject . '/' . $phase->idFase . '/done',
                                 'class' => 'form-horizontal',
                                 'role' => 'form',
                                 'files' => false)) }}

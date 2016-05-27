@@ -30,7 +30,7 @@ Route::get('/', 'ProjectController@GetProjects');
 
 //get 1 project + check if following or not
 Route::get('/project/{id}', 'ProjectController@GetProject');
-Route::post('/project/{id}/done', 'ProjectController@PostProject');
+Route::post('/project/{id}/{faseid}/done', 'ProjectController@PostProject');
 
 //post follow to data base
 Route::post('/project/{id}', 'ProjectController@PostProjectFollow');
