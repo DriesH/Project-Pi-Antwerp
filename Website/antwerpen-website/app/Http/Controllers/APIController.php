@@ -67,10 +67,10 @@ class APIController extends Controller
                             ->count();
 
 
-      $percentageSameAnswer = ($sameAnswers / $allAnswers) * 100;
+      $percentageSameAnswer = round(($sameAnswers / $allAnswers) * 100);
+
       $object = (object) ['percentage' => $percentageSameAnswer];
       $objectToReturn = ["feedback"=>[$object]];
-
       return Response::json($objectToReturn);
 
     }
