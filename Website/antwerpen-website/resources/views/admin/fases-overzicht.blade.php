@@ -38,7 +38,7 @@
                    @else
                        <div>
                            <h4>Er zijn nog geen fases voor dit project.</h4>
-                           <a class="btn btn-success" href="nieuwefase" role="button"><i class="fa fa-plus"></i>Niewe fase aanmaken</a>
+                           <a class="btn btn-success" href="nieuwefase" role="button"><i class="fa fa-plus"></i>Nieuwe fase aanmaken</a>
                        </div>
                    @endif
                 </div>
