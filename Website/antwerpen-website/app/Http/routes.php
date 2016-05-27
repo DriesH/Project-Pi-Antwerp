@@ -96,7 +96,7 @@ Route::get('/admin/project-bewerken/{id}/appvragen/verwijderen/{vraagid}', 'Admi
 Route::post('/admin/project-bewerken/{id}/appvragen/verwijderen/{vraagid}', 'AdminController@postAppVraagVerwijderen');
 
 /*App uitleg*/
-Route::get('/applicatie-uitleg', 'HomeController@getApplicatieUitleg');
+Route::get('/applicatie-uitleg', 'AppPageController@getApplicatieUitleg');
 
 /*Project lijst*/
 Route::get('/admin/project-lijst', 'AdminController@getProjectLijst');

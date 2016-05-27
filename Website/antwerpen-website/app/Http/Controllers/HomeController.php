@@ -45,9 +45,6 @@ class HomeController extends Controller
     }
 
 
-    public function getApplicatieUitleg(){
-        return view('applicatie-overzicht');
-
-    }
+    
 
 }
