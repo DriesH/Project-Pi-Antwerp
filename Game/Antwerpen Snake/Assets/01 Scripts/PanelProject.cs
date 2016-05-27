@@ -76,16 +76,15 @@ public class PanelProject : ReadJson //the only thing to check ==> setparent met
       {
         projectDescrText.text = databaseDescriptions[i].Substring(0,lenghtOfDescrp) + "..."; //reads in all the database descriptions and shortens them so they always fit
         projectTitleText.text = databaseTitles[i].Substring(0, lenghtOfTitle) + "..."; //reads in all the database titles and shortens them so they always fit
+        
         projectImage.sprite = savedSprites[i]; //reads in the sprites 
 
         //make a new panel with all the parameters from above and place it within listOfPanels
         GameObject childObject = Instantiate(panel);
-       // childObject.transform.parent = listOfPanels.transform;
-        childObject.transform.SetParent( listOfPanels.transform); // which one is better
+        childObject.transform.SetParent( listOfPanels.transform); 
       }
       //make the empty space at the bottom so there is some padding
       GameObject empty = Instantiate(emptySpot) as GameObject;
-      //empty.transform.parent = listOfPanels.transform;
       empty.transform.SetParent(listOfPanels.transform);
       if (bar != null) //if there is a scrollbar, place it at the top of the page (loaded at last for the best result)
       {
