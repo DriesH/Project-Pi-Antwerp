@@ -74,10 +74,8 @@ public class PanelProject : ReadJson //the only thing to check ==> setparent met
     {
       for (int i = 0; i < numberOfProjects; i++) //for every project
       {
-       // projectDescrText.text = databaseDescriptions[i].Substring(0,lenghtOfDescrp) + "..."; //reads in all the database descriptions and shortens them so they always fit
-        projectDescrText.text = databaseDescriptions[i];
-        projectTitleText.text = databaseTitles[i];
-      //  projectTitleText.text = databaseTitles[i].Substring(0, lenghtOfTitle) + "..."; //reads in all the database titles and shortens them so they always fit
+        projectDescrText.text = databaseDescriptions[i];//reads in all the database description
+        projectTitleText.text = databaseTitles[i]; //reads in all the database titles 
         
         projectImage.sprite = savedSprites[i]; //reads in the sprites 
 

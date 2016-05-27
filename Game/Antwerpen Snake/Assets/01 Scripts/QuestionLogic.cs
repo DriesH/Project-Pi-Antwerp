@@ -18,7 +18,7 @@ public class QuestionLogic : ReadJson {
 
   void Start()
   {
-	// PlayerPrefs.DeleteKey("questionNr");//delete key for testing purposes
+//	 PlayerPrefs.DeleteKey("questionNr");//delete key for testing purposes
      if (PlayerPrefs.HasKey("questionNr"))//tests if key exists before it uses it
     {
      currentQuestion = PlayerPrefs.GetInt("questionNr");

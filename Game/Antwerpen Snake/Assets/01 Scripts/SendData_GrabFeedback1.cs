@@ -23,18 +23,16 @@ public class SendData_GrabFeedback1 : QuestionLogic {
     if (whatWasPickedUp != null && whatWasPickedUp != "") //if an answer is given
     {
         if (currentQuestion < numberOfQuestions)
-        {
-            
-        
-      currQuestionID = questionIDs[currentQuestion-1]; //because the next question is already loaded, so you need to get the previous question
-      WhichAnswer(whatWasPickedUp); //to get answerUser
-      SnakeV2.whichFoodwasPickedUp = null; //reset the whole pickedupvariable
+        { 
+          currQuestionID = questionIDs[currentQuestion-1]; //because the next question is already loaded, so you need to get the previous question
+          WhichAnswer(whatWasPickedUp); //to get answerUser
+          SnakeV2.whichFoodwasPickedUp = null; //reset the whole pickedupvariable
       
-      //DON'T CHANGE URL, post the anwser to the URL down here using the parameters
-      writeURL = "http://pi.multimediatechnology.be/API/post/projecten/antwoord?questionID=" + currQuestionID + "&answerUser=" + currAnswerUser;
-      StartCoroutine(writeToServer(currQuestionID, currAnswerUser));
-    }
-        }
+          //DON'T CHANGE URL, post the anwser to the URL down here using the parameters
+          writeURL = "http://pi.multimediatechnology.be/API/post/projecten/antwoord?questionID=" + currQuestionID + "&answerUser=" + currAnswerUser;
+          StartCoroutine(writeToServer(currQuestionID, currAnswerUser));
+        } 
+     }
   }
 
 
@@ -56,10 +54,6 @@ public class SendData_GrabFeedback1 : QuestionLogic {
      percentage.text = data + "% is met u eens";
      nData = hundred - data;
      nPercentage.text = nData + "% is niet met u eens";
-     //Debug.Log(data.ToString());
-
-    //data nog inlezen voor feedback => nog percentteken toevoegen
-    //==> enkel feedback voor gekozen antwoord
   }
 
   void WhichAnswer(string food_tag) //to see which answer was given to it can be sent to the server
