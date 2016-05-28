@@ -55,7 +55,7 @@
      <Compile Include="Assets\01 Scripts\SnakeV2.cs" />
      <Compile Include="Assets\01 Scripts\StartScreenAndInstructionButtons.cs" />
      <Compile Include="Assets\01 Scripts\TouchLogic.cs" />
-     <Compile Include="Assets\01 Scripts\WriteJson.cs" />
+     <Compile Include="Assets\01 Scripts\enemyMoving.cs" />
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>
