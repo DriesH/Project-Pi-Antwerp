@@ -8,27 +8,12 @@
 
         <!-- BOOTSTRAP & FONT-AWESOME -->
         <link rel="shortcut icon" href="/pictures/favicon/favicon-32x32.png" type="image/png">
-        <link rel="stylesheet" href="/css/bootstrap.min.css">
         <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" type="text/css">
-        <link rel="stylesheet" href="/css/bootstrap-datepicker3.standalone.min.css" type="text/css">
         <!-- FONTS -->
         <link rel="stylesheet" href="/fonts/Antwerpen-Regular.css" media="screen" title="no title" charset="utf-8">
         <link rel="stylesheet" href="/fonts/Sun-Antwerpen.css" media="screen" title="no title" charset="utf-8">
         <!-- PAGE LAYOUT -->
         <link rel="stylesheet" href="/css/master.css" media="screen" title="no title" charset="utf-8">
-        <link rel="stylesheet" href="/css/nav-bar.css" media="screen" title="no title" charset="utf-8">
-        <link rel="stylesheet" href="/css/project-box.css" media="screen" title="no title" charset="utf-8">
-        <link rel="stylesheet" href="/css/project-page.css" media="screen" title="no title" charset="utf-8">
-        <link rel="stylesheet" href="/css/carousel.css" media="screen" title="no title" charset="utf-8">
-        <link rel="stylesheet" href="/css/admin-panel.css" media="screen" title="no title" charset="utf-8">
-        <link rel="stylesheet" href="/css/dashboard-user.css" media="screen" title="no title" charset="utf-8">
-        <link rel="stylesheet" href="/css/fases.css" media="screen" title="no title" charset="utf-8">
-        <link rel="stylesheet" href="/css/app-uitleg-box.css" media="screen" title="no title" charset="utf-8">
-        <link rel="stylesheet" href="/css/bootstrap-btn-colors.css" media="screen" title="no title" charset="utf-8">
-        <!-- FUNCTIONAL CSS -->
-        <link rel="stylesheet" href="/css/vertical-timeline-css.css" media="screen" title="no title" charset="utf-8">
-        <link rel="stylesheet" href="/css/slick-theme.css" media="screen" title="no title" charset="utf-8">
-        <link rel="stylesheet" href="/css/grid-layout.css" media="screen" title="no title" charset="utf-8">
     </head>
     <body>
 
