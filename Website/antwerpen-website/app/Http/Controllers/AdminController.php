@@ -980,6 +980,7 @@ class AdminController extends Controller
                       ->join('questions', 'phases.idFase', '=', 'questions.idFase')
                       ->join('answers', 'questions.idVraag', '=', 'answers.idVraag')
                       ->orderBy('phases.idFase', 'asc')
+                      ->orderBy('questions.idVraag', 'asc')
                       ->orderBy('answers.antwoord', 'asc')
                       ->get();
 
