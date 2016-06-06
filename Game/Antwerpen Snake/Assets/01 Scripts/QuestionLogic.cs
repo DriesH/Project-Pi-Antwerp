@@ -1,12 +1,12 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
 
 public class QuestionLogic : ReadJson {
   
   public Text questionText        = null; //the text where all the questions will appear
-  public Text loadingText         = null;
   public GameObject questionPanel = null; //the panel that alternatively will be set to hide or appear
+  public Button okButton          = null; //show the button when the questions have been loaded
 
   protected static int currentQuestion     = 0; //so the script knows which question to show
   private string[] questions      = null;  //to save all the questions for the database
@@ -18,7 +18,12 @@ public class QuestionLogic : ReadJson {
 
   void Start()
   {
-    loadingText.enabled = true; //when the game starts, show the loadingtext
+//	 PlayerPrefs.DeleteKey("questionNr");//delete key for testing purposes
+     if (PlayerPrefs.HasKey("questionNr"))//tests if key exists before it uses it
+    {
+     currentQuestion = PlayerPrefs.GetInt("questionNr");
+    }  
+    okButton.interactable = false; //make the button disabled so it can't be clicked when the questions haven't loaded
     if (this.tag == "Buttontest") //make sure that this script that is linked to several objects, only is excecuted when it's linked to the tag Buttontest
     { 
     StartCoroutine(GetDatabase(urlProject, "Question")); //start the method from ReadJson so it's the first to begin
@@ -53,7 +58,7 @@ public class QuestionLogic : ReadJson {
         questionIDs[i]  = databaseIDQuestions[i]; //put each ID from the database into the array
       }
     }
-    loadingText.enabled = false; //hide the loadingtext
+    okButton.interactable = true; //the questions have loaded so make the button interactable
     questionsLoaded = true;
   }
 
@@ -86,6 +91,7 @@ public class QuestionLogic : ReadJson {
     if (currentQuestion < numberOfQuestions) //stop counting when there are no questions left
     { 
       currentQuestion++; //flip to the next question
+	  PlayerPrefs.SetInt("questionNr",currentQuestion);//saves currentQuestion as in in playerprefs to save progress
     }
     questionsLoaded = true; //load the next question
   }

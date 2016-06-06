@@ -12,5 +12,20 @@ var elixir = require('laravel-elixir');
  */
 
 elixir(function(mix) {
-    mix.sass('app.scss');
+    mix.styles([
+        'admin-panel.css',
+        'app-uitleg-box.css',
+        'bootstrap-btn-colors.css',
+        'bootstrap-datepicker3.standalone.min.css',
+        'bootstrap.min.css',
+        'dashboard-user.css',
+        'fases.css',
+        'font-awesome.min.css',
+        'grid-layout.css',
+        'master.css',
+        'nav-bar.css',
+        'project-box.css',
+        'project-page.css',
+        'vertical-timeline-css.css'
+    ], 'public/css/master.css');
 });

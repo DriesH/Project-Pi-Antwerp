@@ -1,0 +1,78 @@
+.navbar{
+    background-color: #2C5697;
+    /*height: 3.57143rem;*/
+    height: 7.143rem;
+    top: 0;
+    width: 100%;
+    z-index: 5000;
+    display: block;
+    border-radius: 0;
+}
+
+.navbar-brand{
+    padding: 0;
+}
+
+.navbar-brand img{
+    max-width: 100px;
+    margin-left: 15px;
+}
+
+.profile {
+    opacity: 0.7;
+}
+
+.profile:hover {
+    opacity: 1;
+}
+
+.navbar-brand{
+    height: 100%;
+}
+
+.afmelden>a>i{
+    padding-right: 0;
+}
+
+.navbar-nav{
+    margin-bottom: 0px;
+}
+
+#navbar-login{
+    background-color: #2C5697;
+    overflow-y: hidden;
+}
+
+#inlog-field{
+    border-top: none;
+}
+
+#navbar-login.navbar-nav{
+    margin: 0px 0px 0px 0px;
+}
+
+.navbar-collapse{
+    padding-left: 0px;
+    padding-right: 0px;
+}
+
+#navbar-login li{
+    height: 100px;
+    line-height: 100px;
+}
+
+#navbar-login a{
+    color: white;
+    height: 100%;
+    line-height: 70px;
+}
+
+#navbar-login a:hover{
+    color: #2C5697;
+    background-color: white;
+    text-decoration: underline;
+}
+
+.nav>li>a:focus, .nav>li>a:hover {
+    background: none;
+}

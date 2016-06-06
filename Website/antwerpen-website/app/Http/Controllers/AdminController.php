@@ -17,6 +17,8 @@ use Auth;
 use Excel;
 use App\Multiple_choice_answer;
 use DB;
+use Carbon\Carbon;
+use Jenssegers\Date\Date;
 
 class AdminController extends Controller
 {
@@ -121,7 +123,7 @@ class AdminController extends Controller
 
         $validator = Validator::make($request->all(), [
             'naam' => 'required',
-            'uitleg' => 'required|min:250',
+            'uitleg' => 'required|min:100',
             'locatie' => 'required',
             'foto' => 'image|max:1000',
         ]);
@@ -278,7 +280,7 @@ class AdminController extends Controller
 
         $validator = Validator::make($request->all(), [
             'naam' => 'required',
-            'uitleg' => 'required|min:250',
+            'uitleg' => 'required|min:100',
             'locatie' => 'required',
             'foto' => 'image|max:1000',
         ]);

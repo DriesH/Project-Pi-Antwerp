@@ -12,7 +12,7 @@ public class PanelProject : ReadJson //the only thing to check ==> setparent met
   public Text       projectDescrText      = null; //the short description of a project;
   public GameObject emptySpot             = null; //this is for the empty slot at the bottom of the page
   public Text       noProjectText         = null; //show some text when there are no projects or when there wasn't internet
-  public Text       loadingText           = null; //show when everything is loading from database
+  public GameObject loadingText           = null; //show when everything is loading from database
   public Scrollbar  bar                   = null; //drop the scrollbar in here
 
   private const float startValueScrollbar = 1f; //makes sure the scrollbar is always starting at the top of the page
@@ -25,7 +25,7 @@ public class PanelProject : ReadJson //the only thing to check ==> setparent met
   void Start()
   { 
     noProjectText.enabled = false; //start with hiding the text 
-    loadingText.enabled = true; //show this text
+    loadingText.SetActive(true); //show this text
 
     StartCoroutine(GetDatabase(urlProject, "Project")); //start the method from ReadJson so it's the first to begin
   }
@@ -74,24 +74,23 @@ public class PanelProject : ReadJson //the only thing to check ==> setparent met
     {
       for (int i = 0; i < numberOfProjects; i++) //for every project
       {
-        projectDescrText.text = databaseDescriptions[i].Substring(0,lenghtOfDescrp) + "..."; //reads in all the database descriptions and shortens them so they always fit
-        projectTitleText.text = databaseTitles[i].Substring(0, lenghtOfTitle) + "..."; //reads in all the database titles and shortens them so they always fit
+        projectDescrText.text = databaseDescriptions[i];//reads in all the database description
+        projectTitleText.text = databaseTitles[i]; //reads in all the database titles 
+        
         projectImage.sprite = savedSprites[i]; //reads in the sprites 
 
         //make a new panel with all the parameters from above and place it within listOfPanels
         GameObject childObject = Instantiate(panel);
-       // childObject.transform.parent = listOfPanels.transform;
-        childObject.transform.SetParent( listOfPanels.transform); // which one is better
+        childObject.transform.SetParent(listOfPanels.transform); 
       }
       //make the empty space at the bottom so there is some padding
       GameObject empty = Instantiate(emptySpot) as GameObject;
-      //empty.transform.parent = listOfPanels.transform;
       empty.transform.SetParent(listOfPanels.transform);
       if (bar != null) //if there is a scrollbar, place it at the top of the page (loaded at last for the best result)
       {
         bar.value = startValueScrollbar;
       }
     }
-    loadingText.enabled = false; //hide the loadingtext
+    loadingText.SetActive(false); //hide the loadingtext
   }
 }

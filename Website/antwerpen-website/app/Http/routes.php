@@ -30,7 +30,7 @@ Route::get('/', 'ProjectController@GetProjects');
 
 //get 1 project + check if following or not
 Route::get('/project/{id}', 'ProjectController@GetProject');
-Route::post('/project/{id}/done', 'ProjectController@PostProject');
+Route::post('/project/{id}/{faseid}/done', 'ProjectController@PostProject');
 
 //post follow to data base
 Route::post('/project/{id}', 'ProjectController@PostProjectFollow');
@@ -96,7 +96,7 @@ Route::get('/admin/project-bewerken/{id}/appvragen/verwijderen/{vraagid}', 'Admi
 Route::post('/admin/project-bewerken/{id}/appvragen/verwijderen/{vraagid}', 'AdminController@postAppVraagVerwijderen');
 
 /*App uitleg*/
-Route::get('/applicatie-uitleg', 'HomeController@getApplicatieUitleg');
+Route::get('/applicatie-uitleg', 'AppPageController@getApplicatieUitleg');
 
 /*Project lijst*/
 Route::get('/admin/project-lijst', 'AdminController@getProjectLijst');

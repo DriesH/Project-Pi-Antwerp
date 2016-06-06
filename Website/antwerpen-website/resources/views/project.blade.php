@@ -48,10 +48,7 @@
                     @endif
                 @endforeach
 
-                <!--  VVV VVVVVVVVVVVVVVVVVVV VVV  -->
-                <!--  VVV - FIX NEEDED HERE - VVV  -->
-                <!--  VVV VVVVVVVVVVVVVVVVVVV VVV  -->
-
+                
                 @if (!Auth::guest() && Auth::user()->role == 10)
                     <a href="/admin/project-bewerken/{{$project->idProject}}" class="bewerken-link pull-right"><i class="fa fa-pencil-square-o"></i>Bewerken</a>
                 @endif
@@ -69,12 +66,8 @@
 
         </article>
         @if(count($questions) > 0)
-          <a href="#in-progress" class="btn btn-info test pull-left"><i class="fa fa-comments"></i>Geef je mening</a>
+          <a href="#in-progress" class="btn btn-info button pull-left"><i class="fa fa-comments"></i>Scroll naar beneden om je mening te geven</a>
         @endif
-
-        <!--  VVV VVVVVVVVVVVVVVVVVVV VVV  -->
-        <!--  VVV - FIX NEEDED HERE - VVV  -->
-        <!--  VVV VVVVVVVVVVVVVVVVVVV VVV  -->
 
         @if (Auth::guest())
 
@@ -118,13 +111,17 @@
                         @endif
                     @endforeach
 
+                    @if(Auth::guest() && Cookie::get($phase->idFase))
+                      <?php $isAlreadyAnswered = true; ?>
+                    @endif
+
                     @if($phase->status == "in-progress" && !$isAlreadyAnswered)
                       @if(count($questions) > 0)
                         <a id="form-reveal" class="btn btn-info"><i class="fa fa-arrow-circle-down"></i>Vul de vragen in!</a>
                         <div class="cd-timeline-question-form" data-id="{{$phase->idFase}}">
                             <h3>Uw mening telt!</h3>
                             {{ Form::open(array(
-                                'url' => '/project/' . $project->idProject . '/done',
+                                'url' => '/project/' . $project->idProject . '/' . $phase->idFase . '/done',
                                 'class' => 'form-horizontal',
                                 'role' => 'form',
                                 'files' => false)) }}

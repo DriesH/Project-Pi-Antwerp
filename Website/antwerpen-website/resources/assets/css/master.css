@@ -1,0 +1,222 @@
+body{
+    background: #fff;
+    font-family: "Sun-Antwerpen 500", sans-serif;
+    padding-top: 8rem;
+}
+
+html{
+    font-size: 87.5%;
+    line-height: 1.33em;
+}
+
+
+
+h1, h5, h5 a, .project-big-box h1{
+    font-family: "Antwerpen";
+    text-decoration: none;
+    color: #282020;
+    margin-top: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+h1, h5, h3, h2, h4{
+    font-family: "Antwerpen";
+    text-decoration: none;
+    color: #282020;
+}
+
+h5 a:hover{
+    color: #0064B4;
+    text-decoration: none;
+}
+
+a{
+    font-weight: 700;
+    color: #0064B4;
+}
+
+a:hover{
+    text-decoration: none;
+}
+
+i{
+    padding-right: 10px;
+    padding-left: 5px;
+}
+
+
+.navbar-nav>li>#page-title{
+    padding-top: 30.5px;
+    padding-bottom: 30.5px;
+}
+
+.navbar-nav>li>a>h1{
+    color: white;
+    font-family: "Antwerpen";
+    margin: 0;
+}
+
+.burger-menu{
+    color: white;
+    margin-top: 1.2rem;
+    font-size: 2em;
+}
+
+#mascot-styling{
+    width: 70px;
+    margin-top: -7px;
+    margin-left: 10px;
+}
+
+.speel-app{
+    display: block;;
+}
+
+@media screen and (min-width: 1px) and (max-width: 990px){
+    #mascot-styling{
+        display: none;
+    }
+
+    .speel-app{
+        display: none;
+    }
+
+    .navbar-nav>li>#page-title{
+        display: none;
+    }
+}
+
+
+#content{
+    padding: 0;
+}
+
+.thumbnail{
+    display:block;
+    padding: 0;
+    margin-bottom: 0;
+    line-height: normal;
+    background-color: none;
+    border: none;
+    border-radius: 0;
+    transition: none;
+}
+
+.panel{
+    border-radius: 0;
+    box-shadow: none;
+    border-bottom: 2px solid #BABABA;
+}
+
+.panel-heading{
+    border-radius: 0;
+}
+
+.panel-heading h1{
+    font-family: "Antwerpen";
+}
+
+.form-control{
+    border-radius: 0;
+}
+
+.btn{
+    border-radius: 0;
+}
+
+/*** GRID CSS ***/
+@media screen and (min-width: 1px) and (max-width: 767px){
+    #grid[data-columns]::before {
+        content: '1 .col-xs-12';
+        transition: 1s;
+    }
+}
+@media screen and (min-width:768px) and (max-width: 991px){
+    #grid[data-columns]::before {
+        content: '2 .col-sm-6';
+    }
+}
+@media screen and (min-width:992px) and (max-width: 9999px){
+    #grid[data-columns]::before {
+        content: '4 .col-md-4';
+    }
+}
+/******/
+
+
+#grid>div{
+    -webkit-transition:all 0.5s ease;
+    -moz-transition:all 0.5s ease;
+    -o-transition:all 0.5s ease;
+    transition:all 0.5s ease;
+}
+
+.form-horizontal .control-label{
+    text-align: left;
+}
+
+/*bootstrap callouts*/
+.bs-callout {
+    padding: 20px;
+    margin: 20px 0;
+    border: 1px solid #eee;
+    border-left-width: 5px;
+    border-radius: 3px;
+}
+.bs-callout h4 {
+    margin-top: 0;
+    margin-bottom: 5px;
+}
+.bs-callout p:last-child {
+    margin-bottom: 0;
+}
+.bs-callout code {
+    border-radius: 3px;
+}
+.bs-callout+.bs-callout {
+    margin-top: -5px;
+}
+.bs-callout-default {
+    border-left-color: #777;
+}
+.bs-callout-default h4 {
+    color: #777;
+}
+.bs-callout-primary {
+    border-left-color: #428bca;
+}
+.bs-callout-primary h4 {
+    color: #428bca;
+}
+.bs-callout-success {
+    border-left-color: #5cb85c;
+}
+.bs-callout-success h4 {
+    color: #5cb85c;
+}
+.bs-callout-danger {
+    border-left-color: #d9534f;
+}
+.bs-callout-danger h4 {
+    color: #d9534f;
+}
+.bs-callout-warning {
+    border-left-color: #f0ad4e;
+}
+.bs-callout-warning h4 {
+    color: #f0ad4e;
+}
+.bs-callout-info {
+    border-left-color: #5bc0de;
+}
+.bs-callout-info h4 {
+    color: #5bc0de;
+}
+
+.control-label{
+    font-family: 'Sun-Antwerpen 700', sans-serif;
+}
+
+.form-label{
+    font-family: 'Sun-Antwerpen 300', sans-serif;
+}

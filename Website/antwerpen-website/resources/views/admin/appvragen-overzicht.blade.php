@@ -29,7 +29,7 @@
                    @else
                        <div>
                            <h4>Er zijn nog geen appvragen voor dit project.</h4>
-                           <a class="btn btn-success" href="appvragen/nieuwevraag" role="button"><i class="fa fa-plus"></i>Niewe appvraag aanmaken</a>
+                           <a class="btn btn-success" href="appvragen/nieuwevraag" role="button"><i class="fa fa-plus"></i>Nieuwe appvraag aanmaken</a>
                        </div>
                    @endif
                 </div>
