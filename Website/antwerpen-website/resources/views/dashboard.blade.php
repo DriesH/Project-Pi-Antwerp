@@ -25,6 +25,7 @@
             </div><!--panel-heading-->
 
             <div class="panel-body">
+              @if($projects != null)
                 @foreach($projects as $project)
                 <div class="media">
                         <div class="media-left media-top">
@@ -44,6 +45,10 @@
 
                 </div><!--media-->
                 @endforeach
+              @else
+                <h4>U volgt momenteel nog geen projecten.</h4>
+              @endif
+
             </div><!--panel-body-->
         </div><!--panel-->
     </div><!--col-md-9-->
