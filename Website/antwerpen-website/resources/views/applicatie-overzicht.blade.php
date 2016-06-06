@@ -11,7 +11,7 @@
             <div class="carousel-container">
                 <img class="carousel-img" src="/pictures/mainscreenPIC.png" alt="game main menu picture" />
                 <img class="carousel-img" src="/pictures/gamePIC.png" alt="in game picture" />
-                <img class="carousel-img" src="/pictures/gamePIC.png" alt="in game picture" />
+                <img class="carousel-img" src="/pictures/ProjectPaneelPic.png" alt="in game picture" />
             </div>
 
             <a class="btn btn-default" href="/Project_A.apk" target="_blank"><i class="fa fa-arrow-down"></i>Download</a>
