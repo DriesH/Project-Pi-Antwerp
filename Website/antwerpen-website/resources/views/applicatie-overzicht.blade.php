@@ -14,7 +14,7 @@
                 <img class="carousel-img" src="/pictures/gamePIC.png" alt="in game picture" />
             </div>
 
-            <a class="btn btn-default" href="/Zeker_Geen_Virus.exe" target="_blank"><i class="fa fa-arrow-down"></i>Download</a>
+            <a class="btn btn-default" href="/Project_A.apk" target="_blank"><i class="fa fa-arrow-down"></i>Download</a>
         </div>
     </div>
 
